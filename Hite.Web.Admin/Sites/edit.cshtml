@@ -1,0 +1,177 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{    
+    Page.Title = "域管理";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    System.Web.Mvc.FormCollection form = new System.Web.Mvc.FormCollection(this.Request.Unvalidated().Form);
+    int id = CECRequest.GetQueryInt("id",0);
+    SiteInfo model = null;
+    var msg = string.Empty;
+    if (IsPost)
+    {
+        var errors = false;
+        model =  new SiteInfo();
+        model.Id = id;
+        model.Name = form["txtName"];
+        model.Url = string.Empty;
+        model.WebDesc = form["txtWebDesc"];
+        model.WebKeywords = form["txtWebKeywords"];
+        model.Language = (WebLanguage)Enum.Parse(typeof(WebLanguage),form["ddlLanguage"]);
+        model.WebTitle = form["txtWebTitle"];
+        model.Introduction = form["txtIntroduction"];
+        model.ContactUs = form["txtContactUs"];
+        model.Logo = form["txtLogo"];
+        model.ThirdCode = form["txtThirdCode"];
+        model.IndexFileName = (IndexFileNameOfSite)Enum.Parse(typeof(IndexFileNameOfSite), form["ddlIndexFileName"]);
+        
+        if (model.Name.IsEmpty())
+        {
+            ModelState.AddError("Name", "名称不能为空!");
+            errors = true;
+        }
+        if(model.IndexFileName == IndexFileNameOfSite.None){
+            ModelState.AddError("IndexFileName","请选择首页文件");
+            errors = true;
+        }
+        if (!errors)
+        {
+            //Success
+            SiteService.Create(model);
+            if(id==0){
+                msg = "<div class=\"msg\">保存成功！</div>";
+            }else{
+                msg = "<div class=\"msg\">更新成功！</div>";
+            }
+        }
+    }
+    else{
+        model = SiteService.Get(id);
+    }
+    
+}
+@section head{
+    <!--编辑器以及编辑器中本地上传图片-->
+    <script src="/editor/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <script src="/Scripts/uploadimgforeditor.js" type="text/javascript"></script>
+    <!--编辑器以及编辑器中本地上传图片-->
+    }
+<div>
+@model.Language
+    <form method="post" action="">
+    <fieldset>
+        <legend>@(id==0?"添加域":"编辑【"+model.Name+"】")</legend>
+        @Html.Raw(msg)
+        <table width="100%">
+            <tr>
+                <th align="right">
+                    名称：
+                </th>
+                <td>@Html.TextBox("txtName",model.Id !=0 ? model.Name : Request["txtName"], new { @class = "text-three" })<span class="required">*</span>@Html.ValidationMessage("Name")
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    SEO标题：
+                </th>
+                <td>@Html.TextBox("txtWebTitle", model.Id != 0 ? model.WebTitle : Request["txtWebTitle"], new { @class = "text-three" })（Title显示的后缀，如xxxx - <font color="red">海得控制</font>）
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    SEO关键词：
+                </th>
+                <td>@Html.TextBox("txtWebKeywords", model.Id != 0 ? model.WebKeywords : Request["txtWebKeywords"], new { @class = "text-five" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                   SEO描述：
+                </th>
+                <td>@Html.TextBox("txtWebDesc", model.Id != 0 ? model.WebDesc : Request["txtWebDesc"], new { @class = "text-five" })
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                   网站介绍：
+                </th>
+                <td>@Html.TextArea("txtIntroduction", model.Id != 0 ? model.Introduction : Request["txtIntroduction"], new { cols=70,rows=15})
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                   联系我们：
+                </th>
+                <td>@Html.TextArea("txtContactUs", model.Id != 0 ? model.ContactUs : Request["txtContactUs"], new { cols = 70, rows = 15 })
+                </td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">
+                   第三方统计代码：
+                </th>
+                <td>@Html.TextArea("txtThirdCode", model.Id != 0 ? model.ThirdCode : Request["txtThirdCode"], new { cols = 70, rows = 5 })
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    LOGO：
+                </th>
+                <td>@Html.TextBox("txtLogo", model.Id != 0 ? model.Logo : Request["txtLogo"], new { @class = "text-five" })&nbsp;&nbsp;
+                    <a href="javascript:void(0);" onclick="uploadImgForInput('txtLogo');return false;";>上传图片</a>
+                    @if (!model.Logo.IsEmpty()) { 
+                        <br /><img src="@model.Logo" />
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    首页文件：
+                </th>
+                <td>@Hite.Mvc.ExtensionHtmlHelper.RenderIndexFileNameOfSiteDropdownList("ddlIndexFileName", model.Id != 0 ? ((int)model.IndexFileName).ToString() : Request["ddlIndexFileName"])<span class="required">*</span>@Html.ValidationMessage("IndexFileName")
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    语言：
+                </th>
+                <td>@Hite.Mvc.ExtensionHtmlHelper.RenderLanguageDropdownList("ddlLanguage", model.Id != 0 ? ((int)model.Language).ToString() : Request["ddlLanguage"])
+                </td>
+            </tr>
+            <tr>
+                <th></th>
+                <td><input type="submit" value="保存" />&nbsp;&nbsp;<a href="list.cshtml" class="back">返回</a></td>
+            </tr>
+        </table>
+        
+    </fieldset>
+    </form>
+</div>
+@section foot{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //设置编辑器
+            tinyMCE.init({
+                theme: "advanced",
+                mode: "exact",
+                elements: "txtIntroduction,txtContactUs",
+                language: "zh",
+                plugins: "table,insertdatetime,media,-xuimage,contextmenu,paste,inlinepopups",
+                // Theme options
+                theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
+                theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|bullist,numlist,|,outdent,indent,|,link,unlink,image,|,insertdate,inserttime,|,forecolor,backcolor",
+                theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,|,media,code,|,xuimage",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_path: false,
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_resizing: true,
+                theme_advanced_resize_horizontal: false,
+                theme_advanced_resizing_use_cookie: 1,
+                theme_advanced_more_colors: false,
+                theme_advanced_font_sizes: '3,4,5,6,7',
+                theme_advanced_fonts: '楷体_GB2312=楷体_GB2312;黑体=黑体;隶书=隶书;Times New Roman=Times New Roman;Arial=Arial;'
+            });
+        });
+   </script>
+}

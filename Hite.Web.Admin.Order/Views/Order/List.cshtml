@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "订单信息";
+}
+@section header{
+    <script type="text/javascript">
+        function doSearch() {
+            var companyName = $("#txtCompanyName").val();
+            var orderNumber = $("#txtOrderNumber").val();
+            window.location.href = '?c='+encodeURIComponent(companyName)+"&o="+orderNumber;
+        }
+    </script>
+}
+<fieldset>
+    <legend>订单列表</legend>
+    <table>
+        <tr>
+            <td>订单搜索：</td>
+            <td>客户公司名称：</td>
+            <td>@Html.TextBox("txtCompanyName", Controleng.Common.CECRequest.GetQueryString("c"))</td>
+            <td>客户订单号：</td>
+            <td>@Html.TextBox("txtOrderNumber",Controleng.Common.CECRequest.GetQueryString("o"))</td>
+            <td><input type="button" value="搜索" onclick="doSearch();return false;" /></td>
+            <td><a href="Edit" class="btn-add">添加订单</a></td>
+        </tr>
+    </table>
+    <table class="tblist" width="100%">
+        <tr>
+            <th width="5%">流水号</th>
+            <th  width="15%">客户订单号</th>
+            <th width="15%">项目名称</th>
+            <th width="5%">数量</th>
+            <th width="10%">合同交付日期</th>
+            <th width="5%">状态</th>             
+            <th width="15%">客户公司名称</th>         
+            <th>备注</th>  
+            <th width="5%">操作</th>
+        </tr>
+        <tr>
+            @foreach(var item in Model){
+                <tr>
+                    <td align="center">@item.Id</td>
+                    <td align="center">@(item.OrderNumber)@Html.Raw(item.IsDeleted ? "&nbsp;&nbsp;<font color=\"red\">已删除</font>" : string.Empty)</td>                    
+                    <td align="center">@item.ProductName</td>
+                    <td align="center">@item.Amount</td>
+                    <td align="center">@item.DeliveryDate.ToString("yyyy-MM-dd")</td>
+                    <td align="center">@item.Status</td>                    
+                    <td align="center">@item.OrderCompanyName</td>
+                    <td align="center">@item.Remark</td>
+                    <td align="center"><a href="Edit?id=@item.Id">编辑</a></td>
+                </tr>
+            }
+        </tr>
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(Model.PageIndex, Model.PageSize, Model.TotalItemCount, new { @class = "pagerbar" }))
+    <hr />
+    <div>状态说明:  【A-设计】 【B-生产中】 【C-部分完工】 【D-完工待发货】 【E-已发货】 【F-已开票】</div>
+</fieldset>
+

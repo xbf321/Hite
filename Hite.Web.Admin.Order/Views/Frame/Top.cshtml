@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Top";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        html, body, div, img
+        {
+            margin: 0px;
+            padding: 0px;
+        }
+        div
+        {
+            float: left;
+        }
+        body
+        {
+            color: #000000;
+            font-family: "微软雅黑";
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 25px;
+        }
+        .bar4
+        {
+            font-size: 13px;
+            font-weight: bold;
+            height: 30px;
+            padding-left: 10px;
+        }
+        .bar4 li
+        {
+            color: #000000;
+            display: inline;
+            font-family: "微软雅黑";
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 30px;
+            list-style-type: none;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
+        a:link, a:visited
+        {
+            color: #000000;
+            font-family: "微软雅黑";
+            font-size: 13px;
+            line-height: 25px;
+            text-decoration: none;
+        }
+        .button2
+        {
+            cursor: pointer;
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+        #logo
+        {
+            height: 54px;
+            width: 100%;
+        }
+        #nav
+        {
+            width: 100%;
+        }
+        #navleft
+        {
+            width: 70%;
+            float: left;
+            background-image: url(/images/barbg.jpg);
+            height: 36px;
+        }
+        #navleft a:link, #navleft a:hover, #navleft a:visited
+        {
+            color: #FFFFFF;
+            font-size: 15px;
+            line-height: 33px;
+            text-decoration: none;
+        }
+        #navright
+        {
+            width: 30%;
+            float: left;
+            border-bottom: 1px solid rgb(51, 51, 51);
+            height: 34px;
+        }
+        #navright img#barright
+        {
+            float: left;
+        }
+    </style>
+}
+<div id="logo">
+    <img alt="" src="" /></div>
+<div id="nav">
+    <div id="navleft">
+        &nbsp;&nbsp;&nbsp;&nbsp;123123
+    </div>
+    <div id="navright">
+        <img alt="" id="barright" src="/images/barright.jpg" />
+        <div>
+            欢迎您:<span></span></div>
+        <div class="bar4">
+            @*<li>@Html.ActionImageLink("<img alt=\"\" border=\"0\" class=\"button2\" src=\"/Content/images/export.gif\"/>退出登录", "Logout", "Login", new { area = "Frame" }, new { @target = "_top" })</li>
+            <li>@Html.ActionImageLink("<img alt=\"\" border=\"0\" class=\"button2\" src=\"/Content/images/handle.gif\"/>修改密码", "ChangePwd", "Account", new { area = "Account" }, new { @target = "right" })%></li>*@
+        </div>
+    </div>
+</div>

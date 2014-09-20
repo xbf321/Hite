@@ -1,0 +1,91 @@
+﻿@{
+    Layout = "~/Views/Shared/_ChannelLayout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .order-wrapper{padding:10px;}
+        .odd{ background:none repeat scroll 0 0 #F4F4F5;}
+    </style>    
+}
+@section footer{
+    <script type="text/javascript">
+        function searchOrder() {
+            var txtOrderUserNameObj = $('#txtOrderUserName');
+            var txtOrderUserPwdObj = $('#txtOrderUserPwd');
+            if (txtOrderUserNameObj.val() == '') {
+                alert('请输入您的用户名');
+                txtOrderUserNameObj.focus();
+                return;
+            }
+            if (txtOrderUserPwdObj.val() == '') {
+                alert('请输入您的密码');
+                txtOrderUserPwdObj.focus();
+                return;
+            }
+            var param = jQuery.param({ username: txtOrderUserNameObj.val(), userpwd: txtOrderUserPwdObj.val() });
+            txtOrderUserPwdObj.val('');
+            $.ajax({
+                type: 'POST',
+                url: '/order/getlistforajax',
+                data: param,
+                beforeSend: function () {
+                    $('#loading').html('<img src="/images/loading.gif" alt="loading..." />正在载入...');
+                },
+                success: function (data) {
+                    $('#loading').empty();
+                    $("#orderList").empty();
+                    if (data.login == false) {
+                        alert("用户名或密码错误，请重试！");
+                        return;
+                    }
+                    if (data.login) {
+                        if (data.orders.length == 0) {
+                            $('#orderList').html('<tr><td>&nbsp;&nbsp;暂无订单！</td></tr>');
+                            return;
+                        }
+                        //append header
+                        var header = '<tr>' +
+                                    '   <th width="10%">订单号</th>' +
+                                    '   <th width="15%">项目名称</th>' +
+                                    '   <th width="8%">数量</th>' +
+                                    '   <th width="10%">交货日期</th>' +
+                                    '   <th>备注</th>' +
+                                    '   <th width="10%">状态</th>' +
+                                    '</tr>';
+                        $("#orderList").append(header);
+                        $("#orderTemplate").tmpl(data.orders).appendTo("#orderList");
+                    }
+
+                }
+            });
+        }
+    </script>
+}
+<div class="order-wrapper">
+    <table>
+        <tr>
+            <td align="right">用户名：</td>
+            <td>@Html.TextBox("txtOrderUserName")</td>
+        </tr>
+        <tr>
+            <td align="right">密码：</td>
+            <td>@Html.Password("txtOrderUserPwd")</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="button" onclick="searchOrder();" value="查询" /></td>
+        </tr>
+    </table>
+    <script type="text/x-jquery-tmpl" id="orderTemplate">
+        <tr {{if Index % 2 ==0}} {{else}} class="odd" {{/if}}>
+            <td align="center">${OrderNumber}</td>
+            <td align="center">${ProductName}</td>
+            <td align="center">${Amount}</td>
+            <td align="center">${DeliveryDate}</td>
+            <td align="center">${Remark}</td>
+            <td align="center">${Status}</td>
+        </tr>
+    </script>
+    <div id="loading"></div>
+    <table id="orderList" width="100%" class="tblist"></table>
+</div>

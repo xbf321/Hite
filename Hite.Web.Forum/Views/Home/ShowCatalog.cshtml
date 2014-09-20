@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Name;
+}
+@section header{
+    <style type="text/css">
+        
+    </style>
+}
+@Html.Action("RenderNav", "Home", new { ForumInfo = Model, TopicInfo = new Hite.Model.ForumTopicInfo() })
+<div class="cat-wrapper">
+    <div class="cat-title">
+        <h1>@Model.Name<span class="ext">主题：<strong>@(Model.Topics)</strong></span><span
+            class="ext">回帖：<strong>@Model.Replies</strong></span><span class="ext">版主：</span><strong>@ViewBag.ModeratorList</strong></h1>
+    </div>
+    <div class="cat-info">@Html.Raw(Model.Info)</div>
+</div>
+<div class="pgt">
+    <div class="pgtr">
+        @Html.Raw(Hite.Common.PagerBarHelper.Render(ViewBag.TopicList.PageIndex, ViewBag.TopicList.PageSize, ViewBag.TopicList.TotalItemCount, new { @class = "pagebar" }))
+    </div>
+    <div class="pgtl">
+        <a href="/publishthread/@(Model.Id).html" title="发表帖子">
+            <img src="/images/btn-post.png" title="发表帖子" /></a></div>
+    <div class="clear">
+    </div>
+</div>
+<div class="thread">
+    <div class="thread-th">
+        <table cellspacing="0" cellpadding="0">
+            <tr>
+                <th colspan="2" class="title">
+                    主题
+                </th>
+                <td class="by">
+                    作者
+                </td>
+                <td class="num">
+                    回复/查看
+                </td>
+                <td class="by" align="right">
+                    最后发表
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="thread-list">
+        <table summary="forum_86" cellspacing="0" cellpadding="0">
+            @foreach (var topic in ViewBag.TopicList)
+            {
+                <tr>
+                    <td class="icn">
+                        <img src="/images/folder_@(topic.Folder).gif" alt="" />
+                    </td>
+                    <th class="title">
+                        <a href="/thread/@(topic.Id).html" title="@topic.Title">@topic.Title</a>
+                    </th>
+                    <td class="by">
+                        <cite>@topic.Poster</cite><br />
+                        <em><span>@Html.Raw(topic.PostDateTimeString)</span></em>
+                    </td>
+                    <td class="num">@topic.Replies/@topic.Views
+                    </td>
+                    <td class="by" align="right">
+                        <cite>@topic.LastPoster</cite><br />
+                        <em><span title="@(topic.LastPostDateTime)">@topic.LastPostDateTimeString</span></em>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="clear">
+</div>
+<div class="pgt">
+    <div class="pgtr">
+        @Html.Raw(Hite.Common.PagerBarHelper.Render(ViewBag.TopicList.PageIndex, ViewBag.TopicList.PageSize, ViewBag.TopicList.TotalItemCount, new { @class = "pagebar" }))
+    </div>
+    <div class="pgtl">
+        <a href="/publishthread/@(Model.Id).html" title="发表帖子">
+            <img src="/images/btn-post.png" title="发表帖子" /></a></div>
+    <div class="clear">
+    </div>
+</div>

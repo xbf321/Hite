@@ -1,0 +1,429 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{678AD130-EA7F-4DD0-A197-F470628BF13A}</ProjectGuid>
+    <ProjectTypeGuids>{E53F8FEA-EAE0-44A6-8774-FFD645390401};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hite.Web.Controller.Site</RootNamespace>
+    <AssemblyName>Hite.Web.Site</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Controleng.Common">
+      <HintPath>..\Hite.Core\bin\Debug\Controleng.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Goodspeed.Library">
+      <HintPath>..\..\ControlengV2\Controleng.Web.Forum\Bin\Goodspeed.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Assemblies\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationBlocks.Data">
+      <HintPath>..\Assemblies\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages" />
+    <Reference Include="System.Web.Helpers" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ArticleController.cs" />
+    <Compile Include="Controllers\ChannelController.cs" />
+    <Compile Include="Controllers\HiteController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\StaticController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="crossdomain.xml" />
+    <Content Include="favicon.ico" />
+    <Content Include="Global.asax" />
+    <Content Include="google24eac716100db904.html" />
+    <Content Include="Images\404.gif" />
+    <Content Include="Images\banner_search.jpg" />
+    <Content Include="Images\btn-home-bg.gif" />
+    <Content Include="Images\btndownload.jpg" />
+    <Content Include="Images\btnlogin.jpg" />
+    <Content Include="Images\btn_next.jpg" />
+    <Content Include="Images\btn_prev.jpg" />
+    <Content Include="Images\contactus.jpg" />
+    <Content Include="Images\contact_us_banner.jpg" />
+    <Content Include="Images\feedback.jpg" />
+    <Content Include="Images\hiscom\icon_arrow_wihit.jpg" />
+    <Content Include="Images\hiscom\box-bottom.jpg" />
+    <Content Include="Images\hiscom\box-center.jpg" />
+    <Content Include="Images\hiscom\box-top.jpg" />
+    <Content Include="Images\hiscom\menubg.jpg" />
+    <Content Include="Images\hiscom\menuLeft.jpg" />
+    <Content Include="Images\hiscom\menuRight.jpg" />
+    <Content Include="Images\icon_earth.jpg" />
+    <Content Include="Images\icon_search.jpg" />
+    <Content Include="Images\icon_search_zoom.jpg" />
+    <Content Include="Images\icon_search_zoom.png" />
+    <Content Include="Images\jiayi\caseTitle.gif" />
+    <Content Include="Images\jiayi\fangan.jpg" />
+    <Content Include="Images\jiayi\fangan_bg.gif" />
+    <Content Include="Images\jiayi\fangan_title.jpg" />
+    <Content Include="Images\jiayi\leftbar_bg.gif" />
+    <Content Include="Images\jiayi\menubg.jpg" />
+    <Content Include="Images\jiayi\menul.jpg" />
+    <Content Include="Images\jiayi\menur.jpg" />
+    <Content Include="Images\jiayi\more.gif" />
+    <Content Include="Images\jiayi\news_bg.gif" />
+    <Content Include="Images\jiayi\news_left.gif" />
+    <Content Include="Images\jiayi\news_right.gif" />
+    <Content Include="Images\jiayi\news_title.gif" />
+    <Content Include="Images\jiayi\products_title.gif" />
+    <Content Include="Images\jiayi\rightbar_bg.gif" />
+    <Content Include="Images\jiayi\service_title.gif" />
+    <Content Include="Images\jiayi\tool_01.jpg" />
+    <Content Include="Images\jiayi\tool_02.jpg" />
+    <Content Include="Images\jiayi\tool_03.jpg" />
+    <Content Include="Images\jiayi\tool_04.jpg" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\login.jpg" />
+    <Content Include="Images\login_icon.jpg" />
+    <Content Include="Images\register.jpg" />
+    <Content Include="Images\register_tip.jpg" />
+    <Content Include="Images\tb_th_bg.jpg" />
+    <Content Include="Images\distribution\more.gif" />
+    <Content Include="Images\distribution\news_title.gif" />
+    <Content Include="Images\distribution\products_title.gif" />
+    <Content Include="Images\distribution\sale_listtitle.gif" />
+    <Content Include="Images\distribution\sale_rline.jpg" />
+    <Content Include="Images\distribution\service_title.gif" />
+    <Content Include="Images\distribution\stitle.gif" />
+    <Content Include="Images\electric\fangan.jpg" />
+    <Content Include="Images\electric\fangan_bg.gif" />
+    <Content Include="Images\electric\fangan_title.jpg" />
+    <Content Include="Images\electric\more.gif" />
+    <Content Include="Images\electric\news_bg.gif" />
+    <Content Include="Images\electric\news_left.gif" />
+    <Content Include="Images\electric\news_right.gif" />
+    <Content Include="Images\electric\news_title.gif" />
+    <Content Include="Images\electric\tool_01.jpg" />
+    <Content Include="Images\electric\tool_02.jpg" />
+    <Content Include="Images\electric\tool_03.jpg" />
+    <Content Include="Images\electric\tool_04.jpg" />
+    <Content Include="Images\energy\fwtitle.jpg" />
+    <Content Include="Images\energy\ldshow.jpg" />
+    <Content Include="Images\energy\news.jpg" />
+    <Content Include="Images\energy\productshow.jpg" />
+    <Content Include="Images\energy\titlebg.jpg" />
+    <Content Include="Images\icon_dot_orange.jpg" />
+    <Content Include="Images\mechatronics\elect_jiejuefa.jpg" />
+    <Content Include="Images\mechatronics\elect_listico.gif" />
+    <Content Include="Images\mechatronics\elect_prodbt.jpg" />
+    <Content Include="Images\mechatronics\elect_prodtitlebg.jpg" />
+    <Content Include="Images\mechatronics\elect_ptitbg.jpg" />
+    <Content Include="Images\mechatronics\elect_ptitliney.jpg" />
+    <Content Include="Images\mechatronics\more.jpg" />
+    <Content Include="Images\systematic\dongtitle.jpg" />
+    <Content Include="Images\systematic\ittitle.jpg" />
+    <Content Include="Images\systematic\jctitle.jpg" />
+    <Content Include="Images\systematic\newtitle.jpg" />
+    <Content Include="Images\systematic\producttitle.jpg" />
+    <Content Include="Images\systematic\sevtitle.jpg" />
+    <Content Include="Images\systematic\yewtitle.jpg" />
+    <Content Include="Images\systematic\more.jpg" />
+    <Content Include="Images\txtsearchbg.jpg" />
+    <Content Include="Images\txtsearchbg.png" />
+    <Content Include="Images\welcome_orange.jpg" />
+    <Content Include="Images\welcome_red.jpg" />
+    <Content Include="Images\welcome_green.jpg" />
+    <Content Include="Images\hoisting\brandtitle.jpg" />
+    <Content Include="Images\hoisting\news.jpg" />
+    <Content Include="Images\hoisting\producttitle.jpg" />
+    <Content Include="Images\hoisting\sybtitle.jpg" />
+    <Content Include="Images\hoisting\titlebg.jpg" />
+    <Content Include="Images\welcome_brown.jpg" />
+    <Content Include="Images\welcome_blue.jpg" />
+    <Content Include="Images\welcome_red.gif" />
+    <Content Include="Images\www\banner.swf" />
+    <Content Include="Images\distribution\bottombg.gif" />
+    <Content Include="Images\distribution\menubg.gif" />
+    <Content Include="Images\distribution\menul.gif" />
+    <Content Include="Images\distribution\menur.gif" />
+    <Content Include="Images\distribution\caseTitle.gif" />
+    <Content Include="Images\electric\leftbar_bg.gif" />
+    <Content Include="Images\electric\menubg.jpg" />
+    <Content Include="Images\electric\menul.jpg" />
+    <Content Include="Images\electric\menur.jpg" />
+    <Content Include="Images\electric\caseTitle.gif" />
+    <Content Include="Images\electric\rightbar_bg.gif" />
+    <Content Include="Images\hoisting\menubg.jpg" />
+    <Content Include="Images\hoisting\menul.jpg" />
+    <Content Include="Images\hoisting\menur.jpg" />
+    <Content Include="Images\hoisting\caseTitle.jpg" />
+    <Content Include="Images\icon_arrow_purple.gif" />
+    <Content Include="Images\energy\caseTitle.jpg" />
+    <Content Include="Images\energy\menubg.jpg" />
+    <Content Include="Images\energy\menuLeft.jpg" />
+    <Content Include="Images\energy\menuRight.jpg" />
+    <Content Include="Images\cat_list_box_line.jpg" />
+    <Content Include="Images\icon_dot.gif" />
+    <Content Include="Images\icon_more.jpg" />
+    <Content Include="Images\icon_arrow_right.jpg" />
+    <Content Include="Images\icon_arrow_green.gif" />
+    <Content Include="Images\icon_arrow_blue.gif" />
+    <Content Include="Images\icon_arrow_orange.gif" />
+    <Content Include="Images\mechatronics\caseTitle.jpg" />
+    <Content Include="Images\mechatronics\menubg.jpg" />
+    <Content Include="Images\mechatronics\menul.jpg" />
+    <Content Include="Images\mechatronics\menur.jpg" />
+    <Content Include="Images\systematic\menubg.jpg" />
+    <Content Include="Images\systematic\menul.jpg" />
+    <Content Include="Images\systematic\menur.jpg" />
+    <Content Include="Images\systematic\casetitle.jpg" />
+    <Content Include="Images\www\hite_brand1.gif" />
+    <Content Include="Images\www\hite_case.gif" />
+    <Content Include="Images\www\hite_cat_title_bg.jpg" />
+    <Content Include="Images\www\blue_libg.jpg" />
+    <Content Include="Images\www\gray_menubg.jpg" />
+    <Content Include="Images\www\gray_menul.jpg" />
+    <Content Include="Images\www\gray_menuline.jpg" />
+    <Content Include="Images\www\gray_menur.jpg" />
+    <Content Include="Images\www\hite_newbg.gif" />
+    <Content Include="Images\www\hite_cat_sub_list_bg.gif" />
+    <Content Include="Images\www\hite_cat_sub_list_a_icon.gif" />
+    <Content Include="Images\jobsicon.gif" />
+    <Content Include="Images\contactusicon.gif" />
+    <Content Include="Images\www\hite_newlbg.gif" />
+    <Content Include="Images\www\hite_news.gif" />
+    <Content Include="Images\www\hite_newsbottomico.jpg" />
+    <Content Include="Images\www\hite_newsRcico.gif" />
+    <Content Include="Images\www\cat_sub_nav_ico.gif" />
+    <Content Include="Images\feedbackicon.gif" />
+    <Content Include="Images\www\hite_titlebg.gif" />
+    <Content Include="Images\www\hite_zyyw.gif" />
+    <Content Include="Images\xDialog\pop_dialog_border.png" />
+    <Content Include="Images\xDialog\pop_dialog_bottom_left.png" />
+    <Content Include="Images\xDialog\pop_dialog_bottom_right.png" />
+    <Content Include="Images\xDialog\pop_dialog_top_left.png" />
+    <Content Include="Images\xDialog\pop_dialog_top_right.png" />
+    <Content Include="Language\en.xml" />
+    <Content Include="Language\zh_cn.xml" />
+    <Content Include="Scripts\FlashFocus.swf" />
+    <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.jcarousellite_1.0.1.js" />
+    <Content Include="Scripts\jquery.ddsmoothmenu.js" />
+    <Content Include="Scripts\jquery.slide.js" />
+    <Content Include="Scripts\jquery.tmpl.min.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.xDialog.js" />
+    <Content Include="Scripts\math.js" />
+    <Content Include="SiteConfig.xml" />
+    <Content Include="Styles\chengdu.css" />
+    <Content Include="Styles\distribution.css" />
+    <Content Include="Styles\electric.css" />
+    <Content Include="Styles\energy.css" />
+    <Content Include="Styles\global.css" />
+    <Content Include="Styles\hack\distribution.css" />
+    <Content Include="Styles\hack\electric.css" />
+    <Content Include="Styles\hack\energy.css" />
+    <Content Include="Styles\hack\hiscom.css" />
+    <Content Include="Styles\hack\hoisting.css" />
+    <Content Include="Styles\hack\mechatronics.css" />
+    <Content Include="Styles\hack\systematic.css" />
+    <Content Include="Styles\hack\www.css" />
+    <Content Include="Styles\hiscom.css" />
+    <Content Include="Styles\hoisting.css" />
+    <Content Include="Styles\jiayi.css" />
+    <Content Include="Styles\jquery.ddsmoothmenu.css" />
+    <Content Include="Styles\jquery.xDialog.css" />
+    <Content Include="Styles\mechatronics.css" />
+    <Content Include="Styles\systematic.css" />
+    <Content Include="Styles\www.css" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-1.4.4.min.js" />
+    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hite.Core\Hite.Core.csproj">
+      <Project>{7D60724F-3125-4988-A281-97BA8ABD4674}</Project>
+      <Name>Hite.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Category\Show.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_ChannelLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\ShowSingleCategoryInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\ArticleList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\ArticleListWithTopOneImage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\CategoryListWithOneColumn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\ArticleListWithCategory.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Article\Detail.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Contactus\Contactus.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\JobList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\AttachmentList.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Templates\ArticleListWithImage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Feedback\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Search\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Login.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LoginUserControl.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Register.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_AccountLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_NavForAccount.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\Modify.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\SetPwd.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Shared\404.cshtml" />
+    <Content Include="Views\Account\ForumApply.cshtml" />
+    <Content Include="Views\Home\En\WWW.cshtml" />
+    <Content Include="Views\Home\zh_cn\Distribution.cshtml" />
+    <Content Include="Views\Home\zh_cn\Electric.cshtml" />
+    <Content Include="Views\Home\zh_cn\Energy.cshtml" />
+    <Content Include="Views\Home\zh_cn\Hiscom.cshtml" />
+    <Content Include="Views\Home\zh_cn\Hoisting.cshtml" />
+    <Content Include="Views\Home\zh_cn\Mechatronics.cshtml" />
+    <Content Include="Views\Home\zh_cn\Systematic.cshtml" />
+    <Content Include="Views\Home\zh_cn\Test.cshtml" />
+    <Content Include="Views\Home\zh_cn\WWW.cshtml" />
+    <Content Include="Views\Home\En\Distribution.cshtml" />
+    <Content Include="Views\Home\En\Systematic.cshtml" />
+    <Content Include="Views\Home\En\Electric.cshtml" />
+    <Content Include="Views\Home\En\Energy.cshtml" />
+    <Content Include="Views\Home\En\Hiscom.cshtml" />
+    <Content Include="Views\Home\En\Hoisting.cshtml" />
+    <Content Include="Views\Home\En\Mechatronics.cshtml" />
+    <Content Include="Views\Home\zh_cn\Chengdu.cshtml" />
+    <Content Include="Views\Home\En\Chengdu.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\zh_cn\Jiayi.cshtml" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2142</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

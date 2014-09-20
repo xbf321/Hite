@@ -1,0 +1,78 @@
+﻿/* header nav start */
+img {
+border:0 none;
+margin:0;
+padding:0;}
+#nav {background:url(/images/hiscom/menubg.jpg) repeat-x left top;}
+#nav ul li a{font-weight:bold;font-size:14px;color:#000; background-color:transparent; display:block;}
+#nav ul li a:hover{background:#b9b5b5; text-decoration:none;display:block;}
+#nav ul li.current{background:#b9b5b5;display:block;}
+#nav ul li.l{background:url(/images/hiscom/menuLeft.jpg) no-repeat left top;}
+#nav ul li.r{background:url(/images/hiscom/menuRight.jpg) no-repeat right top;}
+/*sub child node start */
+#nav ul li ul li{display: list-item;z-index:110;background:url(/images/hiscom/menubg.jpg) repeat-x left; line-height:28px;width:115px;}
+#nav ul li ul li a{color:#212121;display: block;font-size:12px;font-weight:normal;}
+#nav ul li ul li ul li{width:160px;}
+/*sub child node end */
+/*header nav end*/
+
+/*channel page container*/
+.section-wrapper{margin-bottom:10px;}
+
+/*channel page left start*/
+.section-column{float:left;width:205px; display:inline;}
+.section-column h4{ background:url("/images/energy/caseTitle.jpg") no-repeat scroll left top transparent;color:#fff; font-size:14px;font-weight:bold; line-height:33px; text-align:center;}
+
+.cat-sub-list{ background:url("/images/cat_list_box_line.jpg") no-repeat scroll right top transparent;}
+.cat-sub-list h3{ background:url("/images/icon_arrow_right.jpg") no-repeat scroll 20px center transparent;border-bottom:1px solid #CCCCCC;font-weight:bold;padding-left:30px; line-height:32px;color:#0066a4;}
+.cat-sub-list ul{padding-left:20px;}
+.cat-sub-list ul li{ background-image:none;border-width:0; line-height:30px;}
+
+.cat-sub-list h3 a{color:#0066a4;}
+.cat-sub-list h3.current a{color:#d81738;font-weight:600;}
+.cat-sub-list ul li.current a{color:#d81738;font-weight:600;}
+
+/*channel page left end*/
+
+/*channel page right start*/
+.section-content{float:left;width:770px;background-color:#fff;}
+.page-round-top{ background:none repeat scroll 0 0 #969999;height:7px;}
+.page-content{ margin-top:10px;}
+
+/*page-sub-nav*/
+.page-sub-nav{height:18px;border-bottom:1px solid #D5D5D5; margin-left:10px;padding:10px 0; text-indent:30px;background:url("/images/hiscom/icon_arrow_wihit.jpg") no-repeat scroll 12px 13px transparent;}
+.page-sub-nav h5{}
+/*channel page right end*/
+
+.template-article-list a{color:#969999;}
+.template-article-list dt{width:600px;padding-left:15px;border:0;background:url("/images/icon_dot.gif") no-repeat scroll 5px center;}
+.template-article-list dt.bg{background: #f4f0f0 url("/images/icon_dot.gif") no-repeat scroll 5px center;}
+.template-article-list dt.bg a{color:#8e8e8e;}
+.template-article-list dd{border:0;width:120px;color:#8e8e8e;}
+.template-article-list dd.bgdd{background:none repeat scroll 0 0 #f4f0f0;}
+
+/*template-article-detail*/
+.article-detail {padding:0 30px;}
+.article-detail h1{font-size:18px;font-weight:bold;text-align:center;height:22px;line-height:22px;}
+.article-detail .info{text-align:center;border-bottom:1px dashed #DBDBDB; display:block; line-height:20px;padding-bottom:4px;}
+.article-detail .text{line-height:22px;padding-top:8px;}
+
+
+.template-article-list-top-image {
+height:125px;
+margin-bottom:10px;
+overflow:hidden;
+padding:0 25px;}
+.template-article-list-top-image .remark {
+color:#7E7D7D;
+line-height:22px;
+margin-bottom:5px;
+margin-top:2px;
+text-indent:28px;}
+.template-show-single-cat {
+margin-left:20px;
+padding:0 20px;
+width:710px;}
+
+
+

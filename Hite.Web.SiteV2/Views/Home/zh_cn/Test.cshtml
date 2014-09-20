@@ -1,0 +1,35 @@
+﻿@{
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Test</title>
+     @*<script src="http://www.hite.com.cn.3721.com/static/js?src=scripts/jquery-1.4.4.min.js,scripts/jquery.jcarousellite_1.0.1.js,scripts/jquery.ddsmoothmenu.js,scripts/jquery.xDialog.js,scripts/jquery.slide.js,/scripts/jquery.tmpl.min.js,/scripts/jquery.cookie.js"></script>*@
+     <script src="http://a.tbcdn.cn/??s/kissy/1.1.6/kissy-min.js,p/global/1.0/global-min.js?t=2011092320100214.js" ></script>
+
+</head>
+<body>
+<span id="msg"></span>
+<script type="text/javascript">
+    (function () {
+        /*$.getScript('http://www.hite.com.cn.3721.com/static/loginapi?' + Math.random(), function () {
+        var s = '';
+        for (var item in userCookie) {
+        s += item + ':' + userCookie[item];
+        }
+        $("#msg").html(s);
+        });*/
+        KISSY.getScript("http://www.hite.com.cn.3721.com/static/loginapi?" + Math.random(), function () {
+            var s = '';
+            for (var item in userCookie) {
+                s += item + ':' + userCookie[item];
+            }
+            document.getElementById("msg").innerHTML = s;
+        });
+    })();
+</script>
+@*<iframe src="http://www.hite.com.cn.3721.com/static/loginapi?"></iframe>*@
+</body>
+</html>

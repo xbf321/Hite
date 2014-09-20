@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "机电一体化首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#7f0019;border:1px solid #7f0019;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#7f0019;}
+        
+        .wrap1-col1{float:left;width:690px;}
+        .wrap1-col2{float:right; line-height:22px;padding-top:45px; width:270px; background:url("/images/welcome_red.jpg") no-repeat scroll left 10px transparent;}
+
+        .wrap2{border-bottom:2px solid #E2DAE0; background:url("/images/mechatronics/elect_prodtitlebg.jpg") repeat-x scroll left top transparent;}
+        .products{float:left; padding-top:4px; width:450px; background:url("/images/mechatronics/elect_ptitliney.jpg") no-repeat scroll right 4px transparent;}
+        .products h3{ height:22px; margin:0 4px; padding:8px 0 0 10px; background:url("/images/mechatronics/elect_ptitbg.jpg") repeat-x scroll left top transparent;}
+        .products-content li{float:left; height:74px; overflow:hidden; padding-top:3px; padding-left:15px; width:190px;}
+        .product-img{float:left;}
+        .product-link{float:left;width:80px;padding:5px 0 0 5px;}
+
+        .solution{float:left; padding-top:4px;width:527px;}
+        .solution h3{ height:22px;padding:8px 0 0 10px; background:url("/images/mechatronics/elect_ptitbg.jpg") repeat-x scroll left top transparent;}
+        .solution-content{padding:10px;}
+        .s-c-img{float:left;width:160px;}
+        .s-c-news-list{float:left;}
+        .solution-content .more{float:right;}
+		.s-c-img{padding:10px 8px;}
+		ul li {padding-left:10px;line-height:20px;color:#853b38}
+ </style>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <div class="focusimg" id="slide">
+            <!--轮播广告-->
+            <ol>
+                @foreach (var item in ViewBag.FocusImageList)
+                { 
+                    <text><li><a href="@item.Url" target="_blank" title="@item.Title">
+                    <img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+                }
+            </ol>
+        </div>
+        <script type="text/javascript">
+            $("#slide").hiteSlide({ width: 702, height: 301, timer: 4000 });
+        </script>
+    </div>
+    <div class="wrap1-col2">
+       @Html.Raw(PageData["SiteInfo"].Introduction)
+    </div>
+</div>
+<div class="blankb"></div>
+<div class="wrap2 clearfix">
+    <div class="products">
+        <h3><img src="/images/mechatronics/en/elect_prodbt.jpg"></h3>
+        <div class="products-content clearfix">
+            <ul>
+                @foreach(var item in ViewBag.Products){
+                    <li>
+                    <p class="product-img">@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item,"<img src=\""+item.ImageUrl+"\" alt=\""+item.Name+"\" width=\"97\" height=\"64\" />"))</p>
+                    <p class="product-link">@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item))</p></li>
+                }
+            </ul>
+            <div class="clear"></div>
+             <div class="more" style="float:right;margin-right:20px;"><a href="/en/channel/588.html"><img src="/images/mechatronics/more.jpg" width="35" height="6" /></a></div>
+        </div>
+    </div>
+    <div class="solution">
+        <h3><img src="/images/mechatronics/en/elect_jiejuefa.jpg" /></h3>
+        <div class="solution-content">
+            <div class="s-c-img">
+                @foreach (var item in ViewBag.SolutionTopOneImg) { 
+                    <p><a href="@item.Url" title="@item.Title"><img src="@item.ImageUrl" width="153" height="111" title="@item.Title" /></a></p>
+                }
+            </div>
+            <div class="s-c-news-list">
+            <ul>
+                @foreach (var item in ViewBag.Categories) { 
+                    <li>[<span class="cat-name">@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item))</span>] 
+                        @foreach(var article in item.ArticleList){
+                            <span class="cat-name"><a href="@article.Url" target="_blank" title="@article.Title">@article.Title</a></span>
+                        }
+                    </li>
+                }
+          </ul>
+          </div>
+          <div class="clear"></div>
+          <div class="more"><a href="/en/channel/593.html"><img src="/images/mechatronics/more.jpg" width="35" height="6" /></a></div>
+
+        </div>
+    </div>
+</div>
+<div class="blankb"></div>
+

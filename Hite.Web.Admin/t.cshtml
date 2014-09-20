@@ -1,0 +1,26 @@
+﻿
+@{
+    //log4net.ILog Logger = log4net.LogManager.GetLogger("Test");
+    //Logger.Error("Error");
+    string cookieValue = Controleng.Common.Utils.GetCookie("pa");
+    if (!string.IsNullOrEmpty(cookieValue))
+    {
+
+        Response.Write(Goodspeed.Library.Security.DESCryptography.Decrypt(cookieValue, System.Configuration.ConfigurationManager.AppSettings["DESKey"]));
+    }
+    //Response.Write(PagesAdminContext.Current.UserName);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>123123</title>
+    <script src="Scripts/jquery-1.4.4.min.js" type="text/javascript"></script>
+    <script src="Scripts/jquery-ui-1.8.12.custom.min.js" type="text/javascript"></script>
+    <link href="Styles/ui-lightness/jquery-ui-1.8.12.custom.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript">
+    </script>
+</head>
+<body>
+
+</body>
+</html>

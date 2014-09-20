@@ -1,0 +1,279 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@using System.Web.Mvc;
+@using Hite.Mvc;
+@{
+    Page.Title = "添加或编辑分类";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    int id = CECRequest.GetQueryInt("id", 0);
+    int siteId = CECRequest.GetQueryInt("siteId", 0);
+
+    var errors = false;
+    var msg = string.Empty;
+    var siteList = Hite.Services.SiteService.List();    
+    if (siteId == 0 || (siteList.Where(m => m.Id == siteId).Count() == 0))
+    {
+        <text>
+            <div class="msg">先选择所属域：
+                <select id="dlSiteList" onchange="window.location.href = '?siteId='+this.value">
+                    <option value="-1">==请选择域==</option>
+                    @foreach (var item in siteList)
+                    {
+                        if (PagesAdminContext.Current.IsInSites(item.Id))
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+        </text>
+        return;
+    }
+    ///检查是否有权限
+    if(!PagesAdminContext.Current.IsInSites(siteId)){
+        Response.Write(PagesAdminContext.NOTAUTHTEXT);
+        Response.End();
+    }
+
+    
+    var siteName = siteList.Where(m => m.Id == siteId).SingleOrDefault().Name;
+    System.Web.Mvc.FormCollection form = new System.Web.Mvc.FormCollection(this.Request.Unvalidated().Form);
+
+    CategoryInfo model = null;
+    if (IsPost)
+    {
+        model = new CategoryInfo();
+        model.Id = id;
+        model.SiteId = siteId;
+        model.Name = form["txtTitle"];
+        model.Sort = TypeConverter.StrToInt(form["txtSort"]);
+        model.ParentId = form["ddlSiteList"].AsInt();
+        model.ParentIdList = "0";
+        model.Introduction = form["txtIntroduction"];
+        model.LinkUrl = form["txtLinkUrl"];
+        model.Alias = form["txtEnglishName"];
+        model.TemplateType = form["ddlTemplates"].AsInt();
+        model.IsShowFirstChildNode = form["cbIsShowFirstChildNode"] == "on" ? true : false ;
+        model.BannerAdImageUrl = form["txtBannerAdImageUrl"];
+        model.ImageUrl = form["txtImageUrl"];
+        model.IsDeleted = form["cbIsDeleted"] == "on" ? true : false;
+        model.IsEnabled = form["cbIsEnabled"] == "on" ? true : false;
+
+        if (model.Name.IsEmpty())
+        {
+            ModelState.AddError("Title", "请输入类别名称");
+            errors = true;
+        }
+        if(CategoryService.ExistsName(model.SiteId,id,model.Name,model.ParentId)){
+            ModelState.AddError("Title", "类别名称重复");
+            errors = true;
+        }
+        if(!string.IsNullOrEmpty(model.Alias)){
+            //判读是否重复
+            bool bExists = CategoryService.ExistsAlias(siteId,model.Id,model.Alias);
+            if(bExists){
+                ModelState.AddError("Alias", "英文名称重复");
+                errors = true;            
+            }
+        }
+        if (!errors)
+        {
+            if (model.ParentId != 0)
+            {
+                var parentCategoryInfo = CategoryService.Get(model.ParentId);
+                model.ParentIdList = string.Format("{0},{1}", parentCategoryInfo.ParentIdList, model.ParentId);
+            }
+            CategoryService.Create(model);
+            if(id == 0){
+                msg = string.Format("<div class=\"msg\">保存成功！继续&nbsp;&nbsp;<a href=\"?siteId={0}\">添加</a>&nbsp;&nbsp;或&nbsp;&nbsp;<a href=\"list.cshtml?siteId={0}\">返回</a></div>", siteId);
+            }else{
+                msg = string.Format("<div class=\"msg\">更新成功！继续&nbsp;&nbsp;<a href=\"?siteId={0}\">添加</a>&nbsp;&nbsp;或&nbsp;&nbsp;<a href=\"list.cshtml?siteId={0}\">返回</a></div>", siteId);
+            }
+        }
+    }
+    else
+    {
+        model = CategoryService.Get(id);
+    }
+}
+@section head{
+    <!--编辑器以及编辑器中本地上传图片-->
+    <script src="/editor/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <script src="/Scripts/uploadimgforeditor.js" type="text/javascript"></script>
+    <!--编辑器以及编辑器中本地上传图片-->
+}
+<form action="" method="post">
+<fieldset>
+    <legend>添加或编辑分类</legend>
+    @Html.Raw(msg)
+    <table width="100%">
+        <tr>
+            <th align="right">
+                所属域：
+            </th>
+            <td>
+                <b>@siteName</b>
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                父级：
+            </th>
+            <td>
+                @CategoryService.RenderDowndownListTreeForAdmin(siteId, "ddlSiteList", model.Id == 0 ? Request["ddlSiteList"] : model.ParentId.ToString()) &nbsp;&nbsp;如果选择【根路径】，则所添加的分类属于【根级别分类】
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                名称：
+            </th>
+            <td>@Html.TextBox("txtTitle", model.Id == 0 ? Request["txtTitle"] : model.Name, new { @class = "text-five" })<span class="required">*</span>@Html.ValidationMessage("Title")
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                类别图片：
+            </th>
+            <td>@Html.TextBox("txtImageUrl", model.Id == 0 ? Request["txtImageUrl"] : model.ImageUrl, new { @class = "text-five" })&nbsp;&nbsp;
+            <a href="javascript:void(0);" onclick="uploadImgForInput('txtImageUrl');return false;";>上传图片</a>
+            </td>
+        </tr>        
+        <tr>
+            <th align="right" valign="top">
+                描述：
+            </th>
+            <td>@Html.TextArea("txtIntroduction", model.Id == 0 ? Request["txtIntroduction"] : model.Introduction, new { @rows = "6", @cols = 60 })
+            </td>
+        </tr>
+               
+        <tr>
+            <th align="right">
+                模板：
+            </th>
+            <td>
+            @Hite.Mvc.ExtensionHtmlHelper.RenderTemplatesDropdownList("ddlTemplates",model.Id == 0 ? Request["ddlTemplates"] : model.TemplateType.ToString())
+            </td>
+        </tr>
+        <tr>
+            <th align="right" valign="top">扩展属性：</th>
+            <td>
+                <div id="tabs">
+                    <ul>
+                        <li><a href="#tabs-1">别名</a></li>
+                        <li><a href="#tabs-2">快速链接</a></li>
+                        <li><a href="#tabs-3">排序</a></li>
+                        <li><a href="#tabs-4">Banner广告链接</a></li>
+                    </ul>
+                    <div id="tabs-1">
+                        <table>
+                            <tr>
+                                <th align="right">
+                                   别名：
+                                </th>
+                                <td>@Html.TextBox("txtEnglishName", model.Id == 0 ? Request["txtEnglishName"] : model.Alias )@Html.ValidationMessage("Alias")<br />
+                                <font color="red">必须为英文，不能有含有“/”</font>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-2">
+                        <table>
+                            <tr>
+                                <th align="right">
+                                    快速链接：
+                                </th>
+                                <td>@Html.TextBox("txtLinkUrl", model.Id == 0 ? Request["txtLinkUrl"] : model.LinkUrl, new { @class = "text-five" })<br />
+                                    如果此值不为空，则前台页面的分类链接就不是程序自动生成的
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-3">
+                        <table>
+                            <tr>
+                            <th align="right">
+                                排序：
+                            </th>
+                            <td>@Html.TextBox("txtSort", model.Id == 0 ? (Request["txtSort"] == null ? "0" : Request["txtSort"]) : model.Sort.ToString())
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-4">
+                        <table>
+                            <tr>
+                                <th align="right">
+                                    Banner广告链接：
+                                </th>
+                                <td>@Html.TextBox("txtBannerAdImageUrl", model.Id == 0 ? Request["txtBannerAdImageUrl"] : model.BannerAdImageUrl, new { @class = "text-five" })&nbsp;&nbsp;
+                                <a href="javascript:void(0);" onclick="uploadImgForInput('txtBannerAdImageUrl');return false;";>上传图片</a><br />
+                                <font color="red">只针对根节点，如果是子栏目则没有作用</font>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </td>
+        </tr> 
+        <tr>
+            <th align="right" valign="top">
+             扩展属性2：   
+            </th>
+            <td>
+                <table>
+                    <tr>
+                        <td>@Html.CheckBox("cbIsShowFirstChildNode", model.Id == 0 ? (Request["cbIsShowFirstChildNode"] == "on" ? true : false) : model.IsShowFirstChildNode)是否显示此节点下的第一个子节点内容</td>
+                    </tr>
+                    <tr>
+                    <td>@Html.CheckBox("cbIsEnabled", model.Id == 0 ? (string.IsNullOrEmpty(Request["cbIsEnabled"]) == true ? true : (Request["cbIsEnabled"] == "on" ? true:false)) : model.IsEnabled)是否启用（如果不启用，则前台不显示）</td>
+                        
+                    </tr>
+                    <tr>
+                        <td>@Html.CheckBox("cbIsDeleted", model.Id == 0 ? (Request["cbIsDeleted"] == "on" ? true : false) : model.IsDeleted)是否删除（如果删除，则前台不管是否启用，都不显示）</td>
+                    </tr>
+                </table>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" value="保存" />&nbsp;&nbsp;<a href="list.cshtml?siteId=@siteId" class="btn-back">返回</a>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+</form>
+@section foot{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#tabs").tabs();
+                tinyMCE.init({
+                    theme: "advanced",
+                    mode: "exact",
+                    elements: "txtIntroduction",
+                    width: "800",
+                    height: "380",
+                    language: "zh",
+                    plugins: "table,insertdatetime,media,-xuimage,contextmenu,paste,inlinepopups",
+                    // Theme options
+                    theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
+                    theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|bullist,numlist,|,outdent,indent,|,link,unlink,image,|,insertdate,inserttime,|,forecolor,backcolor",
+                    theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,|,media,code,|,xuimage",
+                    theme_advanced_toolbar_location: "top",
+                    theme_advanced_toolbar_align: "left",
+                    theme_advanced_path: false,
+                    theme_advanced_statusbar_location: "bottom",
+                    theme_advanced_resizing: true,
+                    theme_advanced_resize_horizontal: false,
+                    theme_advanced_resizing_use_cookie: 1,
+                    theme_advanced_more_colors: false,
+                    theme_advanced_font_sizes: '3,4,5,6,7',
+                    theme_advanced_fonts: '楷体_GB2312=楷体_GB2312;黑体=黑体;隶书=隶书;Times New Roman=Times New Roman;Arial=Arial;'
+                });
+        });
+    </script>
+}

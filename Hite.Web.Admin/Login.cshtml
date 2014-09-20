@@ -1,0 +1,96 @@
+﻿@using Hite.Services;
+@{
+    if(IsPost){
+        var errors = false;
+        string userName = Request["txtUserName"];
+        string userPwd = Request["txtUserPwd"];
+        if(string.IsNullOrEmpty(userName)){
+            errors = true;
+            ModelState.AddError("username","请输入您的用户名！");
+        }
+        if(string.IsNullOrEmpty(userPwd)){
+            errors = true;
+            ModelState.AddError("userpwd","请输入您的密码！");
+        }
+        if(!errors && ModelState.IsValid){
+            if (AdminService.IsExistsUser(userName))
+            {
+                var userInfo = AdminService.Get(userName, true);
+                if(userInfo.UserPwd != Controleng.Common.Utils.MD5(userPwd)){
+                    errors = true;
+                    ModelState.AddError("userpwd","密码不正确！");
+                }else if(!userInfo.IsEnabled){
+                    errors = true;
+                    ModelState.AddError("notenabled", "此账号已禁用,请联系管理员！");
+                }else{
+                    //Success wirte cookie
+
+                   string roles = String.Join(",", userInfo.Roles.Select(m => m.Name + "|" + m.SiteId).ToArray());                    
+                    string cookieValue = string.Format("{0}#{1}",userName,roles);
+                    cookieValue = Goodspeed.Library.Security.DESCryptography.Encrypt(cookieValue, System.Configuration.ConfigurationManager.AppSettings["DESKey"]);
+                    Controleng.Common.Utils.WriteCookie("pa",cookieValue,60*5);
+
+                    Response.Redirect("/");
+                }
+            }
+            else {
+                errors = true;
+                ModelState.AddError("username","用户名不存在！");
+            }
+        }
+    }
+    
+    }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>用户登录 - 海得管理平台</title>
+    <link href="/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        .login
+        {
+            width: 300px;
+            margin: 0 auto;
+            padding:10px;
+        }
+    </style>
+    <script type="text/javascript">
+        if (top.location != self.location) {
+            top.location = self.location;
+        }
+    </script>
+</head>
+<body>
+    <div class="login">
+        <fieldset>
+            <legend>用户登录</legend>
+            @Html.ValidationSummary()
+            <form method="post">
+            <table>
+                <tr>
+                    <td align="right">
+                        Email：
+                    </td>
+                    <td>@Html.TextBox("txtUserName", Request["txtUserName"])
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        密码：
+                    </td>
+                    <td>@Html.Password("txtUserPwd")
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" value="登录" />
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </fieldset>
+    </div>
+</body>
+</html>

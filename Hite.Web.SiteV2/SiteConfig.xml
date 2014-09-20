@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--优先选择url，如果不匹配，再次找area-->
+<sites>
+    <!--WWW-->
+    <items url="www.hite.com.cn.3721.com" siteid="1" ensiteid="9" />
+    <items url="www.hite.cn" siteid="1" ensiteid="9"/>
+    <items url="www.hite.com.cn" siteid="1" ensiteid="9"/>
+    <!--起重-->
+    <items url="hoisting.hite.com.cn" siteid="2" ensiteid="0"/>
+    <!--成套-->
+    <items url="assembling.hite.com.cn" siteid="3" ensiteid="0"/>
+    <!--新能源-->
+    <items url="www.hite-energy.com" siteid="4" ensiteid="0" />
+    <items url="energy.hite.com.cn" siteid="4" ensiteid="0" />
+    <!--机电一体化-->
+    <items url="automation.hite.com.cn" siteid="5" ensiteid="0" />
+    <!--系统-->
+    <items url="system.hite.com.cn" siteid="6" ensiteid="0" />
+    <!--电气-->
+    <items url="electric.hite.com.cn" siteid="7" ensiteid="0" />
+    <!--海思科-->
+    <items url="www.hi-scom.com" siteid="8" ensiteid="0" />
+    <items url="hi-scom.hite.com.cn" siteid="8" ensiteid="0" />
+</sites>

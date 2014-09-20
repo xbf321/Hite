@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>海得后台管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        html
+        {
+            overflow-x: hidden;
+        }
+    </style>
+    <script type="text/javascript">
+        function resize(obj) {
+            if (obj.offsetHeight > 625 && window.screen.availHeight > 716) {
+                obj.parentNode.cols = "180,15,*";
+            }
+        }
+        window.onresize = function () {
+            resize(document.getElementById("left"));
+        }
+    </script>
+</head>
+<frameset rows="*,25" cols="*" frameborder="NO" border="0" framespacing="0">
+    @*<frame src="/Frame/Top" name="topFrame" scrolling="NO" noresize="noresize" />*@
+    <frameset cols="180,15,*" border="1">
+        <frame name="left" id="left" src="/Frame/Left.cshtml" onload="resize(this);" />
+        <frame id="center" src="/Frame/Center.cshtml" />
+        <frame name="right" id="right" src="/Frame/Right.cshtml" />
+        <noframes>
+            <body>
+                <p>
+                    此网页使用了框架，但您的浏览器不支持框架。</p>
+            </body>
+        </noframes>
+    </frameset>
+    <frame src="/Frame/Bottom.cshtml" scrolling="NO" border="0" noresize="noresize" />
+</frameset>
+</html>

@@ -1,0 +1,24 @@
+﻿@{
+    Page.Title = "导航";
+    Layout = "~/Shared/_Layout.cshtml";
+    var menuHtml = SiteMapHelper.TreeView();
+}
+@section header{
+    <link href="/Styles/jquery.treeview.css" rel="stylesheet" />
+    <script src="/Scripts/jquery.treeview.js" type="text/javascript"></script>
+}
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#menu>ul").treeview({
+                animated: true,
+                persist: "location",
+                collapsed: true,
+                unique: false
+            });
+        });
+    </script>
+}
+<div id="menu" class="treeview-black treeview">
+    @menuHtml
+</div>

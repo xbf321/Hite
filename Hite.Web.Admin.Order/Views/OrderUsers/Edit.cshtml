@@ -1,0 +1,41 @@
+﻿@model Hite.Model.OrderUserInfo
+@{
+    ViewBag.Title = "编辑或添加";
+}
+<fieldset>
+    <legend>编辑或添加订单用户</legend>
+    @Html.ValidationSummary()
+    <form action="" method="post">
+    <table>
+        <tr>
+            <th align="right">
+                订单用户名：
+            </th>
+            <td>@Html.TextBoxFor(model => model.UserName)
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                密码：
+            </th>
+            <td>@Html.TextBoxFor(model => model.UserPwd)
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                客户公司名称：
+            </td>
+            <td>@Html.TextBoxFor(model => model.CompanyName)
+            </th>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+                <input type="submit" value="保存" class="" />&nbsp;&nbsp;<a href="list" class="btn-back">返回</a>
+            </td>
+        </tr>
+    </table>
+    </form>
+</fieldset>

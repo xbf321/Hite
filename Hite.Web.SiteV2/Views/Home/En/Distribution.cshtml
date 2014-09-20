@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "海得成套";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#204e5e;border:1px solid #204e5e;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#204e5e;}
+        
+        .wrap1-col1{float:left;width:700px;}
+        .wrap1-col2{float:right; line-height:22px;padding-top:45px; width:270px; background:url("/images/welcome_brown.jpg") no-repeat scroll left 10px transparent;}
+
+        .news{float:left;width:700px;}
+        .news-title{ height:32px;}
+        .news-title .l{ height:32px; width:13px; background:url("/images/electric/news_left.gif") no-repeat scroll left top transparent; float:left;}
+        .news-title .bg{ background:url("/images/electric/news_bg.gif") repeat-x scroll left top transparent;float:left; height:32px; width:674px;}
+        .news-title .r{ background:url("/images/electric/news_right.gif") no-repeat scroll left top transparent;float:left; height:32px; width:13px;}
+        .news-title-img{ display:block; float:left; padding-top:7px;}
+        .news-title-more{ display:block; float:right; padding-top:12px;}
+        .news-content{border:1px solid #DBDBDB;}
+        .news-top-one{ border-bottom:1px dashed #ACACAC; margin:0 10px;}
+        .news-top-one-img{float:left;}
+        .news-top-one-content{float:left;width:500px;}
+
+        .news-list dt{float:left; line-height:24px; padding-left:18px; width:330px; background:url("/images/icon_dot.gif") no-repeat scroll 10px center transparent; overflow:hidden;}
+
+        .solution-title{ background:url("/images/electric/fangan.jpg") repeat-x scroll left bottom transparent; height:23px;}
+        .solution-content{border:1px solid #E7E7E7;width:978px; border-width:0 1px 1px;}
+        .solution-content li{ display:inline; float:left; height:176px; margin:10px 0 10px 18px;width:142px; background:url("/images/electric/fangan_bg.gif") no-repeat scroll left top transparent;}
+        .solution-content li img{padding:8px;}
+        .solution-content li p.title{ margin-top:2px; padding-left:18px; background:url("/images/icon_dot.gif") no-repeat scroll 10px center transparent;}
+
+        .tools{ float:right;width:270px;}
+        .tools li{ margin-bottom:4px;}
+		.news-top-one-content h3 {
+font-size:14px;
+font-weight:600;
+padding:12px 12px;}
+    </style>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <div class="focusimg" id="slide">
+            <!--轮播广告-->
+            <ol>
+                @foreach (var item in ViewBag.FocusImageList)
+                { 
+                    <text><li><a href="@item.Url" target="_blank" title="@item.Title">
+                        <img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+                }
+            </ol>
+        </div>
+        <script type="text/javascript">
+            $("#slide").hiteSlide({ width: 702, height: 280, timer: 4000 });
+        </script>
+    </div>
+    <div class="wrap1-col2">
+        @Html.Raw(PageData["SiteInfo"].Introduction)
+    </div>
+</div>
+<div class="blankb"></div>
+<div class="wrap2 clearfix">
+    <div class="news">
+        <div class="news-title">
+            <ul>
+                <li class="l"></li>
+                <li class="bg">
+                <span class="news-title-img"><img src="/images/electric/en/news_title.gif" /></span>
+                <span class="news-title-more"><img src="/images/electric/more.gif" /></span></li>
+                <li class="r"></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="news-content">
+        @{
+            var news = ViewBag.News;
+            if (news.Count > 0)
+            {                
+                <text>
+                    <div class="news-top-one clearfix">
+                        <div class="news-top-one-img">
+                            <img src="@news[0].ImageUrl" width="103" height="152" />
+                        </div>
+                        <div class="news-top-one-content">
+                            <h3><a href="@news[0].Url" title="@news[0].Title">@news[0].Title</a></h3>
+                            <p>@news[0].Remark</p>
+                        </div>
+                    </div>
+                </text>
+                news.RemoveAt(0);
+            }
+            
+            }
+            <div class="blankb"></div>
+            <div class="news-list clearfix">
+                <dl>
+                    @foreach (var item in news)
+                    {
+                    <dt><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title, 30)</a></dt>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+    <div class="tools">
+        <ul>
+            <li><a href="/channel/339.html"><img src="/images/electric/en/tool_01.jpg" width="260" height="75" /></a></li>
+            <li><img src="/images/electric/en/tool_02.jpg" width="270" height="48" /></li>
+            <li><a href="/channel/xzxx.html"><img src="/images/electric/en/tool_03.jpg" width="270" height="51" /></a></li>
+            <li><a href="/channel/zhishi.html"><img src="/images/electric/en/tool_04.jpg" width="270" height="51" /></a></li>
+          </ul>
+    </div>
+</div>
+<div class="blankb"></div>
+<div class="solution">
+    <div class="solution-title">
+        <img src="/images/electric/en/fangan_title.jpg"/>
+    </div>
+    <div class="solution-content clearfix">
+        <ul>
+        @foreach (var item in ViewBag.Categories) { 
+            <li>
+            @Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item, "<img src=\""+item.ImageUrl+"\" alt=\""+item.Name+"\" width=\"123\" height=\"88\" />"))
+              @foreach(var article in item.ArticleList){
+                <p class="title"><a href="@article.Url" title="@article.Title">@Goodspeed.Common.CharHelper.Truncate(article.Title,12)</a></p>
+              }
+            </li>
+        }
+    </ul>
+    </div>
+</div>
+<div class="blankb"></div>
+
+
+

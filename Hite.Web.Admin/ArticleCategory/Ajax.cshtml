@@ -1,0 +1,72 @@
+﻿@using System.Text;
+@using Controleng.Common;
+@{
+    var method = string.Empty ;
+    if(IsPost){        
+        
+        method = Request.Form["m"];
+
+
+        //删除，不是真正的删除
+        if(method.ToLower() == "delete"){
+            int id = TypeConverter.StrToInt(Request.Form["id"]);
+            Hite.Services.CategoryService.Delete(id);
+        }
+        //还原
+        if(method.ToLower() == "restore"){
+            int id = TypeConverter.StrToInt(Request.Form["id"]);
+            Hite.Services.CategoryService.Restore(id);
+        }
+        
+        //获得TreeViewHtml
+        if (method.ToLower() == "treehtml")
+        {
+            var siteId = TypeConverter.StrToInt(Request.Form["siteId"]);
+            Response.Write(Hite.Services.CategoryService.RenderTreeViewForAdminWithEdit(siteId));
+        }
+        
+        //根据siteId取得此域下的所有一级分类
+        if(method.ToLower() == "getrootcatsbysiteid"){
+            Response.ContentType = "application/json";
+            int siteId = TypeConverter.StrToInt(Request.Form["siteId"]);
+            var list = Hite.Services.CategoryService.ListBySiteId(siteId).Where(p => p.ParentId == 0 && p.IsDeleted == false);
+            StringBuilder sb = new StringBuilder("{\"count\":"+list.Count()+",\"cats\":[");
+            var i = 0;
+            foreach(var item in list){
+                sb.Append("{");
+                sb.AppendFormat("\"id\":{0},\"pid\":{1},\"name\":{2}", item.Id, item.ParentId, Json.Encode(string.Format("{0}{1}", item.Name, item.IsDeleted ? "（已删除）" : "")));
+                sb.Append("}");                
+                if(i != list.Count()-1){
+                    sb.Append(",");
+                }
+                i++;
+            }
+            sb.Append("]}");
+            Response.Write(sb.ToString());
+        }
+        //根据ParentId获得所有一级分类
+        if(method.ToLower() == "getcatsbyparentid"){
+            Response.ContentType = "application/json";
+            int parentId = TypeConverter.StrToInt(Request.Form["parentId"]);
+            var list = Hite.Services.CategoryService.ListByParentId(parentId);
+            StringBuilder sb = new StringBuilder("{\"pid\":"+parentId+",\"count\":"+list.Count+",\"cats\":[");
+            var i = 0;
+            foreach (var item in list)
+            {
+                sb.Append("{");
+                sb.AppendFormat("\"id\":{0},\"pid\":{1},\"name\":{2}", 
+                    item.Id, 
+                    item.ParentId, 
+                    Json.Encode(string.Format("{0}{1}",item.Name,item.IsDeleted?"（已删除）":"")));
+                sb.Append("}");
+                if (i != list.Count - 1)
+                {
+                    sb.Append(",");
+                }
+                i++;
+            }
+            sb.Append("]}");
+            Response.Write(sb.ToString());
+        }
+    }
+}

@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = Model.Title;
+    Layout = "~/Views/Shared/_ChannelLayout.cshtml";
+}
+@if (Model.Id == 0) { return; }
+<div class="article-detail">
+    <h1>@Model.Title</h1>
+    <span class="info">@(Hite.Mvc.LanguageResourceHelper.GetString("article-publish-date-text",PageData["SiteInfo"].Language))：@Model.PublishDateTime.ToString("yyyy-MM-dd")</span>
+    <div class="text">
+        @Html.Raw(Model.Content)
+    </div>
+</div>
+@if (ViewBag.RelatedArticleList != null && ViewBag.RelatedArticleList.Count > 0)
+{
+    <div class="related-article">
+        <h3>@(Hite.Mvc.LanguageResourceHelper.GetString("article-related-article-text",PageData["SiteInfo"].Language))：</h3>
+        <div class="related-article-list clearfix">
+            <ul>
+                @foreach (var item in ViewBag.RelatedArticleList)
+                { 
+                    <li><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title,29)</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+}

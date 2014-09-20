@@ -1,0 +1,57 @@
+﻿@model Hite.Model.UserInfo
+@{
+    ViewBag.Title = Hite.Mvc.LanguageResourceHelper.GetString("modify-text", PageData["SiteInfo"].Language);
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@Html.Partial("~/Views/Shared/_NavForAccount.cshtml", "Modify", new ViewDataDictionary{{"Language",PageData["SiteInfo"].Language}})
+<div class="usr-content">
+    <form action="" method="post" id="form">
+        @Html.HiddenFor(m => m.Id)
+        @if (ViewBag.Msg != null)
+        {
+            <div class="msg">
+                @Html.Raw(ViewBag.Msg)
+            </div>
+        }
+        <table>
+            <tr>
+                <th align="right">Email：</th>
+                <td>@Html.TextBoxFor(m => m.Email, new { @class = "text required email" })</td>
+            </tr>
+            <tr>
+                <th align="right">@Hite.Mvc.LanguageResourceHelper.GetString("realname-text", PageData["SiteInfo"].Language)：</th>
+                <td>@Html.TextBoxFor(m => m.RealName, new { @class = "text required" })</td>
+            </tr>
+            <tr>
+                <th align="right">@Hite.Mvc.LanguageResourceHelper.GetString("company-text", PageData["SiteInfo"].Language)：</th>
+                <td>@Html.TextBoxFor(m => m.Company, new { @class = "text required" })</td>
+            </tr>
+            <tr>
+                <th align="right">@Hite.Mvc.LanguageResourceHelper.GetString("phone-text", PageData["SiteInfo"].Language)：</th>
+                <td>@Html.TextBoxFor(m => m.Phone, new { @class = "text required" })</td>
+            </tr>
+            <tr>
+                <th align="right">@Hite.Mvc.LanguageResourceHelper.GetString("industry-text", PageData["SiteInfo"].Language)：</th>
+                <td>@Hite.Mvc.ExtensionHtmlHelper.RenderUserIndustryDowndownList("Industry", Model.Industry)</td>
+            </tr>
+            <tr>
+                <td align="right"></td>
+                <td><input type="submit" value="@Hite.Mvc.LanguageResourceHelper.GetString("save-text", PageData["SiteInfo"].Language)" /></td>
+            </tr>
+        </table>
+    </form>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#form").validate({ messages: {
+                Email: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-email-text", PageData["SiteInfo"].Language)",
+                RealName: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-realname-text", PageData["SiteInfo"].Language)",
+                Company: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-company-text", PageData["SiteInfo"].Language)",
+                Phone: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-phone-text", PageData["SiteInfo"].Language)",
+                Industry: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-industry-text", PageData["SiteInfo"].Language)"
+            }
+            });
+        });
+    </script>
+}

@@ -1,0 +1,8 @@
+﻿@if (Request.IsAuthenticated)
+{
+    <text><b>@HttpContext.Current.User.Identity.Name</b>！[<a href="@(System.Configuration.ConfigurationManager.AppSettings["USERCENTERURL"])">用户中心</a>]&nbsp;&nbsp;[<a href="@(System.Configuration.ConfigurationManager.AppSettings["LOGOUTURL"])">退出</a>]</text>
+}
+else
+{ 
+    <text><a href="@string.Concat(System.Configuration.ConfigurationManager.AppSettings["LOGINURL"],HttpContext.Current.Request.Url.ToString())">登录</a>&nbsp;&nbsp;<a href="@(System.Configuration.ConfigurationManager.AppSettings["REGISTERURL"])">注册</a></text>
+}

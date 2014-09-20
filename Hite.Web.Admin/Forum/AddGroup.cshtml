@@ -1,0 +1,94 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{
+    Page.Title = "添加组";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    int id = CECRequest.GetQueryInt("id",0);
+    ForumGroupInfo model = ForumService.GetGroupInfo(id);
+    bool errors = false;
+    int flag = 0;
+    if(IsPost){
+        model.Id = id;
+        model.Name = Request["txtName"];
+        if(model.Name.IsEmpty()){
+            errors = true;
+            ModelState.AddError("Name","组名称不能为空！");
+        }
+        
+        model.Sort = TypeConverter.StrToInt(Request["txtSort"], 0);
+        model.IsDeleted = TypeConverter.StrToInt(Request["rblIsDeleted"]) == 1 ? true : false;
+
+        if(!errors && ModelState.IsValid){
+            flag = 1; //保存成功
+            ForumService.UpdateGroupInfo(model);
+        }
+    }
+}
+
+@section head {
+    <style type="text/css">
+        .colLeft{float:left;width:300px;}
+        .colRight{float:left;width:600px;}
+    </style>
+}
+<fieldset>
+    <legend><a href="?">添加组</a></legend>
+    <div class="colLeft">
+        <form method="post">
+        @Html.ValidationSummary()
+        @if(flag == 1){
+            <div class="success">保存成功！<a href="?">继续添加</a>&nbsp;&nbsp;或&nbsp;&nbsp;<a href="list.cshtml">返回版面列表</a></div>
+        }
+        <table>
+            <tr>
+                <th align="right">组名称：</th>
+                <td>@Html.TextBox("txtName", model.Id == 0 ? Request["txtName"] : model.Name)</td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">排序：</th>
+                <td>@Html.TextBox("txtSort", model.Id == 0 ? Request["txtSort"] : model.Sort.ToString())<br />（数值越小，排列顺序越靠前）</td>
+            </tr>
+            <tr>
+                <th align="right">是否删除：</th>
+                <td><input type="radio" name="rblIsDeleted" value="0" @(model.Id == 0 ? Request["rblIsDeleted"] : (model.IsDeleted ? "" : "checked")) />否<input type="radio" name="rblIsDeleted" value="1" @(model.Id == 0 ? Request["rblIsDeleted"]:(model.IsDeleted? "checked": "")) />是（默认：否）</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="保存" />&nbsp;&nbsp;<a href="List.cshtml">返回板块列表</a></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div class="colRight">
+        <table class="tblist" width="100%">
+            <tr>
+                <th width="10%">流水号</th>
+                <th>名称</th>
+                <th width="10%">排序</th>
+                <th width="15%">是否删除</th>
+                <th width="15%">操作</th>
+            </tr>
+            @foreach (var item in ForumService.GroupList()) { 
+                <tr>
+                    <td align="center">@item.Id</td>
+                    <td align="center">@item.Name</td>
+                    <td align="center">@item.Sort</td>
+                    <td align="center">@Html.Raw(item.IsDeleted? "<font color=\"red\">已删除</font>":"否")</td>
+                    <td align="center"><a href="?id=@item.Id">编辑</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="clear"></div>
+</fieldset>
+@section foot{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if ($('#txtSort').val() === '') {
+                $('#txtSort').val(0);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,24 @@
+﻿@foreach (var item in Model)
+{
+    <text>
+    <div class="template-cat-list-with-one-column">
+        <div class="template-cat-img">
+            <img src="@item.ImageUrl" width="152" height="116" alt="@item.Name" /></div>
+        <div class="template-cat-article-list">
+            <h3 class="blue6B">
+                @Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item, "<strong>" + item.Name + "</strong>",null,ViewBag.Language))</h3>
+            <ul>
+                @foreach (var articleItem in item.ArticleList)
+                {
+                    <li><a href="@articleItem.Url" title="@articleItem.Title">@articleItem.Title</a></li>
+                }
+            </ul>
+        </div>
+        <div class="clear">
+        </div>
+        <div class="more">
+            @Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item, "<img src=\"/images/icon_more.jpg\" width=\"94\" height=\"39\" />", null, ViewBag.Language))
+        </div>
+    </div>
+    </text>
+} 

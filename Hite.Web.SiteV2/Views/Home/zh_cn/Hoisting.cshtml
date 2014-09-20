@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "海得起重首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{    
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#2f3a7a;border:1px solid #2f3a7a;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#2f3a7a;}
+        
+        .wrap1-col1{float:left;width:700px;}
+        .wrap1-col2{float:right; line-height:22px; padding-top:60px;width:270px; background:url("/images/welcome_blue.jpg") no-repeat scroll left 10px transparent;}        
+        .wrap2-col1,.wrap2-col2{float:left;border:1px solid #E6E6E6;width:400px;height:160px;}
+        .wrap2-col1 h3,.wrap2-col2 h3,.wrap2-col3 h3,.wrap3 h3{ background:url("/images/hoisting/titlebg.jpg") repeat-x scroll 0 0 transparent;height:21px; padding-left:10px; padding-top:4px;}
+        .wrap2-col1 .news-top-one-img{padding:10px 5px 0 5px;float:left;width:142px; height:117px; overflow:hidden;}
+        .wrap2-col1 .news-list{ margin-left:10px; float:left;padding-top:10px;width:230px; overflow:hidden; line-height:20px;}
+        .news-list li{ line-height:20px;background:url("/images/icon_dot.gif") no-repeat scroll left center transparent; text-indent:8px;}
+
+        .wrap2-col2{width:365px;border-left:0;}
+        .wrap2-col3 li{float:left;padding:5px 10px 0 10px;}
+        .wrap2-col3{float:left;width:210px;border-left:0;height:160px;border:1px solid #E6E6E6;}
+        .wrap2-col2 ul{padding:5px;}
+        .wrap2-col2 li{line-height:21px;}
+
+        .wrap3{border-color:#E6E6E6;border-right:1px solid #E6E6E6; border-style:none solid solid; border-width:0 1px 1px; height:160px; overflow:hidden;}
+        .wrap3 h3{ margin-bottom:10px;}
+        .wrap3 ul{padding:12px;}
+        .wrap3 ul li {float:left;margin-right:10px;text-align:center;width:120px; margin-bottom:10px;}
+        .wrap3 ul li.img{width:114px; height:84px; overflow:hidden;}
+		
+
+		.wrap2-col3 ul {padding-top:3px;}
+        .article-info{margin-bottom:15px;}
+        .article-image{margin-bottom:15px;border:1px solid #D2D1D1;
+        display:inline;float:left;margin-right:8px;width:152px;height:116px;}
+        .wrap2{margin-bottom:10px;}
+        img {border:0 none;margin-bottom:3px;padding:0;}
+
+        .carousel{float:left;}
+        .prev,.next{display:block;text-decoration:none;width:32px; height:93px; float:left;}
+        .prev{margin-left:2px;background:url("/images/btn_prev.jpg") no-repeat scroll left center transparent;}
+        .next{ background:url("/images/btn_next.jpg") no-repeat scroll left center transparent;}
+
+    </style>
+}
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () { 
+            $(".carousel").jCarouselLite({btnNext: ".next",btnPrev: ".prev",visible :7,auto:1500,speed:1000});
+        });
+    </script>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <div class="focusimg" id="slide">
+            <!--轮播广告-->
+            <ol>
+                @foreach (var item in ViewBag.FocusImageList)
+                { 
+                    <text><li><a href="@item.Url" target="_blank" title="@item.Title">
+                    <img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+                }
+            </ol>
+        </div>
+        <script type="text/javascript">
+            $("#slide").hiteSlide({ width: 702, height: 300, timer: 4000 });
+        </script>
+    </div>
+    <div class="wrap1-col2">
+        @Html.Raw(PageData["SiteInfo"].Introduction)
+    </div>
+</div>
+<div class="blankb"></div>
+<div class="wrap2 clearfix">
+    <div class="wrap2-col1">
+        <h3><img src="/images/hoisting/news.jpg" alt="新闻中心" width="74" height="14" /></h3>
+        @if (ViewBag.News.Count >0) { 
+            <div class="news-top-one-img">
+                <a href="@ViewBag.News[0].Url" title="@ViewBag.News[0].Title"><img alt="@ViewBag.News[0].Title" src="@ViewBag.News[0].ImageUrl" width="142px" height="117px" /></a>
+            </div>
+        }
+        
+        <div class="news-list">
+            <ul>
+                @foreach (var item in ViewBag.News)
+                {
+                    <li><a href="@item.Url" target="_blank" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title, 22)</a></li>
+                }
+            
+            </ul>
+        </div>
+    </div>
+    <div class="wrap2-col2">
+        <h3>
+            <img src="/images/hoisting/sybtitle.jpg" alt="业绩案例" width="87" height="16" /></h3>
+            <ul class="clearfix">
+                @foreach (var item in ViewBag.Cases) { 
+                    <li>[<span class="cat-name">@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item))</span>] 
+                        @foreach(var article in item.ArticleList){
+                            <span class="art-title"><a href="@article.Url" target="_blank" title="@article.Title">@Goodspeed.Common.CharHelper.Truncate(article.Title, 30)</a></span>
+                        }
+                    </li>
+                }
+            </ul>
+    </div>
+    <div class="wrap2-col3 clearfix">
+        <h3>
+            <img src="/images/hoisting/brandtitle.jpg" alt="自主品牌" width="74" height="14" /></h3>
+        <ul>
+        @foreach (var item in ViewBag.Brand)
+        {
+            <li>
+                <a href="@item.Url" target="_blank" title="@item.Title"><img src="@item.ImageUrl" alt="@item.Title" width="80" height="34" /></a></li>
+        }
+        </ul>
+    </div>
+</div>
+<div class="wrap3 clearfix">
+    <h3><img src="/images/hoisting/producttitle.jpg" alt="产品解决方案" width="91" height="19" /></h3>
+    <p><a class="prev" href="javascript:void(0);">&nbsp;</a></p>
+    <div class="carousel">
+        <ul class="clearfix">
+            @foreach (var item in ViewBag.ProductSolution)
+            { 
+                <li><a href="@item.Url" title="@item.Title"><img src="@item.ImageUrl" alt="@item.Title" width="120px" height="90px" /></a><br /><a href="@item.Url" title="@item.Title">@item.Title</a></li>
+            }
+        
+        </ul>
+    </div>
+    <p><a class="next" href="javascript:void(0);">&nbsp;</a></p>
+</div>
+<div class="blankb"></div>
+

@@ -1,0 +1,137 @@
+﻿@using Hite.Services;
+@using Hite.Model;
+@using Controleng.Common;
+@{
+    Page.Title = "设置版主";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+    
+    string action = CECRequest.GetQueryString("action").ToLower();
+    int forumId = CECRequest.GetQueryInt("forumId", 0);
+    bool errors = false;
+    string msg = string.Empty;
+    
+    if (!string.IsNullOrEmpty(action))
+    {
+        switch (action)
+        {
+            case "delete":
+                //删除版主
+                int userId = CECRequest.GetQueryInt("userId", 0);
+                ForumService.DeleteModerator(userId, forumId);
+                Response.Redirect("moderatorList.cshtml");
+                Response.End();
+                break;
+        }
+
+    }
+    
+    if (IsPost)
+    {
+        
+        string txtUserName = Request["txtUserName"];
+        int requestForumId = TypeConverter.StrToInt(Request["forumList"]);
+        int userId = 0;
+        
+        if(requestForumId == 0){
+            errors = true;
+            ModelState.AddError("ForumId", "请选择板块");
+        }
+        if(string.IsNullOrEmpty(txtUserName)){
+            errors = true;
+            ModelState.AddError("UserName", "请输入用户名");
+        }
+        if(!string.IsNullOrEmpty(txtUserName)){
+            //检查是否存在此用户
+            var userInfo = UserService.Get(txtUserName);
+            if(userInfo.Id ==0){
+                errors = true;
+                ModelState.AddError("NotExists","此用户不存在");
+            }
+            userId = userInfo.Id;
+        }
+        if(!errors){
+            bool isSuccess = ForumService.AddModerator(new ForumModeratorInfo(){
+                ForumId = requestForumId,
+                UserId = userId,
+                UserName = txtUserName
+            });
+            if(isSuccess){
+                msg = "添加成功";
+            }else{
+                ModelState.AddError("Filed", "添加失败，此用户已经是此板块的版主");
+            }
+            
+        }
+    }
+
+    var moderatorList = ForumService.GetModerators(forumId);
+}
+@section head {
+}
+<fieldset>
+    <legend>版主列表</legend>
+    <form method="post">
+    @Html.ValidationSummary()
+    @if(!string.IsNullOrEmpty(msg)){
+            <div class="success">@msg</div>
+    }
+    <table>
+        <tr>
+            <td>
+                选择板块：
+            </td>
+            <td>@Hite.Services.ForumService.RenderForumDropdownList("forumList", TypeConverter.StrToInt(Request["forumList"]))
+            <input type="button" onclick="search();" value="查询" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="text" id="txtUserName" name="txtUserName" /><input type="submit" value="添加" />
+            </td>
+        </tr>
+    </table>
+    </form>
+    <table class="tblist">
+        <tr>
+            <th width="100px">
+                用户名
+            </th>
+            <th width="150px">
+                所属板块
+            </th>
+            <th width="100px">
+                添加时间
+            </th>
+            <th width="50px">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in moderatorList)
+        {
+            <tr>
+                <td align="center">@item.UserName
+                </td>
+                <td align="center">@item.ForumName
+                </td>
+                <td align="center">@item.CreateDateTime.ToString("yyyy-MM-dd")
+                </td>
+                <td align="center">
+                    <a href="javascript:void(0);" onclick="del(@item.UserId,@item.ForumId)">删除</a>
+                </td>
+            </tr>
+        }
+    </table>
+</fieldset>
+@section foot{
+    <script type="text/javascript">
+        function del(uid, fid) {
+            if (window.confirm('确定？')) {
+                window.location.href = '?action=delete&userid=' + uid + '&forumId=' + fid;
+            }
+        }
+        function search() {
+            var id = $('#forumList').val();
+            window.location.href = '?forumId=' + id;      
+        }
+    </script>
+}

@@ -1,0 +1,122 @@
+﻿@{
+    Layout = "~/Views/Shared/_ChannelLayout.cshtml";
+    ViewBag.Title = Hite.Mvc.LanguageResourceHelper.GetString("feedback-text", PageData["SiteInfo"].Language);
+}
+@section header{
+    <style type="text/css">
+        .msg{color:Red;padding:10px;display:block;font-weight:bold;border:1px red dotted;}
+        .field{font-weight:700;}
+    </style>
+    <script src="/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+}
+<div class="feedbackWrapper">
+    @if(ViewBag.Flag != null){
+        <div class="msg">
+            @switch((int)ViewBag.Flag){
+                case 1 :
+                    <text>保存成功！</text>
+                    break;
+                case 0:
+                    <text>保存失败，请重试！</text>
+                    break;
+            }
+        </div>
+        <script type="text/javascript">
+            window.setTimeout(function () {
+                $(".msg").slideUp("slow");
+            }, 5000);
+        </script>
+    }
+    <table width="0" border="0" cellspacing="8" cellpadding="0">
+        <tr style="color: #0c66ae; font-weight: 600;">
+            <td>
+                如果您是本站注册会员，请先<a href="#">登录</a>后填写以下反馈信息。<a href="#">免费注册</a> 如果您不是本站会员请填写您个人信息后再填写反馈信息。
+            </td>
+        </tr>
+    </table>
+    <form action="" method="post" id="form">
+    @Html.AntiForgeryToken("POSTFEEDBACK")
+    <table width="0" border="0" cellspacing="6" cellpadding="0">
+        <tr>
+            <td align="right" width="70px">
+                <label class="field">@Hite.Mvc.LanguageResourceHelper.GetString("realname-text", PageData["SiteInfo"].Language)：</label>
+            </td>
+            <td>@Html.TextBox("txtRealName", "", new { maxlength = 4, @class = "required" })</td>
+        </tr>
+        <tr>
+            <td align="right">
+            <label class="field">@Hite.Mvc.LanguageResourceHelper.GetString("company-text", PageData["SiteInfo"].Language)：</label></td>
+            <td>@Html.TextBox("txtCompany", "", new { maxlength = 20, @class = "required" })</td>
+        </tr>
+        <tr>
+            <td align="right">
+               <label class="field">@Hite.Mvc.LanguageResourceHelper.GetString("phone-text", PageData["SiteInfo"].Language)：</label>
+            </td>
+            <td>@Html.TextBox("txtPhone", "", new { maxlength = 15, @class = "required" })</td>
+        </tr>
+        <tr>
+            <td align="right">
+                <label class="field">@Hite.Mvc.LanguageResourceHelper.GetString("email-text", PageData["SiteInfo"].Language)：</label>
+            </td>
+            <td>@Html.TextBox("txtEmail", "", new { maxlength = 20, @class = "required email" })</td>
+        </tr>
+        <tr>
+            <td height="30" colspan="2" valign="bottom" style="color: #0c66ae; font-weight: 600;">
+                1.我有以下需求：<label for="cbRequirement" class="error" style="display:none;">@Hite.Mvc.LanguageResourceHelper.GetString("validate-required-text", PageData["SiteInfo"].Language)</label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input name="cbRequirement" type="checkbox" value="我想得到贵公司的详细资料" class="required"/>
+            我想得到贵公司的详细资料
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input name="cbRequirement" type="checkbox" value="我想得到贵公司的价格信息"  class="required"/>
+                我想得到贵公司的价格信息
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input name="cbRequirement" type="checkbox" value="我让贵公司产品销售人员与我联系" class="required"/>
+                我让贵公司产品销售人员与我联系
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input name="cbRequirement" type="checkbox" value="我让贵公司技术支持人员与我联系" class="required" />
+                我让贵公司技术支持人员与我联系
+            </td>
+        </tr>
+        <tr>
+            <td height="30" colspan="2" valign="bottom" style="color: #0c66ae; font-weight: 600;">
+                2.其他意向请在下面输入：
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="left" valign="top">
+                @Html.TextArea("txtIntention", "", new { cols=60,rows=8})<br />不支持Html,200个字以内
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="好了，我填好了" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#form").validate({ messages: {
+                    txtRealName: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-realname-text", PageData["SiteInfo"].Language)",
+                    txtCompany : "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-company-text", PageData["SiteInfo"].Language)",
+                    txtPhone : "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-phone-text", PageData["SiteInfo"].Language)",
+                    txtEmail : "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-email-text", PageData["SiteInfo"].Language)"
+                }
+            });
+        });
+    </script>
+}

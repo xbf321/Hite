@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = Hite.Mvc.LanguageResourceHelper.GetString("contact-us-text", PageData["SiteInfo"].Language);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .banner{}
+        .contactus{margin:0 10px; background:none repeat scroll 0 0 #FFFFFF;padding-top:10px;}
+        .contactus h3{ height:24px; line-height:24px; margin-bottom:10px; border-bottom:4px solid #cbcbcb; margin:0 10px;}
+        .contactus .content{padding:15px 10px;}
+    </style>
+}
+<div class="banner"><img src="@string.Format("/images/{0}contact_us_banner.jpg", PageData["SiteInfo"].Language == Hite.Model.WebLanguage.zh_cn ? string.Empty : "en_")" alt="@(PageData["SiteInfo"].Name)" /></div>
+<div class="contactus">
+    <h3><img src="@string.Format("/images/{0}contactus.jpg", PageData["SiteInfo"].Language == Hite.Model.WebLanguage.zh_cn ? string.Empty : "en_")" alt="@(PageData["SiteInfo"].Name)" /></h3>
+    <div class="content">
+        @Html.Raw(PageData["SiteInfo"].ContactUs)
+    </div>
+</div>
+

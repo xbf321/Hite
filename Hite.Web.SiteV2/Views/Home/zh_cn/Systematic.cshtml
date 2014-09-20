@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "海得系统业务";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#f1820c;border:1px solid #f1820c;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#f1820c;}
+        
+
+        .wrap1-col1{float:left;width:700px;}
+        .wrap1-col2{float:right; line-height:22px;padding-top:45px; width:270px; background:url("/images/welcome_orange.jpg") no-repeat scroll left 10px transparent;}
+
+        .sysbar{ border-bottom:1px solid #D6D6D6;margin-top:10px;}
+        .sysleftbar{float:left;width:700px;border-right:1px solid #D6D6D6;}
+        .sysrightbar{float:right;width:279px; }
+
+        .sys-left-topbar{ border-bottom:1px solid #D5D5D5;}
+        .sys-left-bottombar{padding-bottom:5px; overflow:hidden;}
+        .sys-left-bottombar li {
+            float:left;
+            margin:5px 5px 5px_margin-left:2px;padding-left:20px;
+            text-align:center;
+            width:95px;}
+
+        .sys-left-topbar-left{ border-right:1px solid #D5D5D5;float:left;width:220px;}
+        .sys-left-topbar-right{width:468px;float:right;}
+
+        .flashFocusImg{padding:5px 10px; text-align:center;}
+
+        .news-title ul li{float:left;}
+        .news-title ul li.more{float:right; padding-right:20px;}
+
+        .news-content h2{ height:24px; line-height:24px; text-align:center;color:#EE7D06; font-size:14px; font-weight:bold;}
+        .news-content h2 a{color:#EE7D06;}
+        .top-one .remark{ text-indent:10px;}
+        .news-list{ background:none repeat scroll 0 0 #FEF5DD; overflow:hidden;padding:5px 0 0 10px;}
+        .news-list dt{ height:22px; line-height:22px; padding-left:10px; width:350px; background:url("/images/icon_dot_orange.jpg") no-repeat scroll left center transparent; float:left;}
+        .news-list dd{ line-height:22px; height:22px;}
+        
+        .sysrightbar-content{ border-bottom:#d5d5d5 1px solid;padding:5px 0 5px 0;}
+        .sysrightbar-content h3{padding-left:10px;}
+        .sysrightbar-content ul{padding-left:5px;}
+        .sysrightbar-content li{background:url("/images/icon_dot_orange.jpg") no-repeat scroll left center transparent;padding-left:8px; line-height:20px;}
+        .bgnone{border:0 none;}
+		.news-content h2 {
+            color:#EE7D06;
+            font-size:14px;
+            font-weight:bold;
+            height:27px;
+            line-height:27px;
+            text-align:center;}
+        .top-one .remark {line-height:18px;color:#999;
+            text-indent:10px;padding:8px 15px;}
+        .news-list {background:none repeat scroll 0 0 #FEF5DD;overflow:hidden;padding:10px 0 0 10px;}
+        .sysrightbar-content ul {
+            padding-left:15px;}
+        
+        .sys-left-bottombar li img{width:105px;height:80px;}
+        .sysrightbar-content h3 {padding-left:10px;margin-bottom:5px;}
+        .news-list {
+            background:none repeat scroll 0 0 #FEF5DD;
+            overflow:hidden;
+            margin:10px 0 0 10px;}
+        .top-one .remark {
+            color:#999999;
+            line-height:18px;
+            padding:8px 20px;
+            text-indent:10px;}
+        .sysrightbar-content h3 {padding-left:10px;padding-bottom:10px;}
+
+        .carousel{float:left;}
+        .prev,.next{display:block;text-decoration:none;width:32px; height:93px; float:left;}
+        .prev{margin:15px 10px 0 0px;background:url("/images/btn_prev.jpg") no-repeat scroll left center transparent;}
+        .next{margin:15px 0 0 10px; background:url("/images/btn_next.jpg") no-repeat scroll left center transparent;}
+    </style>
+}
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".carousel").jCarouselLite({ btnNext: ".next", btnPrev: ".prev", visible: 5, circular: false });
+        });
+    </script>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <div class="focusimg" id="slide">
+            <!--轮播广告-->
+            <ol>
+                @foreach (var item in ViewBag.FocusImageList)
+                { 
+                    <text><li><a href="@item.Url" target="_blank" title="@item.Title">
+                    <img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+                }
+            </ol>
+        </div>
+        <script type="text/javascript">
+            $("#slide").hiteSlide({ width: 702, height: 301, timer: 4000 });
+        </script>
+    </div>
+    <div class="wrap1-col2">
+        @Html.Raw(PageData["SiteInfo"].Introduction)
+    </div>
+</div>
+<div class="blankb"></div>
+<div class="sysbar clearfix">
+    <div class="sysleftbar">
+        <div class="sys-left-topbar clearfix">
+            <!--新品发布 Start-->
+            <div class="sys-left-topbar-left">
+                <h3><img height="14" width="73" src="/images/systematic/newtitle.jpg"></h3>
+                <div class="flashFocusImg">
+                    <script type="text/javascript">
+            var pic_width = 185; //图片宽度
+            var pic_height = 120; //图片高度
+            var button_pos = 4; //按扭位置 1左 2右 3上 4下
+            var stop_time = 4000; //图片停留时间(1000为1秒钟)
+            var show_text = 1; //是否显示文字标签 1显示 0不显示
+            var txtcolor = "000000"; //文字色
+            var bgcolor = "FFFFFF"; //背景色
+            var focusFlashUrl = "/Scripts/FlashFocus.swf";
+            var swf_height = show_text == 1 ? pic_height + 20 : pic_height;
+            //可编辑内容结束
+            var pics, links, texts;
+            @{
+                IList<Hite.Model.ArticleInfo> focusArticleList = ViewBag.NewProduct;
+                if (focusArticleList.Count > 0)
+                {
+                   <text>pics = '@(focusArticleList.Select(n => n.ImageUrl).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                   <text>links = '@(focusArticleList.Select(n => n.Url).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                   <text>texts = '@(focusArticleList.Select(n => n.Title).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                }
+            }
+            //输出FlashObjct
+            document.write('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cabversion=9,0,0,0" width="' + pic_width + '" height="' + swf_height + '">');
+            document.write('<param name="movie" value="' + focusFlashUrl + '">');
+            document.write('<param name="quality" value="high"><param name="wmode" value="opaque">');
+            document.write('<param name="FlashVars" value="pics=' + pics + '&links=' + links + '&texts=' + texts + '&pic_width=' + pic_width + '&pic_height=' + pic_height + '&show_text=' + show_text + '&txtcolor=' + txtcolor + '&bgcolor=' + bgcolor + '&button_pos=' + button_pos + '&stop_time=' + stop_time + '">');
+            document.write('<embed src="' + focusFlashUrl + '" FlashVars="pics=' + pics + '&links=' + links + '&texts=' + texts + '&pic_width=' + pic_width + '&pic_height=' + pic_height + '&show_text=' + show_text + '&txtcolor=' + txtcolor + '&bgcolor=' + bgcolor + '&button_pos=' + button_pos + '&stop_time=' + stop_time + '" quality="high" width="' + pic_width + '" height="' + swf_height + '" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />');
+            document.write('</object>');
+        </script>
+                </div>                
+            </div>
+            <!--新品发布End-->
+            <!--企业动态 Start-->
+            <div class="sys-left-topbar-right">
+                <div class="news-title clearfix">
+                    <ul>
+                        <li><img height="18" width="79" src="/images/systematic/dongtitle.jpg"></li>
+                        <li class="more"><a href="/channel/168.html">MORE>></a></li>
+                    </ul>
+                </div>
+                
+                <div class="news-content">
+                @{
+                    //企业动态新闻
+                    var enterpriseNews = ViewBag.EnterpriseTrace;
+                    if(enterpriseNews.Count >0){
+                        var topOneNews = enterpriseNews[0];
+                        <div class="top-one">
+                            <h2><a href="@topOneNews.Url" title="@topOneNews.Title">@topOneNews.Title</a></h2>
+                            <span class="remark">@Goodspeed.Common.CharHelper.Truncate(topOneNews.Remark,90)</span>
+                        </div>
+                        enterpriseNews.RemoveAt(0);
+                    } 
+                        
+                    }
+                    <div class="news-list clearfix">
+                        <dl>
+                            @foreach(var item in enterpriseNews){
+                                <dt><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title,35)</a></dt>
+                                <dd>@item.PublishDateTime.ToString("yyyy-MM-dd")</dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <!--企业动态 End-->
+        </div>
+        <div class="sys-left-bottombar clearfix">
+            <h3><img height="17" width="77" src="/images/systematic/producttitle.jpg"></h3>
+            <p><a class="prev" href="javascript:void(0);">&nbsp;</a></p>
+            <div class="carousel">
+                <ul>
+                    @foreach (var item in ViewBag.ProductCats)
+                    { 
+                        <li>@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item, "<img src=\"" + item.ImageUrl + "\" width=\"95\" height=\"65\" />"))<br />@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item))</li>
+                    }
+                </ul>
+            </div>
+            <p><a class="next" href="javascript:void(0);">&nbsp;</a></p>
+        </div>
+    </div>
+    <div class="sysrightbar">
+        <div class="sysrightbar-content">
+            <h3><img width="76" height="16" src="/images/systematic/jctitle.jpg" complete="complete"/></h3>
+            <ul>
+                @foreach (var item in ViewBag.Xitongjicheng) { 
+                    <li><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title,25)</a></li>
+                }                
+            </ul>
+        </div>
+        <div class="sysrightbar-content">
+            <h3><img width="89" height="17" src="/images/systematic/ittitle.jpg" complete="complete"/></h3>
+            <ul>
+                @foreach (var item in ViewBag.Gongye)
+                { 
+                    <li><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title, 25)</a></li>
+                }
+            </ul>
+        </div>
+        <div class="sysrightbar-content bgnone">
+            <h3><img width="89" height="17" src="/images/systematic/sevtitle.jpg" complete="complete"/></h3>
+            <ul>
+                @foreach (var item in ViewBag.Server)
+                { 
+                    <li><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title, 25)</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="blankb"></div>

@@ -1,0 +1,161 @@
+﻿@using Controleng.Common;
+@using Hite.Model;
+@using Hite.Services;
+@{
+    Page.Title = "主题列表";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+    var model = new Hite.Model.ForumTopicInfo();
+
+    var isDeleted = CECRequest.GetQueryInt("isDeleted",0) == 0 ? false : true;
+    var forumId = CECRequest.GetQueryInt("forumId",0);
+    int pageIndex = CECRequest.GetQueryInt("page",1);
+    
+    if(IsPost){
+        if (CECRequest.GetFormString("event_submit_do_delete") == "anything") {
+            //删除
+            var topicIds = CECRequest.GetFormString("topicIds").Split(new char[]{','},StringSplitOptions.RemoveEmptyEntries);
+            ForumTopicInfo topicInfo = new ForumTopicInfo();
+            foreach(string id in topicIds){
+                topicInfo = ForumTopicService.Get(TypeConverter.StrToInt(id));
+                if(topicInfo.Id >0){
+                    ForumTopicService.DeleteTopic(topicInfo);
+                }
+            } 
+        }
+        if (CECRequest.GetFormString("event_submit_do_restore") == "anything") { 
+            //还原
+            var topicIds = CECRequest.GetFormString("topicIds").Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            ForumTopicInfo topicInfo = new ForumTopicInfo();
+            foreach (string id in topicIds)
+            {
+                topicInfo = ForumTopicService.Get(TypeConverter.StrToInt(id));
+                if (topicInfo.Id > 0)
+                {
+                    ForumTopicService.RestoreTopic(topicInfo);
+                }
+            }
+        }
+    }
+
+    var topicList = ForumTopicService.TopicList(new ForumSearchSetting(){ForumId = forumId,ShowDeleted = isDeleted,PageIndex = pageIndex});
+    
+    
+}
+@section head {
+}
+<fieldset>
+    <legend>主题列表</legend>
+    <fieldset>
+        <legend>查询</legend>
+        <table>
+        <tr>
+            <td>板块：</td>
+            <td>@Hite.Services.ForumService.RenderForumDropdownList("forumList", forumId)</td>
+            <td>是否删除：</td>
+            <td><input type="radio" name="rblIsDeleted" value="0" @(model.Id == 0 ? (isDeleted? "" : "checked") : (model.IsDeleted ? "" : "checked")) />否<input type="radio" name="rblIsDeleted" value="1" @(model.Id == 0 ? (isDeleted ? "checked" : "") : (model.IsDeleted ? "checked" : ""))/>是</td>
+            <td><input type="button" onclick="search();" value="查询" /></td>
+        </tr>
+    </table>
+    </fieldset>
+    <fieldset>
+        <legend>操作</legend>
+        <table>
+            <tr>
+                <td><input type="button" value="删除主题" onclick="deleteTopic();" /></td>
+                <td><input type="button" value="恢复主题" onclick="restoreTopic();" /></td>
+            </tr>
+        </table>
+    </fieldset>
+    <table class="tblist" width="100%">
+        <tr>
+            <th width="3%"><input type="checkbox" id="cball" name="cball" /></th>
+            <th>
+                主题
+            </th>
+            <th width="5%">
+                浏览数
+            </th>
+            <th width="5%">
+                回复数
+            </th>
+            <th width="8%">
+                发表时间
+            </th>
+            <th width="8%">
+                发表人
+            </th>
+            <th width="8%">
+                是否删除
+            </th>
+        </tr>
+        @foreach (var item in topicList) { 
+            <tr>
+                <td align="center"><input type="checkbox" id="cbtopic_@(item.Id)" name="cbtopic" value="@(item.Id)" /></td>
+                <td>@item.Title</td>
+                <td align="center">@item.Views</td>
+                <td align="center">@item.Replies</td>
+                <td align="center">@Html.Raw(item.PostDateTimeString)</td>
+                <td align="center">@item.Poster</td>
+                <td align="center">@Html.Raw(item.IsDeleted? "<font color=red>已删除</font>" : "否")</td>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(topicList.PageIndex, topicList.PageSize, topicList.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>
+<form method="post" id="deleteTopicForm" action="">
+    @Html.Hidden("event_submit_do_delete","anything")
+    @Html.Hidden("topicIds")
+</form>
+<form method="post" id="restoreTopicForm" action="">
+    @Html.Hidden("event_submit_do_restore","anything")
+    @Html.Hidden("topicIds")
+</form>
+@section foot{
+    <script type="text/javascript">
+        function search() {
+            var forumId = $('#forumList').val();
+            var isDeleted = $("input[name='rblIsDeleted']:checked").val();
+            if (forumId) {
+                window.location.href = '?forumId=' + forumId + '&isDeleted=' + isDeleted;
+            } else {
+                alert("请选择板块");
+                return;
+            }
+        }
+        function deleteTopic() {
+            if (window.confirm('确认要删除？')) {
+                var form = document.getElementById("deleteTopicForm");
+                var topicIds = '';
+                $('input[name=cbtopic]').each(function () {
+                    if (this.checked) {
+                        topicIds += this.value + ',';
+                    }
+                });
+                form.topicIds.value = topicIds;
+                form.submit();
+            }
+        }
+        function restoreTopic() {
+            if (window.confirm('确认要恢复？')) {
+                var form = document.getElementById("restoreTopicForm");
+                var topicIds = '';
+                $('input[name=cbtopic]').each(function () {
+                    if (this.checked) {
+                        topicIds += this.value + ',';
+                    }
+                });
+                form.topicIds.value = topicIds;
+                form.submit();
+            }
+        }
+        $(document).ready(function () {
+            $('#cball').click(function () {
+                if (this.checked) {
+                    $('input[name=cbtopic]').attr('checked', 'checked');
+                } else {
+                    $('input[name=cbtopic]').attr('checked', '');
+                }
+            });
+        });
+    </script>
+}

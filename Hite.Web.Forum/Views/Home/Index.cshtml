@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "海得控制内部论坛";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+}
+@Html.Action("RenderNav", "Home")
+<div class="fl">
+    @foreach (var item in ViewBag.GroupList)
+    {
+        <div class="group">
+            <div class="group-title">
+                <span class="o">
+                    <img onclick="toggleCollapse('catalog_@(item.Id)');" alt="收起/展开" title="收起/展开" src="/images/collapsed_no.gif"
+                        id="catalog_@(item.Id)_img" /></span><h2>@item.Name</h2>
+            </div>
+        </div>
+        if (item.Forums.Count > 0)
+        {
+            <div id="catalog_@(item.Id)" class="group-content">
+                <table border="0" cellspacing="0" cellpadding="0">
+                @{var i = 0;}
+                @foreach (var forum in item.Forums)
+                {                    
+                    if (!forum.IsDeleted)
+                    {
+                        <tr>
+                            <td width="10%" align="center" @Html.Raw(i>0 ? "class=\"bt\"": string.Empty)>
+                                <img src="/images/forum_new.gif" />
+                            </td>
+                            <td @Html.Raw(i > 0 ? "class=\"bt\"" : string.Empty)>
+                                <span style="color: #2396C1;"><strong><a href="catalog/@(forum.Id).html" title="@forum.Name">@forum.Name</a></strong></span><br />
+                                @Html.Raw(forum.Info)<br />
+                            </td>
+                            <td width="15%" align="center" @Html.Raw(i > 0 ? "class=\"bt\"" : string.Empty)>
+                                <em>@(forum.Topics)/@(forum.Replies)</em>
+                            </td>
+                            <td width="30%" @Html.Raw(i > 0 ? "class=\"bt\"" : string.Empty)>
+                                <a href="/thread/@(forum.LastTopicId).html" title="@(forum.LastTopic)">@Goodspeed.Common.CharHelper.Truncate(forum.LastTopic, 26)</a><br />
+                                @if (forum.LastPosterId > 0)
+                                {
+                                    <text>@(forum.LastPoster)-<em>@(forum.LastTopicDateTime.ToString("yyyy-MM-dd"))</em></text>
+                                }
+                                
+                            </td>
+                        </tr>
+                        <text>@{i++;}</text>
+                    }
+                    
+                }                    
+                </table>
+            </div>
+        }
+    }
+</div>
+

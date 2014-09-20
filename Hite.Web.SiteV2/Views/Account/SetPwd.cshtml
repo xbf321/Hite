@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = Hite.Mvc.LanguageResourceHelper.GetString("chanage-pwd-text", PageData["SiteInfo"].Language);
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@Html.Partial("~/Views/Shared/_NavForAccount.cshtml", "SetPwd", new ViewDataDictionary { { "Language", PageData["SiteInfo"].Language } })
+<div class="usr-content">
+    <form action="" method="post" id="form">
+    @if (ViewBag.Msg != null)
+    {
+        <div class="msg">
+            @Html.Raw(ViewBag.Msg)
+        </div>
+    }
+    <table>
+        <tr>
+            <th align="right">
+                @Hite.Mvc.LanguageResourceHelper.GetString("old-pwd-text", PageData["SiteInfo"].Language)：
+            </th>
+            <td>@Html.Password("txtOldPwd", "", new { @class = "text required" })
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                 @Hite.Mvc.LanguageResourceHelper.GetString("new-pwd-text", PageData["SiteInfo"].Language)：
+            </th>
+            <td>@Html.Password("txtNewPwd", "", new { @class = "text required", maxlength = "20" })
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                 @Hite.Mvc.LanguageResourceHelper.GetString("confirm-new-pwd-text", PageData["SiteInfo"].Language)：
+            </th>
+            <td>@Html.Password("txtNewPwdConfirm", "", new { @class = "text required", equalTo = "#txtNewPwd", maxlength = "20" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input type="submit" value="@Hite.Mvc.LanguageResourceHelper.GetString("save-text", PageData["SiteInfo"].Language)" />
+            </td>
+        </tr>
+    </table>
+    </form>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#form").validate({ messages: {
+                txtOldPwd: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-old-pwd-text", PageData["SiteInfo"].Language)",
+                txtNewPwd: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-new-pwd-text", PageData["SiteInfo"].Language)",
+                txtNewPwdConfirm: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-repeat-pwd-text", PageData["SiteInfo"].Language)"
+            }
+            });
+        });
+    </script>
+}

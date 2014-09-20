@@ -1,0 +1,70 @@
+﻿@{
+    Layout = "_Layout.cshtml";
+    if (ViewBag.RootCategoryInfo == null)
+    {
+        ViewBag.RootCategoryInfo = new Hite.Model.CategoryInfo();
+    }
+}
+@section Header{
+    <script type="text/javascript">
+        _GLOBAL.menuRootId = @ViewBag.RootCategoryInfo.Id;
+    </script>
+    @RenderSection("header", false)
+}
+<div id="cat-banner">
+    <img alt="@ViewBag.RootCategoryInfo.Name" src="@ViewBag.RootCategoryInfo.BannerAdImageUrl" />
+</div>
+<div class="blankb">
+</div>
+<div class="section-wrapper clearfix">
+    <div class="section-column">
+        <h4>
+            @(ViewBag.RootCategoryInfo.Name)</h4>
+        <div class="cat-sub-list clearfix">
+            @{Html.RenderAction("SubCategoryListForChannelPage", "Channel", new { rootId = ViewBag.RootCategoryInfo.Id, selectedId = ViewBag.CurrentCategoryInfo.Id, language = PageData["SiteInfo"].Language });}
+        </div>
+        <div class="clear">
+        </div>
+        <div class="site-hp">
+            <ul>
+                @if (PageData["SiteInfo"].Language == Hite.Model.WebLanguage.zh_cn)
+                {
+                    <text><li><a href="/feedback.html">
+                        <img src="/images/feedbackicon.gif" alt="在线反馈" width="159" height="46" /></a></li>
+                    <li><a href="/hr.html">
+                        <img src="/images/jobsicon.gif" alt="人才招聘专区" width="159" height="46" /></a></li>
+                    <li><a href="/contactus.html">
+                        <img src="/images/contactusicon.gif" alt="联系我们" width="159" height="46" /></a></li></text>
+                }
+                else
+                { 
+                    <text><li><a href="/en/feedback.html">
+                        <img src="/images/en_feedbackicon.gif" width="159" height="46" /></a></li>
+                    <li><a href="/en/hr.html">
+                        <img src="/images/en_jobsicon.gif" width="159" height="46" /></a></li>
+                    <li><a href="/en/contactus.html">
+                        <img src="/images/en_contactusicon.gif" width="159" height="46" /></a></li></text>
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="section-content">
+        <div class="page-round-top">
+        </div>
+        <div class="page-sub-nav">
+            <h5>
+                @{Html.RenderAction("RenderSubNavForChannelPage", "Channel", new { siteId = ViewBag.RootCategoryInfo.SiteId, catId = ViewBag.CurrentCategoryInfo.Id, customTitle = ViewBag.SubNavCustomTitle, language = PageData["SiteInfo"].Language });}
+            </h5>
+        </div>
+        <div class="page-content">
+            @RenderBody()
+        </div>
+        <div class="page-round-bottom">
+        </div>
+    </div>
+    <div class="clear">
+    </div>
+</div>
+@section footer{
+    @RenderSection("footer", false)
+}

@@ -1,0 +1,79 @@
+﻿@model Hite.Model.ForumTopicInfo
+@{
+    ViewBag.Title = string.Format("{0}帖子 - {1}",Model.Id > 0 ? "编辑":"发表", ViewBag.ForumInfo.Name);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <!--编辑器以及编辑器中本地上传图片-->
+    <script src="/editor/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <!--编辑器以及编辑器中本地上传图片-->
+}
+@Html.Action("RenderNav", "Home", new { ForumInfo = ViewBag.ForumInfo, TopicInfo = new Hite.Model.ForumTopicInfo() })
+<div class="post-thread">
+    <div class="content">
+        <div class="title">
+            <h3>
+                |发表帖子</h3>
+        </div>
+        <div class="post">
+            <form method="post" action="">
+            @Html.ValidationSummary()
+            @Html.HiddenFor(m => m.Id)
+            <input type="hidden" name="event_submit_do_publish" value="anything" />
+            <table width="100%">
+                <tr>
+                    <th>
+                        帖子标题：
+                    </th>
+                    <td>@Html.TextBoxFor(m => m.Title, new { @class = "text-long" })
+                    </td>
+                </tr>
+                <tr>
+                    <th valign="top">
+                        内容正文：
+                    </th>
+                    <td>@Html.TextAreaFor(m => m.Content, new { cols=120,rows=20})
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" value="发表" />
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //设置编辑器
+            tinyMCE.init({
+                theme: "advanced",
+                mode: "exact",
+                width: "750",
+                height: "380",
+                elements: "Content",
+                language: "zh",
+                plugins: "table,insertdatetime,media,xuimg,contextmenu,paste,inlinepopups,attach",
+                // Theme options
+                theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect,|,bullist,numlist,|,outdent,indent,|,link,unlink,image,|,forecolor,backcolor,",
+                theme_advanced_buttons2: "tablecontrols,|,hr,removeformat,|,media,code,|,xuimg,|,attach",
+                theme_advanced_buttons3: "",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_path: false,
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_resizing: true,
+                theme_advanced_resize_horizontal: false,
+                theme_advanced_resizing_use_cookie: 1,
+                theme_advanced_more_colors: false,
+                theme_advanced_font_sizes: '3,4,5,6,7',
+                theme_advanced_fonts: '楷体_GB2312=楷体_GB2312;黑体=黑体;隶书=隶书;Times New Roman=Times New Roman;Arial=Arial;'
+            });
+        });
+    </script>
+}

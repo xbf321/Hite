@@ -1,0 +1,7 @@
+﻿@{
+    if (!PagesAdminContext.Current.IsLogin || !PagesAdminContext.Current.IsSuperAdmin())
+    {
+        Response.Redirect("/login.cshtml");
+        Response.End();
+    }
+}

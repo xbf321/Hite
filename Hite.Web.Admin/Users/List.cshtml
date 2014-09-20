@@ -1,0 +1,44 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{
+    Page.Title = "用户管理";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    int pageIndex = CECRequest.GetQueryInt("page", 1);
+    int pageSize = 15;
+    
+    var userList = UserService.List(pageIndex,pageSize);
+}
+
+@section head {
+    
+}
+<fieldset>
+    <legend>用户管理</legend>
+    <table class="tblist" width="100%">
+        <tr>
+            <th width="8%">用户名</th>
+            <th width="15%">邮箱</th>
+            <th width="8%">姓名</th>
+            <th>公司</th>
+            <th width="8%">电话</th>
+            <th width="6%">行业</th>
+            <th width="6%">注册时间</th>
+            <th width="8%">最后登录时间</th>
+        </tr>
+        @foreach(var model in userList){
+            <tr>
+                <td align="center">@model.UserName</td>
+                <td align="center">@model.Email</td>
+                <td align="center">@model.RealName</td>
+                <td>@model.Company</td>
+                <td align="center">@model.Phone</td>
+                <td align="center">@model.Industry</td>
+                <td align="center">@model.CreateDateTime.ToString("yyyy-MM-dd")</td>
+                <td align="center">@model.LastLoginDateTime.ToString("yyyy-MM-dd")</td>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(pageIndex, pageSize, userList.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>

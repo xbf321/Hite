@@ -1,0 +1,86 @@
+﻿@using Hite.Mvc;
+@{
+    ViewBag.Title = "海斯科首页";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{    
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#2f3a7a;border:1px solid #2f3a7a;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#2f3a7a;}
+        
+        .box{ float:left; margin-right:5px; width:320px;}
+        .box-title{color:#565759; font-weight:bold; height:17px; padding-left:8px; padding-top:7px;background:url("/images/hiscom/box-top.jpg") no-repeat scroll 0 0 transparent}
+        .box-content{ height:113px;background:url("/images/hiscom/box-center.jpg") no-repeat scroll 0 0 transparent;}
+        .box-bottom-line{ height:10px;background:url("/images/hiscom/box-bottom.jpg") no-repeat scroll 0 0 transparent;}
+
+        .news{padding:10px;}
+        .news-img{float:left;}
+        .news-content{ margin-left:10px;width:140px; float:left;font-size:12px;}
+        .news-content h3{ font-weight:bold; font-size:14px;color:#666666;}
+        .news-content p{ text-indent:10px;padding-top:5px;}
+
+        .solution{padding:10px;}
+        .solution ul li{ line-height:20px;}
+        .products{padding:10px;}
+    </style>
+}
+<div class="focusimg" id="slide">
+    <!--轮播广告-->
+    <ol>
+        @foreach (var item in ViewBag.FocusImageList)
+        { 
+            <text><li><a href="@item.Url" title="@item.Title"><img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+        }
+    </ol>
+</div>
+<script type="text/javascript">
+    $("#slide").hiteSlide({ width: 980, height: 538, timer: 4000 });
+</script>
+<div class="box">
+    <div class="box-title"><a href="/en/channel/643.html">News</a></div>
+    <div class="box-content">
+        <div class="news">
+            @foreach(var item in ViewBag.News){
+                <div class="news-img"><a href="@item.Url" title="@item.Title"><img src="@item.ImageUrl" alt="@item.Title" width="148" height="105" /></a></div>
+                <div class="news-content">
+                    <strong><a href="@item.Url" title="@item.Title">@item.Title</a></strong>
+                    <p>@Goodspeed.Common.CharHelper.Truncate(item.Remark,25)</p>
+                    <div class="more"><a href="@item.Url" title="@item.Title">More>></a></div>
+                </div>
+            }
+            
+        </div>
+    </div>
+    <div class="box-bottom-line"></div>
+</div>
+<div class="box">
+    <div class="box-title"><a href="/en/channel/666.html">Solutions</a></div>
+    <div class="box-content">
+        <div class="solution">
+            <ul>
+               @foreach (var item in ViewBag.Solution)
+                {
+                <li><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title, 30)</a></li>
+                } 
+            </ul>
+        </div>
+    </div>
+    <div class="box-bottom-line"></div>
+</div>
+<div class="box">
+    <div class="box-title"><a href="/en/channel/647.html">Product Center</a></div>
+    <div class="box-content">
+        <div class="products">
+            <ul>
+               @foreach (var item in ViewBag.Products)
+                {
+                <li><a href="@item.Url" title="@item.Title"><img src="@item.ImageUrl" title="@item.Title"/></a><br><a href="@item.Url" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title, 30)</a></li>
+                } 
+            </ul>
+			
+        </div>
+    </div>
+    <div class="box-bottom-line"></div>
+</div>
+<div class="clear"></div>

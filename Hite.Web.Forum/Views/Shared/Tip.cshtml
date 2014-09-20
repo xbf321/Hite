@@ -1,0 +1,49 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Msg;
+    }
+@section header{
+    <style type="text/css">
+        body{font:12px/1.5 tahoma,arial,宋体;}
+        .content{margin:0 auto;}
+        .error-tip{border:1px solid #BDE0F3;background:none repeat scroll 0 0 #F0FAFB;line-height:1.8;padding-left:10px;width:350px; margin:0 auto;padding:17px 10px 17px 56px;}
+        .success-tip{font-size:14px;font-weight:bold;color:#404040;border:1px solid #ddd;padding:17px 10px 17px 56px;line-height:22px;border-color:#4dbf00;background-color:#f0ffe5;}
+    </style>
+}
+<div class="content">
+@if (Model.Success)
+{
+    <div class="success-tip">
+        <strong>@Model.Msg</strong>
+        <br />
+        <span id="timeCount" title="@Model.Url">
+            5</span>秒之后返回&nbsp;或&nbsp;<a href="@Model.Url">
+                立即返回</a> <span class="other">&nbsp;|&nbsp;<a href="/">返回论坛</a></span>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            countDown();
+        });
+        // 数字自动递减
+        function countDown() {
+            var count = parseInt($('#timeCount').text());
+            if (count > 0) {
+                count--;
+                $('#timeCount').text(count)
+                window.setTimeout(function () {
+                    countDown();
+                }, 1000);
+            } else {
+                window.parent.location.href = $('#timeCount').attr("title");
+            }
+        }
+ </script>
+}
+else
+{ 
+    <div class="error-tip">
+        <strong>出错了！@Model.Msg</strong><br />
+                <span class="otherlink"><a href="@Model.Url">点击这里返回</a>&nbsp;&nbsp;或&nbsp;&nbsp;<a href="/">去论坛首页</a></span>
+    </div>    
+}
+</div>

@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "管理员设置";
+}
+<fieldset>
+    <legend>管理员设置</legend>
+    <a href="add" class="btn-add">添加管理员</a>
+    <table class="tblist" width="100%">
+        <tr>
+            <th width="5%">流水号</th>
+            <th>用户</th>
+            <th width="10%">角色</th>
+            <th width="10%">是否删除</th>
+            <th width="10%">添加时间</th>
+            <th width="10%">操作</th>
+        </tr>
+        <tr>
+            @foreach(var item in Model){
+                if (item.UserName != "xbf321@gmail.com")
+                {
+                <tr>
+                    <td align="center">@item.Id</td>
+                    <td align="center">@item.UserName</td>                    
+                    <td align="center">@item.RoleType</td>
+                    <td align="center">@Html.Raw(item.IsDeleted ? "<font color=red>已删除</font>" : "否")</td>
+                    <td align="center">@item.CreateDateTime.ToString("yyyy-MM-dd")</td>
+                    <td align="center">
+                        @if (item.IsDeleted)
+                        {
+                            <a href="RestoreUser?id=@item.Id" onclick="javascript:if(window.confirm('确定？')){return true;}else{return false;}">恢复</a>
+                        }
+                        else
+                        { 
+                            <a href="DeleteUser?id=@item.Id" onclick="javascript:if(window.confirm('确定？')){return true;}else{return false;}">删除</a>
+                        }
+                    </td>
+                </tr>
+                }
+            }
+        </tr>
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(Model.PageIndex, Model.PageSize, Model.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>
+

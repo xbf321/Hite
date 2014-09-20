@@ -1,0 +1,16 @@
+﻿@if (Request.Url.Host.IndexOf("hite.com.cn") > 0)
+{
+    //说明在hite.com.cn域下
+    if (Request.IsAuthenticated){<text><br /><b>@HttpContext.Current.User.Identity.Name</b>！@Html.Raw(Hite.Mvc.LanguageResourceHelper.GetString("logged-in-bar-text", Model.Language))</text>}else{<text>@Html.Raw(Hite.Mvc.LanguageResourceHelper.GetString("not-logged-in-bar-text", Model.Language))</text>}
+}
+else
+{
+    //判断Cookie
+    <text> 
+    <span id="login-info">
+        <script type="text/javascript">
+            (function () {var d = document.domain, d = d.match(/([\-\w]+\.(?:com\.cn|com)+)/i)[0];$.getScript(_GLOBAL.passportServer + "/static/loginapi?" + Math.random(), function () {for (var i in userCookie) {$.cookie(i, userCookie[i], { domain: d, path: '/' })}var _ht_ = userCookie._ht_, _hr_ = userCookie._hr_, _usr_ = userCookie.usr, _nk_ = userCookie.username, o = !!(_hr_ && _ht_ && _usr_ && _nk_), k = '';if (o) { k = '<br /><b>' + _nk_ + '</b>！@Html.Raw(Hite.Mvc.LanguageResourceHelper.GetString("logged-in-bar-text", Model.Language))'; } else { k = '@(Html.Raw(Hite.Mvc.LanguageResourceHelper.GetString("not-logged-in-bar-text", Model.Language)))'; } $("#login-info").html(k);});})();
+        </script>
+    </span>
+    </text>
+}

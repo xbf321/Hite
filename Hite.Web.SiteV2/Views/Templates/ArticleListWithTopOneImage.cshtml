@@ -1,0 +1,39 @@
+﻿@if (Model != null)
+{
+    if (Model.Count > 0)
+    {
+        if (ViewBag.PageIndex == 0 || ViewBag.PageIndex == 1)
+        {
+            var firstNews = Model[0];
+            if (!string.IsNullOrEmpty(firstNews.ImageUrl))
+            {
+                <text>
+                <div class="template-article-list-top-image">
+                    <p>
+                        <img src="@firstNews.ImageUrl" width="168" height="120" alt="@firstNews.Title" /><a href="@firstNews.Url" class="gray14">@firstNews.Title</a></p>
+                    <p class="remark">
+                        @Html.Raw(firstNews.Remark)
+                    </p>
+                    <div class="clear">
+                    </div>
+                </div>
+                </text>
+                Model.RemoveAt(0);
+            }
+        }
+    }
+}
+<div class="template-article-list clearfix">
+    <dl>
+        @{  var i = 0;
+            foreach (var item in Model)
+            {
+            <text>
+            <dt@Html.Raw(i % 2 == 0 ? "" : " class=\"bg\"")><a href="@item.Url" title="@item.Title">@item.Title</a></dt>
+            <dd@Html.Raw(i % 2 == 0 ? "" : " class=\"bgdd\"")>@item.PublishDateTime.ToString("yyyy-MM-dd")</dd>
+            </text>
+                                                         i++;
+            }}
+    </dl>
+</div>
+@Html.Raw(Hite.Common.PagerBarHelper.Render(ViewBag.PageIndex, ViewBag.PageSize, ViewBag.Total, new { @class = "pagebar" }))

@@ -1,0 +1,17 @@
+﻿@if (Model.Count == 0) { return; }
+<div class="template-article-list-with-image clearfix">
+    <ul>
+        @foreach (var item in Model)
+        {
+            <li class="clearfix">
+                <div class="article-image"><img src="@item.ImageUrl" alt="@item.Title" /></div>
+                <div class="article-info">
+                    <div class="article-title"><a href="@item.Url" class="gray14" title="@item.Title">@item.Title</a></div>
+                    <div class="article-remark">@Html.Raw(item.Remark)</div>
+                    <div class="more"><a href="@item.Url" title="@item.Title">@(Hite.Mvc.LanguageResourceHelper.GetString("more-text", ViewBag.Language))>></a></div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
+@Html.Raw(Hite.Common.PagerBarHelper.Render(ViewBag.PageIndex, ViewBag.PageSize, ViewBag.Total, new { @class = "pagebar" }))

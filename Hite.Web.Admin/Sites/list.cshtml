@@ -1,0 +1,48 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@{
+    Page.Title = "域管理";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    var siteInfoList = SiteService.List(); 
+}
+<fieldset>
+    <legend>域管理</legend>
+    <table width="100%">
+        <tr>
+            <td align="right">
+                <a href="edit.cshtml" class="btn-add">添加域</a>
+            </td>
+        </tr>
+    </table>
+    <table width="100%" class="tblist">
+        <tr>
+            <th width="8%">
+                ID
+            </th>
+            <th>
+                名称
+            </th>
+            <th width="8%">
+                语言
+            </th>
+            <th width="10%">
+                编辑
+            </th>
+        </tr>
+        @foreach (var model in siteInfoList)
+        { 
+            <tr>
+                <td class="tdcenter">@model.Id
+                </td>
+                <td>@model.Name
+                </td>
+                <td class="tdcenter">@model.Language
+                </td>
+                <td class="tdcenter">
+                    <a href="edit.cshtml?id=@model.Id">编辑</a>
+                </td>
+            </tr>
+        }
+    </table>
+</fieldset>

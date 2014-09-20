@@ -1,0 +1,654 @@
+﻿@using System.Text;
+@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{
+    Page.Title = "发表或编辑文章";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+    int siteId = CECRequest.GetQueryInt("siteId", 0);
+    int id = CECRequest.GetQueryInt("id", 0);
+    if(siteId ==0){
+        <text>
+            <div class="msg">Category Error!</div>
+        </text>
+        return;
+    }
+    var categoryList = CategoryService.ListBySiteId(siteId).Where(p => p.ParentId ==0);
+
+    var errors = false;
+    var msg = string.Empty;
+
+    ArticleInfo model = ArticleService.Get(id);
+    
+    if (IsPost)
+    {
+        System.Web.Mvc.FormCollection form = new System.Web.Mvc.FormCollection(this.Request.Unvalidated().Form);
+        model.SiteId = siteId;
+        model.Id = id;
+        model.Content = form["txtContent"];
+        model.Title = form["txtTitle"];
+        model.Tags = form["txtTags"].Replace("，", ",");
+        model.LinkUrl = form["txtLinkUrl"];
+        model.ImageUrl = Request["txtImageUrl"];        
+        model.IsDeleted = TypeConverter.StrToInt(form["rblIsDeleted"]) == 1 ? true : false;
+        model.IsTop = TypeConverter.StrToInt(form["rblIsTop"]) == 1 ? true : false;
+        model.Sort = TypeConverter.StrToInt(form["txtSort"]);
+        model.Remark = form["txtRemark"];
+        model.Timespan = DateTime.Now.ToString("HHmmssfff");
+        DateTime publishDateTime = DateTime.Now;
+        DateTime.TryParse(string.Format("{0} {1}", form["txtPublishDateTime"], DateTime.Now.ToString("HH:mm:ss")),out publishDateTime);
+        model.PublishDateTime = publishDateTime;
+
+        //ParentCategoryIds
+        model.ParentCategoryIds = System.Text.RegularExpressions.Regex.Replace(form["parentCategoryIds"], @"(\-)$", string.Empty, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+        if(string.IsNullOrEmpty(model.ParentCategoryIds)){
+            ModelState.AddError("CategoryId", "请选择分类");
+            errors = true;
+        }
+        //CategoryId
+        string[] parentCategoryIds = model.ParentCategoryIds.Split(new  char[]{'-'},StringSplitOptions.RemoveEmptyEntries);
+        if (parentCategoryIds.Length >0) {
+            model.CategoryId = parentCategoryIds.LastOrDefault().AsInt();
+        }   
+
+        if(model.CategoryId == 0){
+            ModelState.AddError("CategoryId", "请选择分类");
+            errors = true;
+        }
+        if (model.Title.IsEmpty())
+        {
+            ModelState.AddError("Title", "标题不能为空！");
+            errors = true;
+        }
+
+        if (!errors)
+        {
+
+            //同时发布到其它站点中
+            string relatedCatsString = form["relatedCatsString"];
+            model.CatsJSON = ArticleService.FormatSitesStringToJson(relatedCatsString);
+            
+            
+            //新增或修改
+            int articleId = ArticleService.Create(model);
+            
+            if (id == 0)
+            {
+                msg = "<div class=\"msg\">保存成功！<a href=\"list.cshtml?siteId="+siteId+"\">返回</a>&nbsp;&nbsp;<a href=\"edit.cshtml?siteId=" + siteId + "\">在发一篇</a></div>";
+            }
+            else
+            {
+                msg = "<div class=\"msg\">更新成功！<a href=\"list.cshtml?siteId="+siteId+"\">返回</a>&nbsp;&nbsp;<a href=\"edit.cshtml?siteId=" + siteId + "\">在发一篇</a></div>";
+            } 
+
+            #region ==插入ArticleInCategories==
+            //首先获得条目数，格式14#12-5-6|12#4-9-17
+            var catsArr = relatedCatsString.Split(new char[] { '|' }, StringSplitOptions.RemoveEmptyEntries);            
+            List<ArticleInCategoryInfo> articleInCategoryInfoModelList = new List<ArticleInCategoryInfo>();
+            
+            //首先插入主要的类别
+            articleInCategoryInfoModelList.Add(new ArticleInCategoryInfo() { 
+                SiteId = siteId,
+                ArticleId = articleId,
+                CategoryId = model.CategoryId,
+                CategoryName = CategoryService.Get(model.CategoryId).Name
+            });
+
+            
+            //接下来插入相关类别
+            foreach (string signRowStr in catsArr)
+            {
+                string[] row = signRowStr.Split(new char[] { '#' }, StringSplitOptions.RemoveEmptyEntries);
+                if (row.Length > 1)
+                {
+                    //row[0]为SiteId
+                    int appId = TypeConverter.StrToInt(row[0]);
+
+                    //row[1]为所有的CatIds,格式：12-5-6
+                    //需要获得最后一个CategoryId
+                    var lastIds = row[1].Split(new char[] { '-' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (lastIds.Count() > 0)
+                    {
+                        var lastId = lastIds.Last().AsInt();
+                        articleInCategoryInfoModelList.Add(new ArticleInCategoryInfo()
+                        {
+                            SiteId = appId,
+                            ArticleId = articleId,
+                            CategoryId = lastId,
+                            CategoryName = CategoryService.Get(lastId).Name
+                        });
+                    }
+
+                }
+            }
+            ArticleService.InsertArticleInCategories(articleInCategoryInfoModelList);
+            #endregion
+            
+        }
+
+    }
+    string currentSelectedCatJSON = "{}";
+    if(model.Id>0){
+        //对主要类别设置默认值
+        currentSelectedCatJSON = ArticleService.FormatParentCategoryIdsToJson(model.ParentCategoryIds);
+        
+    }
+    
+}
+@section head{
+    <!--编辑器以及编辑器中本地上传图片-->
+    <script src="/editor/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <script src="/Scripts/uploadimgforeditor.js" type="text/javascript"></script>
+    <!--编辑器以及编辑器中本地上传图片-->
+
+    <script type="text/javascript">
+        var GLOBAL = {
+           currentRootCategory : {count:@(categoryList.Count()),cats:[@{foreach(var item in categoryList){<text>{id:@item.Id,name:"@item.Name"},</text>}}]},
+           currentSelectedCategoryJson : @(currentSelectedCatJSON),
+           allSites : [@{var allSites = SiteService.List(); foreach (var item in allSites){if(PagesAdminContext.Current.IsInSites(item.Id)){<text>{id:@item.Id,name:"@(item.Name)(@(item.Language))"},</text>}}}]
+        };
+        var CONFIG = {"cats_json":@Html.Raw(model.Id == 0 ? "{\"count\":0}" :model.CatsJSON),"site_index":0,"sites":[@{var list = SiteService.List(); foreach (var item in list){if(PagesAdminContext.Current.IsInSites(item.Id)){<text>{"id":@item.Id,"name":"@(item.Name)(@(item.Language))"},</text>}}}]};
+    </script>
+}
+<form method="post" action="" onsubmit="return checkForm();">
+@Html.Hidden("relatedCatsString")
+@Html.Hidden("parentCategoryIds", 0)
+<fieldset>
+    <legend>@(id == 0 ? "发表文章" : "编辑文章【" + (model.Id == 0 ? string.Empty : model.Title) + "】")</legend>
+    @Html.Raw(msg)
+    <table width="100%">
+        <tr>
+            <td colspan="2" align="right"><div id="catloading" style="display: none;">
+                    <img src="/images/loading.gif" alt="正在载入..." />正在载入...</div></td>
+        </tr>
+        <tr>
+            <th align="right">请选择类别：</th>
+            <td>
+                <span id="mainCategoryWrapper"></span><span class="required">*</span>@Html.ValidationMessage("CategoryId")
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                标题：
+            </th>
+            <td>@Html.TextBox("txtTitle", model.Id == 0 ? Request["txtTitle"] : model.Title, new { @class = "text-five" })<span class="required">*</span>@Html.ValidationMessage("Title")
+            </td>
+        </tr>
+        <tr>
+            <th align="right" valign="top">
+                内容：
+            </th>
+            <td>@Html.TextArea("txtContent", model.Id == 0 ? Request["txtContent"] : model.Content, new { @rows = 20, @cols = 70, @class = "txtContent" })
+            </td>
+        </tr>
+        <tr>
+            <th align="right" valign="top">
+                摘要：
+            </th>
+            <td>@Html.TextArea("txtRemark", model.Id == 0 ? Request["txtRemark"] : model.Remark, new { @rows = 8, @cols = 50 })
+            </td>
+        </tr>
+        <tr>
+            <th align="right">
+                新闻图片：
+            </th>
+            <td>@Html.TextBox("txtImageUrl", model.Id == 0 ? Request["txtImageUrl"] : model.ImageUrl, new { @class = "text-five" })&nbsp;&nbsp;<a href="javascript:void(0);" onclick="uploadImgForInput('txtImageUrl');return false;";>上传图片</a>
+            </td>
+        </tr>   
+        <tr>
+            <th align="right" valign="top">附加属性：</th>
+            <td>
+                <div id="tabs">
+                    <ul>
+                        <li><a href="#tabs-1">关键词</a></li>
+                        <li><a href="#tabs-2">快速链接</a></li>
+                        <li><a href="#tabs-3">发布时间</a></li>                        
+                        <li><a href="#tabs-4">是否置顶</a></li>
+                        <li><a href="#tabs-5">显示顺序</a></li>
+                        <li><a href="#tabs-6">是否删除</a></li>
+                    </ul>
+                    <div id="tabs-1">
+                        <table>
+                            <tr>
+                                <th align="right" valign="top">
+                                    关键词：
+                                </th>
+                                <td>@Html.TextBox("txtTags", model.Id == 0 ? Request["txtTags"] : model.Tags, new { @class = "text-five" })
+                                    <br />
+                                    多个关键词用“,”号分隔
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-2">
+                        <table>
+                            <tr>
+                                <th align="right">
+                                    快速链接：
+                                </th>
+                                <td>@Html.TextBox("txtLinkUrl", model.Id == 0 ? Request["txtLinkUrl"] : model.LinkUrl, new { @class = "text-five" })
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-3">
+                        <table>
+                            <tr>
+                                <th align="right">
+                                    发布时间：
+                                </th>
+                                <td>@Html.TextBox("txtPublishDateTime", model.Id == 0 ? Request["txtPublishDateTime"] : model.PublishDateTime.ToString("yyyy-MM-dd"), new { @width = "200px" })
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-4">
+                        <table>
+                            <tr>
+                                <th align="right">是否置顶：</th>
+                                <td><input type="radio" name="rblIsTop" value="0" @(model.Id == 0 ? Request["rblIsTop"] : (model.IsTop ? "" : "checked")) />否<input type="radio" name="rblIsTop" value="1" @(model.Id == 0 ? Request["rblIsTop"] : (model.IsTop ? "checked" : ""))/>是</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-5">
+                        <table>
+                            <tr>
+                                <th align="right">显示顺序：</th>
+                                <td>@Html.TextBox("txtSort", model.Id == 0 ? (Request["txtSort"] == null ? "0" : Request["txtSort"]) : model.Sort.ToString())<br />
+                                <font color="red">如果两篇文章都为置顶，数值越小，排列顺序越靠前</font>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="tabs-6">
+                        <table>
+                            <tr>
+                                <th align="right">是否删除：</th>
+                                <td><input type="radio" name="rblIsDeleted" value="0" @(model.Id == 0 ? Request["rblIsDeleted"] : (model.IsDeleted ? "" : "checked")) />否<input type="radio" name="rblIsDeleted" value="1" @(model.Id == 0?Request["rblIsDeleted"]:(model.IsDeleted?"checked":""))/>是</td>
+                            </tr>
+                         </table>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th align="right" valign="top">
+                同时发布到：
+            </th>
+            <td>
+                <div id="catWrapper">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <a href="list.cshtml?siteId=@(siteId)" class="back">返回</a><input type="submit" value="保存"  />
+            </td>
+        </tr>
+    </table>
+</fieldset>
+</form>
+@section foot{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //设置主分类
+            
+            createCatSelectV2("mainCategoryWrapper", "0|0|99999", GLOBAL.currentRootCategory, GLOBAL.currentSelectedCategoryJson);            
+            //设置编辑器
+            tinyMCE.init({
+                theme: "advanced",
+                mode: "exact",
+                width: "800",
+                height: "380",
+                elements: "txtContent",
+                language: "zh",
+                plugins: "table,insertdatetime,media,-xuimage,contextmenu,paste,inlinepopups",
+                // Theme options
+                theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
+                theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|bullist,numlist,|,outdent,indent,|,link,unlink,image,|,insertdate,inserttime,|,forecolor,backcolor",
+                theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,|,media,code,|,xuimage",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_path: false,
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_resizing: true,
+                theme_advanced_resize_horizontal: false,
+                theme_advanced_resizing_use_cookie: 1,
+                theme_advanced_more_colors: false,
+                theme_advanced_font_sizes: '3,4,5,6,7',
+                theme_advanced_fonts: '楷体_GB2312=楷体_GB2312;黑体=黑体;隶书=隶书;Times New Roman=Times New Roman;Arial=Arial;'
+            });
+            //设置TAB标签
+            $("#tabs").tabs();
+            //设置时间选择器
+            $("#txtPublishDateTime").datepicker({ dateFormat: 'yy-mm-dd', monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'], dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'] });
+
+            if (CONFIG.cats_json.count > 0) {
+                for (i in CONFIG.cats_json.items) {
+                    createSiteSelect(CONFIG.cats_json.items[i]);
+                }
+            } else {
+                createSiteSelect();
+            }
+
+
+        });
+
+        
+
+        /*同时发布到其它的分类 Start*/
+        function createSiteSelect(data) {
+            var siteId = 0;
+            if (data) {
+                if (data.sid) {
+                    siteId = data.sid;
+                }
+            }
+            var index = CONFIG.site_index;
+            /*ddlSite start*/
+            var sel = document.createElement("SELECT");
+            sel.setAttribute("id", "ddlsite_" + index);
+            sel.setAttribute("name", "ddlsite_" + index);
+            sel.setAttribute("index", index);
+
+            var op = document.createElement("OPTION");
+            op.setAttribute('value', '0');
+            op.innerHTML = "==请选择域==";
+            sel.appendChild(op);
+            if (CONFIG.sites.length > 0) {
+                for (i in CONFIG.sites) {
+                    var id = CONFIG.sites[i].id;
+                    op = document.createElement("OPTION");
+                    op.setAttribute("value", id);
+                    op.innerHTML = CONFIG.sites[i].name;
+                    if (siteId == id) {
+                        op.setAttribute("selected", "selected");
+                    }
+                    sel.appendChild(op);
+                }
+            }
+            sel.onchange = function () {
+                siteSelect_onchange(this, index);
+            }
+            if (siteId > 0) {
+                siteSelect_onchange(sel, index, data.cat);
+            }
+            /*ddlSite end*/
+
+            /*btnAdd start*/
+            var btnAdd = document.createElement("a");
+            btnAdd.setAttribute("href", "javascript:void(0);");
+            btnAdd.setAttribute("index", index);
+            btnAdd.innerHTML = "添加";
+            btnAdd.style.cssText = "margin-left:10px;";
+            btnAdd.onclick = function () {
+                addSiteSelect(this);
+            }
+            /*btnAdd end*/
+
+            /*btnDel start*/
+            var btnDel = document.createElement("a");
+            btnDel.setAttribute("href", "javascript:void(0);");
+            btnDel.innerHTML = "删除";
+            btnDel.style.cssText = "margin-left:10px;";
+            btnDel.setAttribute("index", index);
+            btnDel.onclick = function () {
+                delSiteSelect(this);
+            }
+            /*btnDel end*/
+
+            /*ddlSiteContainerDiv start*/
+            var selDiv = document.createElement("div");
+            selDiv.id = "site_wrapper_" + index;
+            selDiv.setAttribute("class", "site_wrapper");
+            selDiv.setAttribute("index", index);
+            selDiv.style.cssText = "padding:5px;";
+            $(selDiv).append("条目"+index + "：");
+            selDiv.appendChild(sel);
+            selDiv.appendChild(btnAdd);
+            selDiv.appendChild(btnDel);
+            /*ddlSiteContainerDiv end*/
+
+            $("#catWrapper").append(selDiv);
+
+            CONFIG.site_index++;
+        }
+        function siteSelect_onchange(obj, index, catValues) {
+            var value = obj.value;
+            //删除站点下的分类
+            $('#cids_' + index + '_span').empty();
+
+            if(value == "0"){               
+                return;
+            }
+            //取得属于此站点下的根分类
+            var dataValue = "m=getrootcatsbysiteid&siteId=" + value;
+            $.ajax({
+                type: "POST",
+                url: "/ArticleCategory/Ajax.cshtml",
+                data: dataValue,
+                dataType: "json",
+                beforeSend: function (x) {
+                    $("#catloading").show();
+                },
+                success: function (data) {
+                    $("#catloading").hide();
+                    var reponse = "0|0|" + index;
+                    createCatSelect(reponse, data, catValues);
+                }
+            });
+        }
+        
+        //创建类目下拉列表框
+        function createCatSelect(cidStr, list, catValues) {
+            var cidArr = cidStr.split('|');
+            var cid = cidArr[0];
+            var spanId = cidArr[1];
+            var index = cidArr[2];
+            if (cid == 0) {
+                if ($("#cids_" + index + "_span")) {
+                    $("#cids_" + index + "_span").empty().remove();
+                }
+            }
+            if (list.count == 0) {
+                return;
+            }
+            var selId = "cid_" + index + "_" + cid;
+            var sel = document.createElement("SELECT");
+            sel.setAttribute("id", selId);
+            sel.setAttribute("name", selId);
+            sel.setAttribute("index", index);
+
+            var op = document.createElement("OPTION");
+            op.setAttribute("value", "0");
+            op.innerHTML = "==请选择分类==";
+            sel.appendChild(op);
+            for (i in list.cats) {
+                var id = list.cats[i].id;
+                op = document.createElement("OPTION");
+                op.setAttribute("value", id);
+                op.innerHTML = list.cats[i].name;
+                if (catValues) {
+                    if (catValues.id) {
+                        if (id == catValues.id) {
+                            op.setAttribute("selected", "selected");
+                        }
+                    }
+                }
+                sel.appendChild(op);
+            }
+            var parentId = cid;
+            if (cid == "0") {
+                //创建类目容器
+                var selSpan = document.createElement("span");
+                selSpan.id = "cids_" + index + "_span";
+                selSpan.style.cssText = "margin-left:10px;";
+                selSpan.setAttribute("index", index);
+                selSpan.appendChild(sel);
+                sel.onchange = function () {
+                    catSelect_OnChange(this, parentId, index);
+                }
+                $("#ddlsite_" + index).after(selSpan);
+
+                var cidSpan = document.createElement("span");
+                cidSpan.id = selId + "_span";
+                cidSpan.setAttribute("index", index);
+                cidSpan.style.cssText = "margin-left:10px;";
+                selSpan.appendChild(cidSpan);
+            } else {
+                var spanWrapperObj = "#cid_" + index + "_" + spanId + "_span";
+                $(spanWrapperObj).append(sel);
+                sel.onchange = function () {
+                    catSelect_OnChange(this, parentId, index);
+                }
+
+                var cidSpan = document.createElement("span");
+                cidSpan.id = "cid_" + index + "_" + cid + "_span";
+                cidSpan.setAttribute("index", index);
+                cidSpan.style.cssText = "margin-left:10px;";
+                $(spanWrapperObj).append(cidSpan);
+            }
+            if (catValues) {
+                if (catValues.cat) {
+                    catSelect_OnChange(sel, catValues.pid, index, catValues.cat);
+                }
+            }
+        }
+        function catSelect_OnChange(obj, parentId, index, catValues) {
+            var cid = obj.value;
+            $("#" + obj.id + "_span").html('');
+
+            if (cid == "0") {
+                return; 
+            }
+            
+            //Ajax
+            var dataValue = "m=getcatsbyparentid&parentId=" + cid;
+            $.ajax({
+                type: "POST",
+                url: "/ArticleCategory/Ajax.cshtml",
+                data: dataValue,
+                dataType: "json",
+                beforeSend: function (x) {
+                    $("#catloading").show();
+                },
+                success: function (data) {
+                    $("#catloading").hide();
+                    var reponse = cid + "|" + parentId + "|" + index;
+                    createCatSelect(reponse, data, catValues);
+                }
+            });
+        }
+        //删除当前div
+        function delSiteSelect(obj) {
+            if (window.confirm('确认要删除当前分类吗？')) {
+                //判断是否仅有一个，如果仅有一个不能删除
+                var index = $(obj).attr('index');
+                var currentWrapperId = '#site_wrapper_'+index;
+
+                var count = $(currentWrapperId).siblings().length;
+                if (count == 0) {
+                    //初始化条目为index的分类
+                    $('#ddlsite_' + index).val("0");
+                    $('#cids_' + index + '_span').empty().remove();
+                } else {
+                    $(currentWrapperId).empty().remove();
+                }
+            }
+        }
+        //添加分类
+        function addSiteSelect(obj) {
+            var index = $(obj).attr("index");
+            var errors = checkCats(index);            
+            if (errors) {
+                createSiteSelect();
+            }
+        }
+        function checkCats(index) {
+            //首先判断有几个条目，如果就剩一个条目，不选择域，也可以通过
+            var count = $('#site_wrapper_' + index).siblings().length;
+            if (count == 0) {
+                return true ;
+            }
+
+            //首先判断是否选择域            
+            var selectedValue = document.getElementById("ddlsite_" + index).value;
+            if (selectedValue == "0") {
+                alert("请选择条目【"+index+"】中的“域”！\n\n如果不选择，请点击删除操作。");
+                return false;
+            }
+            //判断是否选择根分类
+            selectedValue = document.getElementById('cid_' + index + '_0').value;
+            if (selectedValue == "0") {
+                alert('请选择条目【'+index+'】中的“分类”！\n\n如果不选择，请点击删除操作。');
+                return false;
+            }
+            return true;
+        }
+        function getSites() {
+            var str = '';
+            $('#catWrapper > div').each(function (i) {
+                var index = $(this).attr('index');
+                var ddlSiteId = 'ddlsite_' + index;
+                if (document.getElementById(ddlSiteId)) {
+                    var siteId = document.getElementById(ddlSiteId).value;
+                    if (siteId > 0) {
+                        str += siteId + '#' + getCats(index, 0)+"|";                        
+                    }
+                }
+            });
+            return str;
+        }
+        function getCats(index, parentId) {
+            var str = '';
+            var selId = 'cid_' + index + '_' + parentId;
+            if (document.getElementById(selId)) {
+                var catId = document.getElementById(selId).value;
+                if (catId > 0) {
+                    str += catId + '-'+getCats(index,catId);
+                }
+            }
+            return str;
+        }
+        function checkForm() {
+            var errors = false;
+            //判断是否选择类别
+            var parentCategoryIds = getCats(99999, 0);
+            if (parentCategoryIds == "") {
+                alert("请选择类别");
+                errors = true;
+                return false;
+            }
+            $("#parentCategoryIds").val(parentCategoryIds);
+
+            //CheckTitle
+            var titleObj = $('#txtTitle');
+            if ($.trim(titleObj.val()) == "") {
+                alert('请输入文章标题！');
+                titleObj.focus();
+                errors = true;
+                return false;
+            }
+
+            
+            //判断是否同时发布到其它的站点
+            $('#catWrapper > div').each(function (i) {
+                var index = $(this).attr('index');
+                var flag = checkCats(index);
+                if (!flag) {
+                    errors = true;
+                    return false;
+                }
+            });
+            $('#relatedCatsString').val(getSites());
+            
+            if (errors) {
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+}

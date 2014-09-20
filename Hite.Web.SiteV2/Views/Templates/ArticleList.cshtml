@@ -1,0 +1,14 @@
+﻿<div class="template-article-list clearfix">
+    <dl>
+        @{  var i = 0;
+            foreach (var item in Model)
+            {
+            <text>
+            <dt@Html.Raw(i % 2 == 0 ? "" : " class=\"bg\"")><a href="@item.Url" title="@item.Title">@item.Title</a></dt>
+            <dd@Html.Raw(i % 2 == 0 ? "" : " class=\"bgdd\"")>@item.PublishDateTime.ToString("yyyy-MM-dd")</dd>
+            </text>
+                                                         i++;
+            }}
+    </dl>
+</div>
+@Html.Raw(Hite.Common.PagerBarHelper.Render(ViewBag.PageIndex, ViewBag.PageSize, ViewBag.Total, new { @class = "pagebar" }))

@@ -1,0 +1,355 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+    <siteMapNode>
+        <siteMapNode title="网站管理" description="1" roles="*">
+            <siteMapNode title="海得集团" description="2" roles="superadmin,www">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=1"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=1"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=1"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=1"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=1"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=1"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=1"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文"  description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=9"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=9"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=9"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=9"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=9"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=9"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=9"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="海得起重" description="2" roles="superadmin,hoisting">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=2"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=2"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=2"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=2"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=2"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=2"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=2"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=13"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=13"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=13"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=13"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=13"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=13"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=13"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="海得成套" description="2" roles="superadmin,assembling">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=3"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=3"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=3"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=3"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=3"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=3"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=3"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=11"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=11"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=11"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=11"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=11"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=11"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=11"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="海得新能源" description="2" roles="superadmin,energy">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=4"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=4"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=4"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=4"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=4"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=4"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=4"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文" description="3">
+                  <siteMapNode title="文章管理">
+                    <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=15"></siteMapNode>
+                    <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=15"></siteMapNode>
+                  </siteMapNode>
+                  <siteMapNode title="招聘管理">
+                    <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=15"></siteMapNode>
+                    <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=15"></siteMapNode>
+                  </siteMapNode>
+                  <siteMapNode title="资料下载管理">
+                    <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=15"></siteMapNode>
+                    <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=15"></siteMapNode>
+                  </siteMapNode>
+                  <siteMapNode title="反馈管理">
+                    <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=15"></siteMapNode>
+                  </siteMapNode>                  
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="海得机电一体化" description="2" roles="superadmin,automation">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=5"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=5"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=5"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=5"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=5"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=5"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=5"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=14"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=14"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=14"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=14"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=14"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=14"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=14"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="海得系统业务" description="2" roles="superadmin,system">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=6"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=6"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=6"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=6"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=6"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=6"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=6"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=12"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=12"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=12"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=12"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=12"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=12"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=12"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="海得电气" description="2" roles="superadmin,electric">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=7"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=7"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=7"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=7"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=7"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=7"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=7"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=10"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=10"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=10"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=10"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=10"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=10"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=10"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="海斯科" description="2" roles="superadmin,hi-scom">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=8"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=8"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=8"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=8"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=8"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=8"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=8"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="英文" description="3">
+                  <siteMapNode title="文章管理">
+                    <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=16"></siteMapNode>
+                    <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=16"></siteMapNode>
+                  </siteMapNode>
+                  <siteMapNode title="招聘管理">
+                    <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=16"></siteMapNode>
+                    <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=16"></siteMapNode>
+                  </siteMapNode>
+                  <siteMapNode title="资料下载管理">
+                    <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=16"></siteMapNode>
+                    <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=16"></siteMapNode>
+                  </siteMapNode>
+                  <siteMapNode title="反馈管理">
+                    <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=16"></siteMapNode>
+                  </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="成都海得" description="2" roles="superadmin,chengdu">
+                <siteMapNode title="中文" description="3">
+                    <siteMapNode title="文章管理">
+                        <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=17"></siteMapNode>
+                        <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=17"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="招聘管理">
+                        <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=17"></siteMapNode>
+                        <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=17"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="资料下载管理">
+                        <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=17"></siteMapNode>
+                        <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=17"></siteMapNode>
+                    </siteMapNode>
+                    <siteMapNode title="反馈管理">
+                        <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=17"></siteMapNode>
+                    </siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+            <siteMapNode title="上海嘉仪" description="2" roles="superadmin,jiayi">
+                <siteMapNode title="文章管理">
+                    <siteMapNode title="发表文章" url="/Article/Edit.cshtml?siteId=18"></siteMapNode>
+                    <siteMapNode title="文章列表" url="/Article/List.cshtml?siteId=18"></siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="招聘管理">
+                    <siteMapNode title="发布招聘" url="/Job/Edit.cshtml?siteId=18"></siteMapNode>
+                    <siteMapNode title="招聘列表" url="/Job/List.cshtml?siteId=18"></siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="资料下载管理">
+                    <siteMapNode title="添加资料" url="/Attach/Edit.cshtml?siteId=18"></siteMapNode>
+                    <siteMapNode title="资料列表" url="/Attach/List.cshtml?siteId=18"></siteMapNode>
+                </siteMapNode>
+                <siteMapNode title="反馈管理">
+                    <siteMapNode title="反馈信息" url="/Feedback/List.cshtml?siteId=18"></siteMapNode>
+                </siteMapNode>
+            </siteMapNode>
+        </siteMapNode>
+        <siteMapNode title="论坛管理" description="1" roles="*">
+            <siteMapNode title="板块列表" url="/Forum/List.cshtml" roles="*"></siteMapNode>
+            <siteMapNode title="主题管理" url="/Forum/TopicList.cshtml" roles="*"></siteMapNode>
+            <siteMapNode title="申请用户" url="/Forum/ApplyUserList.cshtml" roles="*"></siteMapNode>
+            <siteMapNode title="版主管理" url="/Forum/ModeratorList.cshtml" roles="*"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode title="网站分类管理" description="1" roles="*">
+            <siteMapNode title="分类列表" url="/ArticleCategory/List.cshtml" roles="*"></siteMapNode>
+            <siteMapNode title="添加分类" url="/ArticleCategory/Edit.cshtml" roles="*"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode title="网站域管理" description="1" roles="superadmin">
+            <siteMapNode title="域信息" url="/Sites/List.cshtml" roles="superadmin"></siteMapNode>
+            <siteMapNode title="添加域" url="/Sites/Edit.cshtml" roles="superadmin"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode title="网站用户管理" description="1" roles="superadmin">
+            <siteMapNode title="用户列表" url="/Users/List.cshtml" roles="superadmin"></siteMapNode>
+        </siteMapNode>
+        <siteMapNode title="系统设置">
+            <siteMapNode title="管理员列表" url="/Admin/List.cshtml" roles="superadmin"></siteMapNode>
+            <siteMapNode title="添加管理员" url="/Admin/Add.cshtml" roles="superadmin"></siteMapNode>
+            <siteMapNode title="修改密码" url="/SetPwd.cshtml" roles="*"></siteMapNode>
+            <siteMapNode title="退出" url="/Logout.cshtml" roles="*"></siteMapNode>
+        </siteMapNode>
+    </siteMapNode>
+</siteMap>
+

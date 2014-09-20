@@ -1,0 +1,5 @@
+﻿@{
+    //清空Cookie
+    Controleng.Common.Utils.WriteCookie("pa", string.Empty, -1);
+    Response.Redirect("/login.cshtml");
+}

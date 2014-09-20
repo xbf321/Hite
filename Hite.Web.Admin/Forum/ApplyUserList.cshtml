@@ -1,0 +1,86 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{
+    Page.Title = "申请用户管理";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    int pageIndex = CECRequest.GetQueryInt("page",1);
+    int pageSize = 15;
+    string action = CECRequest.GetQueryString("action");
+
+    if (action != string.Empty)
+    {
+        int id = CECRequest.GetQueryInt("id",0);
+        switch (action.ToLower())
+        {
+            case "passed":
+                //设置通过
+                ForumApplyUserService.UpdateStatus(id,ForumApplyStatus.Passed);
+                break;
+            case "nopass":
+                //设置不通过
+                ForumApplyUserService.UpdateStatus(id, ForumApplyStatus.NoPass);
+                break;
+        }
+        Response.Redirect("applyuserlist.cshtml");
+        Response.End();
+    }
+    
+    var applyUserList = ForumApplyUserService.List(pageIndex,pageSize);
+    
+    
+}
+
+@section head {
+    <style type="text/css">
+        .status_Applying{color:Blue;}
+        .status_Passed{color:Green;}
+        .status_NoPass{color:Red;}
+    </style>
+}
+<fieldset>
+    <legend>申请用户管理</legend>
+    <table class="tblist" width="100%">
+        <tr>
+            <th width="15%">用户名</th>
+            <th width="15%">申请版块</th>
+            <th>接洽人</th>
+            <th width="10%">状态</th>
+            <th width="10%">申请时间</th>
+            <th width="15%">操作</th>
+        </tr>
+        @foreach(var model in applyUserList){
+            <tr>
+                <td align="center">@model.UserName</td>
+                <td align="center">@model.ForumGroupName</td>
+                <td>@model.ContactPerson</td>
+                <td align="center"><span class="status_@(model.Status)">@Hite.Common.EnumHelper.GetEnumDescription(model.Status)</span></td>
+                <td align="center">@model.CreateDateTime.ToString("yyyy-MM-dd")</td>
+                <td align="center">
+                    @switch(model.Status){
+                        case ForumApplyStatus.Applying:
+                            <text><a href="javascript:void(0);" onclick="doStatus('@ForumApplyStatus.Passed',@(model.Id))">通过</a>&nbsp;|&nbsp;<a href="javascript:void(0);" onclick="doStatus('@ForumApplyStatus.NoPass',@(model.Id))">拒绝</a></text>
+                            break;
+                        case ForumApplyStatus.NoPass:
+                            <text><a href="javascript:void(0);" onclick="doStatus('@ForumApplyStatus.Passed',@(model.Id))">通过</a></text>
+                            break;
+                        case ForumApplyStatus.Passed:
+                            <text><a href="javascript:void(0);" onclick="doStatus('@ForumApplyStatus.NoPass',@(model.Id))">拒绝</a></text>
+                            break;
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(pageIndex, pageSize, applyUserList.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>
+@section foot{
+    <script type="text/javascript">
+        function doStatus(status, id) {
+            if (window.confirm('确定？')) {
+                window.location.href = '?action=' + status + '&id=' + id;
+            }
+        }
+    </script>
+}

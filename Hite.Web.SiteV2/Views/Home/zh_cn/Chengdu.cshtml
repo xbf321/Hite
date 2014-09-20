@@ -1,0 +1,147 @@
+﻿@{
+    ViewBag.Title = "成都海得";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#1e6498;border:1px solid #1e6498;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#1e6498;}
+        
+        .wrap1-col1{float:left;width:700px;}
+        .wrap1-col2{float:right; line-height:22px;padding-top:45px; width:270px; background:url("/images/welcome_blue.jpg") no-repeat scroll left 10px transparent;}
+		
+		.layout-one{width:972px;height:198px;margin:0 auto;padding-left:8px;padding-top:2px;margin-top:10px;}
+		.layout_one_L{width:270px;height:198px;;float:left;}
+		
+		.layout_one_R{height:200px;width:670px;float:left;}
+		.layout_one_R h1{font-size:16px;color:#3BA17D;font-weight:bold;height:20px;line-height:20px;font-family:"宋体";}
+		.layout_one_R h1 img{padding:0 5px;}
+		.layout_one_bottom{height:155px;widht:670px;padding-left:25px;}
+		.layout_one_bottom h2{height:20px;font-size:14px;font-family:"宋体";color:#696566;padding-top:8px;font-weight:bold;}
+		.layout_one_bottom p{margin:0;padding:0;line-height:24px;font-family:"宋体";color:#696566;}
+		
+		.layout-one-bottom1{width:618px;height:95px;background-color:#E9FDF1;padding-left:25px;}
+		.layout-one-bottom1 p{height:24px;width:618px;line-height:24px;font-family:"宋体";color:#696566;position:relative;}
+		.layout-one-bottom1 p span{padding-left:10px;}
+		.layout-one-bottom1 p img{position:absolute;top:12px;}
+		
+		.layout-two{height:273px;width:972px;margin:0 auto;padding-left:8px;margin-top:6px;}
+		.layout-two ul li{margin-right:95px;float:left;width:245px;}
+		.layout-two ul li p{padding-left:20px;line-height:24px;}
+		.layout-two ul li h1{height:18px;line-height:18px;margin-bottom:5px;font-size:16px;color:#3BA17D;;font-weight:bold;font-family:"宋体";}
+		.layout-two ul li h1 img{padding:0 5px;float:left;}
+    </style>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <div class="focusimg" id="slide">
+            <!--轮播广告-->
+            <ol>
+                @foreach (var item in ViewBag.FocusImageList)
+                { 
+                    <text><li><a href="@item.Url" target="_blank" title="@item.Title">
+                        <img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+                }
+            </ol>
+        </div>
+        <script type="text/javascript">
+            $("#slide").hiteSlide({ width: 700, height: 301, timer: 4000 });
+        </script>
+    </div>
+    <div class="wrap1-col2">
+        @Html.Raw(PageData["SiteInfo"].Introduction)
+    </div>
+</div>
+<div class="layout-one">
+    <div class="layout_one_L">
+        <script type="text/javascript">
+            var pic_width = 270; //图片宽度
+            var pic_height = 198; //图片高度
+            var button_pos = 4; //按扭位置 1左 2右 3上 4下
+            var stop_time = 4000; //图片停留时间(1000为1秒钟)
+            var show_text = 0; //是否显示文字标签 1显示 0不显示
+            var txtcolor = "000000"; //文字色
+            var bgcolor = "FFFFFF"; //背景色
+            var focusFlashUrl = "/Scripts/FlashFocus.swf";
+            var swf_height = show_text == 1 ? pic_height + 20 : pic_height;
+            //可编辑内容结束
+            var pics, links, texts;
+            @{
+                IList<Hite.Model.ArticleInfo> focusArticleList = ViewBag.NewsImageList;
+                if (focusArticleList.Count > 0)
+                {
+                   <text>pics = '@(focusArticleList.Select(n => n.ImageUrl).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                   <text>links = '@(focusArticleList.Select(n => n.Url).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                   <text>texts = '@(focusArticleList.Select(n => n.Title).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                }
+            }
+            //输出FlashObjct
+            document.write('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cabversion=9,0,0,0" width="' + pic_width + '" height="' + swf_height + '">');
+            document.write('<param name="movie" value="' + focusFlashUrl + '">');
+            document.write('<param name="quality" value="high"><param name="wmode" value="opaque">');
+            document.write('<param name="FlashVars" value="pics=' + pics + '&links=' + links + '&texts=' + texts + '&pic_width=' + pic_width + '&pic_height=' + pic_height + '&show_text=' + show_text + '&txtcolor=' + txtcolor + '&bgcolor=' + bgcolor + '&button_pos=' + button_pos + '&stop_time=' + stop_time + '">');
+            document.write('<embed src="' + focusFlashUrl + '" FlashVars="pics=' + pics + '&links=' + links + '&texts=' + texts + '&pic_width=' + pic_width + '&pic_height=' + pic_height + '&show_text=' + show_text + '&txtcolor=' + txtcolor + '&bgcolor=' + bgcolor + '&button_pos=' + button_pos + '&stop_time=' + stop_time + '" quality="high" width="' + pic_width + '" height="' + swf_height + '" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />');
+            document.write('</object>');
+        </script>
+    </div>
+    <div class="layout_one_R">
+        <h1>
+            <img src="/images/distribution/jiantou.jpg" />新闻中心</h1>
+        <div class="layout_one_bottom">
+            @{
+                var news = ViewBag.News;
+                if (news.Count > 0)
+                {
+                    var topNews = news[0];
+                <text><h2>
+                    <a href="@(topNews.Url)" title="@(topNews.Title)" target="_blank">@(topNews.Title)</a></h2>
+                <p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;@Goodspeed.Common.CharHelper.Truncate(topNews.Remark, 130)</p></text>
+                                       news.RemoveAt(0);
+                }
+            
+            }
+            <div class="layout-one-bottom1">
+                @foreach (var item in news)
+                {
+                    <p>
+                        <img src="/images/distribution/dot.jpg" /><span><a href="@(item.Url)" title="@(item.Title)" target="_blank">@(item.Title)</a></span></p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layout-two">
+    <ul>
+        <li>
+            <h1>
+                <img src="/images/distribution/jiantou.jpg" /><span>工业信息化</span></h1>
+            <img src="/images/distribution/gongyexinxi.jpg" />
+            @foreach (var item in Hite.Services.CategoryService.ListByParentId(710, true))
+            {
+                <text><p>@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item))</p></text>
+            }
+        </li>
+        <li>
+            <h1>
+                <img src="/images/distribution/jiantou.jpg" />集成产品方案</h1>
+            <img src="/images/distribution/jichengchanpin.jpg" />
+            @foreach (var item in Hite.Services.CategoryService.ListByParentId(718, true))
+            {
+                <text><p>@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item))</p></text>
+            }
+        </li>
+        <li style="margin: 0">
+            <h1>
+                <img src="/images/distribution/jiantou.jpg" />交通信息化</h1>
+            <img src="/images/distribution/jiaotongxinxi.jpg" />
+            @foreach (var item in Hite.Services.CategoryService.ListByParentId(719, true))
+            {
+                <text><p>@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item))</p></text>
+            }
+        </li>
+    </ul>
+</div>
+<div class="blankb">
+</div>

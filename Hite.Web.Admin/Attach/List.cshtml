@@ -1,0 +1,55 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{  
+    Page.Title = "添加资料";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+    int siteId = CECRequest.GetQueryInt("siteId",0);
+    int pageIndex = CECRequest.GetQueryInt("page",0);
+    var attachList = AttachmentService.List(new SearchSetting()
+    {
+        SiteId = siteId,
+        PageIndex = pageIndex,
+        ShowDeleted = true
+    });
+}
+<fieldset>
+<legend>资料列表</legend>
+<table width="100%">
+    <tr>
+        <td align="right"><a href="edit.cshtml?siteId=@siteId" class="btn-add">添加资料</a></td>
+    </tr>
+</table>
+<table width="100%" class="tblist">
+    <tr>
+        <th width="6%">流水号</th>
+        <th>
+            资料名称
+        </th>
+        <th width="10%">
+            文件大小
+        </th>
+        <th width="10%">
+            发布时间
+        </th>
+        <th width="5%">排序</th>
+        <th width="7%">
+            是否删除
+        </th>
+        <th width="5%">操作</th>
+    </tr>
+    @foreach (var item in attachList)
+    {
+        <tr>
+            <td align="center">@item.Id</td>
+            <td>@item.Title</td>
+            <td align="center">@Utils.FormatBytesStr(item.Size)</td>
+            <td align="center">@item.PublishDate.ToString("yyyy-MM-dd")</td>
+            <td align="center">@item.Sort</td>
+            <td align="center">@Html.Raw(item.IsDeleted ? "<font color=\"red\">已删除</font>":"否")</td>
+            <td align="center"><a href="edit.cshtml?siteId=@(item.SiteId)&id=@item.Id">编辑</a></td>
+        </tr>
+    }
+</table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(attachList.PageIndex, attachList.PageSize, attachList.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>

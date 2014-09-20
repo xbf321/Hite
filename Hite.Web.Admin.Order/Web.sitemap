@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap>
+  <siteMapNode>
+    <siteMapNode title="客户订单系统" description="2" roles="*">
+      <siteMapNode url="/OrderUsers/Edit" title="增加用户" roles="superadmin"/>
+      <siteMapNode url="/OrderUsers/List" title="用户列表" roles="superadmin"/>
+      <siteMapNode url="/Order/Edit" title="增加订单" roles="orderoperator"/>
+      <siteMapNode url="/Order/List" title="订单列表" roles="orderoperator"/>
+    </siteMapNode>
+    <siteMapNode title="系统管理" description="2" roles="*">
+        <siteMapNode url="/Admin/List" title="管理员设置" roles="superadmin"></siteMapNode>
+        <siteMapNode url="/Admin/Add" title="添加管理员" roles="superadmin"></siteMapNode>
+        <siteMapNode url="/Admin/SetPwd" title="密码设置" roles="*"></siteMapNode>
+      <siteMapNode url="/Logout" title="退出" roles="*"></siteMapNode>
+    </siteMapNode>
+  </siteMapNode>
+</siteMap>

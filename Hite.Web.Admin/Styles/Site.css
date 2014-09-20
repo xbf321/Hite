@@ -1,0 +1,218 @@
+﻿/*----------------------------------------------------------
+The base color for this template is #5c87b2. If you'd like
+to use a different color start by replacing all instances of
+#5c87b2 with your new color.
+----------------------------------------------------------*/
+
+body
+{
+    font-size: 12px;
+    font-family: "Trebuchet MS" , Verdana, Helvetica, Sans-Serif;
+    margin: 0 auto;
+    padding: 0;
+    color: #696969;
+}
+.tblist
+{
+    border-collapse: collapse;
+}
+.tblist th
+{
+    background-image: url(/images/barbg3.jpg);
+    height: 28px;
+    text-align: center;
+    font-weight: bold;
+    border: solid 1px #CCC;
+}
+.tdcenter
+{
+    text-align: center;
+}
+.tblist td
+{
+    height: 25px;
+    border: solid 1px #CCC;
+}
+a:link
+{
+    color: #034af3;
+    text-decoration: underline;
+}
+
+a:visited
+{
+    color: #505abc;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+}
+.clear
+{
+    clear: both;
+}
+a:active
+{
+    color: #12eb87;
+}
+.validation-summary-errors, .field-validation-error, .required
+{
+    color: Red;
+    font-weight: bold;
+    margin: 0 5px 0 5px;
+}
+.back
+{
+    margin: 0 10px 0 10px;
+    text-decoration: underline;
+}
+.msg
+{
+    margin-top: 10px;
+    color: Red;
+    padding: 10px;
+    display: block;
+    font-weight: bold;
+    border: 1px red dotted;
+}
+.pagerbar
+{
+    margin: 10px 0 10px 0;
+}
+.pagerbar span
+{
+    padding: 5px;
+}
+/* HEADINGS   
+----------------------------------------------------------*/
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.5em;
+    color: #000;
+}
+
+h1, h2
+{
+    font-size: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+h3
+{
+    font-size: 1.2em;
+}
+
+h4
+{
+    font-size: 1.1em;
+}
+
+h5, h6
+{
+    font-size: 1em;
+}
+/* Tab Menu   
+----------------------------------------------------------*/
+
+/* forms   
+----------------------------------------------------------*/
+fieldset
+{
+    margin: 0;
+    padding: 10px;
+    border: 1px solid #CCC;
+    margin-bottom:10px;
+}
+
+fieldset legend
+{
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 5px 10px 5px 10px;
+    border: #aaa 1px solid;
+}
+
+fieldset ol
+{
+    padding: 0;
+    list-style: none;
+}
+
+fieldset ol li
+{
+    padding-bottom: 5px;
+}
+
+fieldset label
+{
+    display: block;
+}
+
+fieldset label.checkbox
+{
+    display: inline;
+}
+
+fieldset input[type="text"], input[type="password"]
+{
+    border: 1px solid #ccc;
+    padding: 2px;
+    font-size: 1.2em;
+    margin: 2px 0 2px 0;
+    color: #444;
+}
+
+fieldset input[type="submit"]
+{
+    font-size: 1.2em;
+    padding: 5px;
+}
+
+/* errors  
+----------------------------------------------------------*/
+.error
+{
+    background: #ffe4e4;
+    color: #be3e16;
+}
+
+.success
+{
+    border:1px dotted #dff2bf;
+    background:#dff2bf;
+    color: #4f8a10;
+    padding:5px;
+}
+
+input[type="text"].error-field, input[type="password"].error-field
+{
+    border: solid 1px #be3e16;
+    background-color: #ffe4e4;
+}
+
+.validation-error
+{
+    display: inline;
+    color: #be3e16;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.validation-error:before
+{
+    content: "»";
+}
+.btn-add
+{
+    padding: 5px;
+    display: block;
+    border: 1px solid gray;
+    width: 60px;
+    text-align: center;
+}
+.text-three{width:300px;}
+.text-four{width:400px;}
+.text-five{ width:500px;}

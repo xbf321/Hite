@@ -1,0 +1,61 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{  
+    Page.Title = "反馈列表";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+    int siteId = CECRequest.GetQueryInt("siteId", 0);
+    int pageIndex = CECRequest.GetQueryInt("page", 0);
+    var feedbackList = FeedbackService.List(new SearchSetting()
+    {
+        SiteId = siteId,
+        PageIndex = pageIndex
+    });
+}
+<fieldset>
+    <legend>反馈信息</legend>
+    <table width="100%" class="tblist">
+        <tr>
+            <th width="7%">流水号</th>
+            <th width="15%">用户名</th>
+            <th width="10%">姓名</th>
+            <th>公司</th>
+            <th width="15%">电话</th>
+            <th width="15%">Email</th>
+            <th width="10%">反馈时间</th>
+            <th width="7%">查看</th>
+        </tr>
+        @foreach(var item in feedbackList){
+            <tr>
+                <td align="center">@item.Id</td>
+                <td align="center">@(item.UserId == 0 ? "匿名" : item.UserName)</td>
+                <td align="center">@item.RealName</td>
+                <td align="center">@item.Company</td>
+                <td align="center">@item.Phone</td>
+                <td align="center">@item.Email</td>
+                <td align="center">@item.CreateDateTime.ToString("yyyy-MM-dd")</td>
+                <td align="center"><a href="javascript:void(0);" onclick="showInfo(@item.Id)">详细</a></td>
+                <div id="id_@(item.Id)" style="display:none;padding:5px;">
+                    <b>需求：</b><br />
+                    @item.Requirement<br />
+                    <b>意向：</b><br />
+                    @item.Intention
+                </div>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(feedbackList.PageIndex, feedbackList.PageSize, feedbackList.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>
+@section foot{
+    <script type="text/javascript">
+        function showInfo(id) {
+            var dialog = new X.UI.Dialog({ width: '600px' });
+            dialog.setHeader("详细信息");
+            var info = $("#id_" + id).html();
+            dialog.setBody(info);
+            var b2 = new X.UI.Button('<input class="input-button" type="button" value="\u5173\u95ED" />');
+            dialog.addButton(b2, dialog.close);
+            dialog.show();
+        }
+    </script>
+}

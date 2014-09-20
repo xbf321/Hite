@@ -1,0 +1,22 @@
+﻿@{
+    var folder = System.Configuration.ConfigurationManager.AppSettings["IMAGESERVERFOLDER"];
+    var serverDomain = System.Configuration.ConfigurationManager.AppSettings["IMAGESERVERDOMAIN"];
+    HttpFileCollectionBase files = Request.Files;
+    try{
+        HttpPostedFileBase postedFile = files[0];
+        //
+        if(postedFile.ContentLength >0){
+            string originalFileName = postedFile.FileName;
+            string originalExtension = System.IO.Path.GetExtension(originalFileName);
+            string newFileName = string.Format("{0}{1}",DateTime.Now.ToString("yyyyMMddHHmmss"),originalExtension);
+            string imageServerFolder = String.Concat(folder, string.Format("{0}\\{1}\\{2}\\", DateTime.Now.Year, DateTime.Now.Month.ToString("00"), DateTime.Now.Day.ToString("00")));
+            if(!System.IO.Directory.Exists(imageServerFolder)){
+                System.IO.Directory.CreateDirectory(imageServerFolder);
+            }
+            postedFile.SaveAs(String.Concat(imageServerFolder,newFileName));
+
+            string returnImage = string.Format("{0}/{1}/{2}/{3}/{4}", serverDomain, DateTime.Now.Year, DateTime.Now.Month.ToString("00"), DateTime.Now.Day.ToString("00"), newFileName);
+            Response.Write(returnImage);
+        }
+    }catch(Exception ex){}
+    }

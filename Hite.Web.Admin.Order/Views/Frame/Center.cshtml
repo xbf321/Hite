@@ -1,0 +1,36 @@
+﻿@{
+    ViewBag.Title = "导航";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        body{background:#555;text-align:left;margin:0px;overflow:hidden;}
+    </style>
+    <script type="text/javascript">
+        function switchSysBar(e) {
+            if (e.innerHTML == "3") {
+                e.innerHTML = "4";
+                window.top.document.getElementById("left").style.display = "none";
+                window.top.document.getElementsByTagName("frameset")[1].cols = "0,15,*";
+            } else {
+                e.innerHTML = "3";
+                window.top.document.getElementById("left").style.display = "";
+
+
+                var obj = window.top.document.getElementsByTagName("frameset")[1];
+                if (obj.offsetHeight > 625 && window.screen.availHeight > 716) {
+                    obj.cols = "180,15,*";
+                }
+                else {
+                    obj.cols = "167,15,*";
+                }
+            }
+        }
+</script>
+}
+<table width="15" height="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td align="center" valign="middle"><span title="关闭/打开导航栏目" style="font-family: Webdings; cursor:pointer; color:#fff;" onclick="switchSysBar(this);">3</span></td>
+  </tr>
+</table>
+

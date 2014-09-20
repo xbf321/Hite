@@ -1,0 +1,15 @@
+﻿<div class="template-cat-list-with-one-column clearfix" style="border:0;">
+    <div class="template-cat-img">
+        <img src="@ViewBag.CurrentCategoryInfo.ImageUrl" width="152" height="116" alt="@ViewBag.CurrentCategoryInfo.Name" /></div>
+    <div class="template-cat-article-list">
+        <h3 class="blue6B">
+            <strong>@(ViewBag.CurrentCategoryInfo.Name)</strong></h3>
+        <ul>
+            @foreach (var articleItem in Model)
+            {
+                <li><a href="@articleItem.Url" title="@articleItem.Title">@articleItem.Title</a></li>
+            }
+        </ul>
+    </div>
+</div>
+@Html.Raw(Hite.Common.PagerBarHelper.Render(ViewBag.PageIndex, ViewBag.PageSize, ViewBag.Total, new { @class = "pagebar" }))

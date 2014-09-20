@@ -1,0 +1,58 @@
+﻿@using Controleng.Common;
+@using Hite.Model;
+@using Hite.Services;
+@{  
+    Page.Title = "发布招聘";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+    
+    int siteId = CECRequest.GetQueryInt("siteId",0);
+    int pageIndex = CECRequest.GetQueryInt("page",0);
+    var jobList = JobService.List(new SearchSetting(){
+        SiteId = siteId,
+        PageIndex = pageIndex,
+        ShowDeleted = true
+    });
+}
+<fieldset>
+    <legend>职位列表</legend>
+    <table width="100%">
+        <tr>
+            <td align="right"><a href="edit.cshtml?siteId=@siteId" class="btn-add">发布职位</a></td>
+        </tr>
+    </table>
+    <table width="100%" class="tblist">
+        <tr>
+            <th width="6%">流水号</th>
+            <th>
+                职位
+            </th>
+            <th width="15%">
+                部门
+            </th>
+            <th width="10%">
+                地区
+            </th>
+            <th width="8%">
+                截止日期
+            </th>
+            <th width="5%">排序</th>
+            <th width="7%">
+                是否删除
+            </th>
+            <th width="5%">操作</th>
+        </tr>
+        @foreach(var item in jobList){
+            <tr>
+                <td align="center">@item.Id</td>
+                <td align="center">@item.Title</td>
+                <td align="center">@item.Department</td>
+                <td align="center">@item.Area</td>
+                <td align="center">@(item.EndDateTime.ToShortDateString() == DateTime.MaxValue.ToShortDateString() ? "永不过期":item.EndDateTime.ToShortDateString())</td>
+                <td align="center">@item.Sort</td>
+                <td align="center">@Html.Raw(item.IsDeleted ? "<font color=\"red\">已删除</font>":"否")</td>
+                <td align="center"><a href="edit.cshtml?siteId=@(item.SiteId)&id=@item.Id">编辑</a></td>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(jobList.PageIndex, jobList.PageSize, jobList.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>

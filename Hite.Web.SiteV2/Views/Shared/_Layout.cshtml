@@ -1,0 +1,99 @@
+﻿@{
+    var siteInfo = PageData["SiteInfo"];
+    }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title - @siteInfo.WebTitle</title>
+    <link rel="shortcut icon" href="http://www.hite.com.cn/favicon.ico" type="image/x-icon" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=7" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <meta name="author" content="兴百放,xbf321(at)gmail.com" />
+    <meta name="Keywords" content="@(ViewBag.Keywords != null ? ViewBag.Keywords : siteInfo.WebKeywords)" />
+    <meta name="Description" content="@(ViewBag.Description != null ? ViewBag.Description : siteInfo.WebDesc)" />
+    <link type="text/css" rel="stylesheet" href="/static/css?href=styles/global.css,styles/@(siteInfo.IndexFileName.ToString().ToLower()).css,styles/jquery.ddsmoothmenu.css,styles/jquery.xDialog.css"/>
+    @if (siteInfo.Language == Hite.Model.WebLanguage.en)
+    { 
+    <link rel="alternate" hreflang="cn" href="http://www.hite.com.cn" />
+    <link type="text/css" rel="stylesheet" href="/styles/hack/@(siteInfo.IndexFileName.ToString().ToLower()).css"/>
+    }
+    else { 
+    <link rel="alternate" hreflang="en" href="http://www.hite.com.cn/en" />
+    }
+    <script src="/static/js?src=scripts/jquery-1.4.4.min.js,scripts/jquery.jcarousellite_1.0.1.js,scripts/jquery.ddsmoothmenu.js,scripts/jquery.xDialog.js,scripts/jquery.slide.js,/scripts/jquery.tmpl.min.js,/scripts/jquery.cookie.js,201304082151.js"></script>
+    <script type="text/javascript">
+        var _GLOBAL = { menuRootId: 0, passportServer: "@(System.Configuration.ConfigurationManager.AppSettings["PassportUrl"])@(siteInfo.Language == Hite.Model.WebLanguage.en ? "/en" : "")",login: function () { var _h = window.location.href; if (_h.indexOf('/accounts/login') !==-1 || _h.indexOf('/accounts/register') !== -1) { _h = ''; } window.location.href = this.passportServer + '/accounts/login?ReturnUrl=' + encodeURIComponent(_h);},register: function () { var _h = window.location.href;if (_h.indexOf('/accounts/login') !==-1 || _h.indexOf('/accounts/register') !== -1) { _h = ''; } window.location.href = this.passportServer+'/accounts/register?ReturnUrl='+encodeURIComponent(_h); },logout:function(){window.location.href = this.passportServer + '/accounts/logout?ReturnUrl='+encodeURIComponent(window.location.href);}};
+    </script>@RenderSection("header", false)
+</head>
+<body>
+    <div id="header" class="clearfix">
+        <div class="logo">
+            <a href="/@(siteInfo.Language == Hite.Model.WebLanguage.en ? "en" : "")" title="@siteInfo.Name">
+                <img src="@siteInfo.Logo" alt="@siteInfo.Name" /></a>
+        </div>
+        <div class="link">@Html.Raw(Hite.Mvc.LanguageResourceHelper.GetString("site-top-nav-text", siteInfo.Language))@{Html.RenderPartial("_LoginUserControl", new { Language = @siteInfo.Language });}
+        </div>
+    </div>
+    <div id="nav" class="ddsmoothmenu">
+        <ul>
+            <li class="l">&nbsp;</li>
+            @{Html.RenderAction("CategoryListForHeader", "Home", new { siteId = siteInfo.Id });}
+            <li class="search">
+                <input type="text" class="search-key" name="txtHeaderSearchKey" id="txtHeaderSearchKey" value="@Request["q"]" />
+                <input type="button" class="search-button" id="btnHeaderSearch" alt="@Hite.Mvc.LanguageResourceHelper.GetString("search-text", siteInfo.Language)" />
+            </li>
+            <li class="r"></li>
+        </ul>
+    </div>
+    <div class="blankb">
+    </div>
+    <div id="main">
+        @RenderBody()
+    </div>
+    <div id="footer">
+        @Html.Raw(Hite.Mvc.LanguageResourceHelper.GetString("footer-text", siteInfo.Language))
+    </div>
+    <script type="text/javascript">
+        ddsmoothmenu.init({
+            mainmenuid: "nav", //menu DIV id
+            orientation: 'h', //Horizontal or vertical menu: Set to "h" or "v"
+            classname: 'ddsmoothmenu', //class added to menu's outer DIV
+            contentsource: "markup" //"markup" or ["container_id", "path_to_menu_file"]
+        })
+        jQuery.fn.extend({
+            pressEnter: function (fun) {
+                this.keypress(function (e) {
+                    if (e.which == "13") {
+                        fun.call(this, arguments);
+                        return this;
+                    }
+                });
+            }
+        });
+        $(document).ready(function () {
+            $("#nav > ul > li").each(function (index) {
+                var aObj = $(this).find("a").first();
+                if (aObj.length > 0) {
+                    if (_GLOBAL.menuRootId == aObj.attr('id')) {
+                        $(this).addClass("current").siblings().removeClass("current");
+                    }
+                }
+            });
+            $("#txtHeaderSearchKey").focus();
+            $('#btnHeaderSearch').click(function () {
+                var keyObj = $('#txtHeaderSearchKey');
+                if (keyObj.val() == "") { keyObj.focus(); return false; } else {
+                    window.location.href = '/search.html?q=' + encodeURIComponent(keyObj.val());
+                }
+            });
+        });        
+    </script>@RenderSection("footer", false)
+    <script type="text/javascript">
+        var referrer = window.encodeURIComponent(document.referrer);
+        var url = "<scr" + "ipt type=\"text/javascript\" src=\"/static/statistics?siteid=@(siteInfo.Id)&referrer=" + referrer + "\"></scr" + "ipt\>";
+        document.write(url);
+    </script>
+    @Html.Raw(siteInfo.ThirdCode)
+</body>
+</html>

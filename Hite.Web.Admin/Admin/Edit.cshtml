@@ -1,0 +1,68 @@
+﻿@using Hite.Services;
+@using Hite.Model;
+@{
+    Page.Title = "编辑管理员";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    int id = Controleng.Common.CECRequest.GetQueryInt("id",0);
+    var userInfo = AdminService.Get(id,true);
+    var allRoles = RoleService.List();
+    var msg = string.Empty;
+    if(userInfo.Id == 0){
+        Response.Redirect("list.cshtml");
+        Response.End();
+    }
+    if(IsPost){
+        var roles = Request["roles"] == null ? new string[] { } : Request["roles"].Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+        bool isEnabled = Request["isEnabled"].AsBool();
+        List<RoleInfo> roleList = new List<RoleInfo>();        
+        foreach (var role in roles)
+        {
+            foreach (var item in allRoles)
+            {
+                if (role.AsInt() == item.Id)
+                {
+                    roleList.Add(new RoleInfo()
+                    {
+                        Id = item.Id,
+                        Name = item.Name,
+                        SiteId = item.SiteId
+                    });
+                }
+            }
+        }
+        userInfo.Roles = roleList;
+        userInfo.IsEnabled = isEnabled;
+        AdminService.Update(userInfo);
+        msg = "更新成功！";
+    }
+}
+<form method="post">
+    <fieldset>
+        <legend>编辑【@userInfo.UserName】管理员</legend>
+        @if(!string.IsNullOrEmpty(msg)){
+            <div class="msg">@msg</div>
+        }
+        <table>
+            <tr>
+                <th align="right">角色：</th>
+                <td>
+                    @foreach (var role in allRoles)
+                    {
+                       @Html.CheckBox("roles", userInfo.Roles.Exists(m =>m.Id == role.Id) ? true : false, new { @id = "role_" + role.Id, value = role.Id }) @role.Name
+                    }
+                </td>
+            </tr>
+            <tr>
+                <th align="right">是否启用：</th>
+                <td>@Html.RadioButton("isEnabled", true, userInfo.IsEnabled ? true : false, new { @id = "yes" })是 @Html.RadioButton("isEnabled", false, userInfo.IsEnabled ? false : true, new { @id = "no" })否</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="保存" />&nbsp;&nbsp;<a href="list.cshtml">返回</a></td>
+            </tr>
+        </table>
+        <hr />
+        <font color="red">说明：</font>如果选择SuperAdmin（超级）管理员，就不用再选择其他角色，只有不是超级管理员，才有必要选择其他角色。
+    </fieldset>
+</form>

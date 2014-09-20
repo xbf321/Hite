@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>很抱歉，系统出错了，请稍后访问</title>
+    <link type="text/css" rel="stylesheet" href="/static/css?href=styles/global.css"/> 
+    <script src="/static/js?src=scripts/jquery-1.4.4.min.js"></script>   
+    <style type="text/css">
+        .wrapper{ background-color:#fff;padding:10px;width:600px;margin:0 auto;}
+        .wrapper h2{color:#333;font-size:16px;font-weight:bold;}
+        .wrapper h3{color:#666;}
+        .wrapper h3 strong{margin:0 6px;color:#a10000;font-weight:bold;}
+        .blank0{clear:both;display:block;font-size:1px;visibility:hidden;height:0;line-height:0;}
+        .blank5{clear:both;display:block;font-size:1px;overflow:hidden;height:5px;}
+        .blank8{clear:both;display:block;font-size:1px;overflow:hidden;height:8px;}
+        .blank10{clear:both;display:block;font-size:1px;overflow:hidden;height:10px;}
+        .blank12{clear:both;display:block;font-size:1px;overflow:hidden;height:12px;}
+        .blank15{clear:both;display:block;font-size:1px;overflow:hidden;height:15px;}
+        .blank20{clear:both;display:block;font-size:1px;overflow:hidden;height:20px;}
+        .blank25{clear:both;display:block;font-size:1px;overflow:hidden;height:25px;}
+        .btn-back{width:85px;height:26px;margin-left:10px;padding-left:18px;background:url(/images/btn-home-bg.gif) no-repeat;color:#fff;border:0;cursor:pointer;}
+        .btn-area span,.btn-area input{line-height:26px;float:left;display:inline;}
+        .btn-area span{color:#666;}
+    </style>    
+    <script type="text/javascript">
+        function lazyBackHome() {
+            var sec = $("#sec").text();
+            $("#sec").text(--sec);
+            if (sec > 0)
+                setTimeout("lazyBackHome();", 1000);
+            else
+                window.location.href = "/";
+        }
+    </script>
+</head>
+<body>
+    <div class="wrapper">
+    <span class="blank15"></span><span class="blank15"></span>
+    <h2>
+        很抱歉，系统出错了，请您耐心等待几分钟，我们的服务很快就能恢复。</h2>
+    <span class="blank8"></span>
+    <h3>
+        将在<strong id="sec">10</strong>秒后自动转入首页。</h3>
+    <span class="blank20"></span>
+    <div class="btn-area">
+        <span>您也可以：</span><input type="button" value="返回首页" class="btn-back" onclick="window.location.href='/'" />
+    </div>
+</div>
+  <script type="text/javascript">
+    $(document).ready(function () {
+        lazyBackHome();
+    });
+   </script>
+</body>
+</html>

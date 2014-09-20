@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "密码设置";
+}
+<fieldset>
+    <legend>密码设置</legend>
+    <form method="post">
+        @Html.ValidationSummary()
+        <table>
+            <tr>
+                <th align="right">请输入原始密码：</th>
+                <td>@Html.Password("txtOldPwd")</td>
+            </tr>
+            <tr>
+                <th align="right">请输入新密码：</th>
+                <td>@Html.Password("txtNewPwd")</td>
+            </tr>
+            <tr>
+                <th align="right">请确认新密码：</th>
+                <td>@Html.Password("txtConfirmNewPwd")</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="更新" />&nbsp;&nbsp;<a href="list" class="btn-back">返回</a></td>
+            </tr>
+        </table>
+    </form>
+</fieldset>
+

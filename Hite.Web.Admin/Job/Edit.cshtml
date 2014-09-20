@@ -1,0 +1,167 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{  
+    Page.Title = "发布招聘";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+    JobInfo model = new JobInfo();
+    int siteId = CECRequest.GetQueryInt("siteId", 0);
+    int id = CECRequest.GetQueryInt("id", 0);
+    if(siteId ==0){
+        <text>
+            <div class="msg">Arguments Error!</div>
+        </text>
+        return;
+    }
+    var errors = false;
+    var msg = string.Empty;
+    
+    if(IsPost){
+
+        System.Web.Mvc.FormCollection form = new System.Web.Mvc.FormCollection(this.Request.Unvalidated().Form);
+        model.Id = id;
+        model.Area = form["txtArea"];
+        model.Department = form["txtDepartment"];
+        model.Email = form["txtEmail"];
+        if(!form["txtEndDateTime"].IsEmpty()){
+            model.EndDateTime  = DateTime.Parse(form["txtEndDateTime"]);
+        }
+        model.Introduction = form["txtIntroduction"];
+        model.Number = TypeConverter.StrToInt(form["txtNumber"], 0);
+        model.SiteId = siteId;
+        model.Sort = TypeConverter.StrToInt(form["txtSort"], 0);
+        model.IsDeleted = TypeConverter.StrToInt(form["rblIsDeleted"]) == 1 ? true : false;
+        model.Title = form["txtTitle"];
+        model.CategoryId = 0;   //暂时没用
+        model.ParentCategoryIds = string.Empty; //暂时没用
+        
+        if(model.Title.IsEmpty()){
+            errors = true;
+            ModelState.AddError("title","招聘职位不能为空");
+        }
+        if(!errors){
+            JobService.Update(model);
+            
+            if(id >0){
+                msg = string.Format("<div class='msg'>修改成功！&nbsp;&nbsp;<a href=\"?siteId={0}\">在发一篇</a>&nbsp;&nbsp;或者&nbsp;&nbsp;<a href=\"list.cshtml?siteId={0}\">返回列表页</a></div>", siteId);
+            }else{
+                msg = string.Format("<div class='msg'>保存成功&nbsp;&nbsp;<a href=\"?siteId={0}\">在发一篇</a>&nbsp;&nbsp;或者&nbsp;&nbsp;<a href=\"list.cshtml?siteId={0}\">返回列表页</a></div>", siteId);
+            }
+        }
+    
+    }else{
+        if (id > 0) { model = JobService.Get(id); }
+        
+    }
+
+    
+    
+}
+@section head{
+    <!--编辑器以及编辑器中本地上传图片-->
+    <script src="/editor/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <script src="/Scripts/uploadimgforeditor.js" type="text/javascript"></script>
+    <!--编辑器以及编辑器中本地上传图片-->
+}
+<div>
+    <form method="post" action="" onsubmit="return checkForm();">
+    <fieldset>        
+        <legend>职位信息</legend>
+        @Html.Raw(msg)
+        @Html.ValidationSummary()
+        <table>
+        <tr>
+            <th align="right">招聘职位：</th>
+            <td>@Html.TextBox("txtTitle", model.Id == 0 ? Request["txtTitle"] : model.Title, new { @class = "text-five" })<span class="required">*</span></td>
+        </tr>
+        <tr>
+            <th align="right">招聘部门：</th>
+            <td>@Html.TextBox("txtDepartment", model.Id == 0 ? Request["txtDepartment"] : model.Department, new { @class = "text-five" })</td>
+        </tr>
+        <tr>
+            <th align="right">工作地区：</th>
+            <td>@Html.TextBox("txtArea", model.Id == 0 ? Request["txtArea"] : model.Area, new { @class = "text-five" })</td>
+        </tr>
+        <tr>
+            <th align="right">截止日期：</th>
+            <td>@Html.TextBox("txtEndDateTime", model.Id == 0 ? Request["txtEndDateTime"] : (model.EndDateTime.ToShortDateString() == DateTime.MaxValue.ToShortDateString() ? string.Empty: model.EndDateTime.ToShortDateString()))（不选代表没有截止日期，永不过期）</td>
+        </tr>
+        <tr>
+            <th align="right">招聘人数：</th>
+            <td>@Html.TextBox("txtNumber", model.Id == 0 ? Request["txtNumber"] : model.Number.ToString())（0：表示“若干”）</td>
+        </tr>
+        <tr>
+            <th align="right" valign="top">岗位职责：</th>
+            <td>@Html.TextArea("txtIntroduction", model.Id == 0 ? Request["txtIntroduction"] : model.Introduction, new { cols = 70, rows = 10 })</td>
+        </tr>
+        <tr>
+            <th align="right">应聘邮箱：</th>
+            <td>@Html.TextBox("txtEmail", model.Id == 0 ? Request["txtEmail"] : model.Email, new { @class = "text-three" })</td>
+        </tr>
+        <tr>
+            <th>显示顺序：</th>
+            <td>@Html.TextBox("txtSort", model.Id == 0 ? Request["txtSort"] : model.Sort.ToString())（默认：0，数值越小，排列顺序越靠前）</td>
+        </tr>
+        <tr>
+            <th>是否删除：</th>
+            <td><input type="radio" name="rblIsDeleted" value="0" @(model.Id == 0 ? Request["rblIsDeleted"] : (model.IsDeleted ? "" : "checked")) />否<input type="radio" name="rblIsDeleted" value="1" @(model.Id == 0 ? Request["rblIsDeleted"]:(model.IsDeleted? "checked": "")) />是（默认：否）</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="保存" />&nbsp;&nbsp;<a href="list.cshtml?siteId=@siteId" class="btn-back">返回</a></td>
+        </tr>
+       </table>
+    </fieldset>
+    </form>
+</div>
+@section foot{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //设置编辑器
+            tinyMCE.init({
+                theme: "advanced",
+                mode: "exact",
+                width: "660",
+                height: "380",
+                elements: "txtIntroduction",
+                language: "zh",
+                plugins: "table,insertdatetime,media,-xuimage,contextmenu,paste,inlinepopups",
+                // Theme options
+                theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect",
+                theme_advanced_buttons2: "cut,copy,paste,pastetext,pasteword,|bullist,numlist,|,outdent,indent,|,link,unlink,image,|,insertdate,inserttime,|,forecolor,backcolor",
+                theme_advanced_buttons3: "tablecontrols,|,hr,removeformat,|,media,code,|,xuimage",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_path: false,
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_resizing: true,
+                theme_advanced_resize_horizontal: false,
+                theme_advanced_resizing_use_cookie: 1,
+                theme_advanced_more_colors: false,
+                theme_advanced_font_sizes: '3,4,5,6,7',
+                theme_advanced_fonts: '楷体_GB2312=楷体_GB2312;黑体=黑体;隶书=隶书;Times New Roman=Times New Roman;Arial=Arial;'
+            });
+
+            $("#txtEndDateTime").datepicker({ dateFormat: 'yy-mm-dd', monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'], dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'] });
+
+            //设置TAB标签
+            $("#tabs").tabs();
+        });
+        function checkForm() {
+            var errors = false;
+            var titleObj = $("#txtTitle");
+            if (titleObj.val() == "") {
+                alert("请输入招聘职位");
+                titleObj.focus();
+                errors = true;
+                return false;
+            }
+
+            if (errors) {
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    }

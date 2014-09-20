@@ -1,0 +1,11 @@
+﻿<div class="usr-nav-block">
+    <ul>
+        <li><a href="modify" class="@(Model.ToLower() == "modify" ? "current" : string.Empty)">@Hite.Mvc.LanguageResourceHelper.GetString("modify-text", (Hite.Model.WebLanguage)ViewData["Language"])</a></li>
+        <li><a href="setpwd" class="@(Model.ToLower() == "setpwd" ? "current" : string.Empty)">@Hite.Mvc.LanguageResourceHelper.GetString("chanage-pwd-text", (Hite.Model.WebLanguage)ViewData["Language"])</a></li>
+        <li><a href="forumapply" class="@(Model.ToLower() == "forumapply" ? "current" : string.Empty)">申请论坛用户</a></li>
+        @*<li>@Html.ActionLink("修改信息", "modify", new { }, new { @class = (Model.ToLower() == "modify" ? "current" : string.Empty) })</li>
+        <li>@Html.ActionLink("修改密码", "setpwd", new { }, new { @class = (Model.ToLower() == "setpwd" ? "current" : string.Empty) })</li>
+        <li>@Html.ActionLink("申请论坛用户", "forumapply", new { }, new { @class = (Model.ToLower() == "forumapply" ? "current" : string.Empty) })</li>*@
+    </ul>
+</div>
+<div class="clear"></div>

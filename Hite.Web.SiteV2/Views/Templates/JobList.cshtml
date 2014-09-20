@@ -1,0 +1,43 @@
+﻿<div class="template-job-list">
+    <table width="100%" class="tblist">
+        <tr>
+            <th>
+                职位
+            </th>
+            <th width="10%">招聘部门</th>
+            <th width="10%">工作地区</th>
+            <th width="10%">招聘人数</th>
+            <th width="10%">应聘</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="job-title">@(item.Title)<span class="job-title-link">[<a href="javascript:void(0);" onclick="showJobInfo(@item.Id);return false;">详细..</a>]</span></div>
+                    <div class="job-intro" id="@(item.Id)_job_info">
+                     @if (item.EndDateTime.ToShortDateString() != DateTime.MaxValue.ToShortDateString()) { 
+                        <text><div class="job-end-date">截止日期：@item.EndDateTime.ToShortDateString()</div></text>
+                     }
+                    @Html.Raw(item.Introduction)</div>                
+                </td>
+                <td align="center">@item.Department</td>
+                <td align="center">@item.Area</td>
+                <td align="center">@item.Number</td>
+                <td align="center"><a href="mailto:@(item.Email)">我要应聘</a></td>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(Model.PageIndex, Model.PageSize, Model.TotalItemCount, new { @class = "pagebar" }))
+</div>
+<script type="text/javascript">
+    function showJobInfo(id) {
+        var dialog = new X.UI.Dialog({ width: '600px' });
+        dialog.setHeader("详细信息");
+        var info = $("#" + id + "_job_info").html();
+        dialog.setBody(info);
+        var b2 = new X.UI.Button('<input class="input-button" type="button" value="\u5173\u95ED" />');
+        dialog.addButton(b2, dialog.close);
+        dialog.show();
+    }
+</script>
+

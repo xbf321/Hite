@@ -1,0 +1,16 @@
+/Hite.Core/bin
+/Hite.Core/obj
+/Hite.Web.Admin/bin
+/Hite.Web.Admin/obj
+/Hite.Web.Admin.Order/bin
+/Hite.Web.Admin.Order/obj
+/Hite.Web.Forum/bin
+/Hite.Web.Forum/obj
+/Hite.Web.SiteV2/bin
+/Hite.Web.SiteV2/obj
+/Hite.suo
+/Hite.sln.DotSettings.user
+/Hite.Web.SiteV2/Hite.Web.SiteV2.csproj.DotSettings.user
+/Hite.Web.Forum/Hite.Web.Forum.csproj.DotSettings.user
+/Hite.Web.Admin.Order/Hite.Web.Admin.Order.csproj.DotSettings.user
+/Hite.Core/Hite.Core.csproj.DotSettings.user

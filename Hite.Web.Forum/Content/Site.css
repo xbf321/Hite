@@ -1,0 +1,149 @@
+/*=============================rest==============================*/
+html,body{color:#000;font-family:verdana, "ms song", Arial;background:#FFFFFF;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,input,button,textarea,p,blockquote,th,td{margin:0;padding:0;}img{border:0;}del,ins{text-decoration:none;}li{list-style:none;}caption,th{text-align:left;}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}q:before,q:after{content:'';}abbr,acronym{border:0;font-variant:normal;}sup{vertical-align:baseline;}sub{vertical-align:baseline;}legend{color:#000;}input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;}input,button,textarea,select{font-size:100%;}.clear{clear:both;height:1px; line-height:1px; font-size:0;}
+/*=============================rest end==============================*/
+
+body{font-size: 75%;font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;color: #666666;background:url("/images/bj.jpg") repeat-x scroll 0 0 #FFFFFF;margin:0;padding:0;}
+div,form,ol,span,dl,dt,dd{border:0;margin:0;padding:0;}
+img {border:0; margin:0; padding:0;}
+ul,li {padding:0;margin:0;list-style-type: none; font-weight:normal;}
+h1,h2,h3,h4,h5,h6,p{margin:0;padding:0;font-size:12px; font-weight:normal;}
+a{ text-decoration: none;}
+table{width:100%;border-collapse:separate;}
+a{color:#000; text-decoration:none;}
+a:visited{color:#000; text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+
+.wrapper{margin:0 auto;width:940px;background:#FFFFFF;padding:10px;}
+
+/*=====================================header================================*/
+.header{ margin:0 auto;width:960px; margin-top:10px;}
+.header .logo{float:left;}
+.header .ulink{float:right;}
+.header-list{float:right;width:100%;}
+.header-list ul{list-style:none; margin-right:20px;}
+.header-list ul li{width:52px;height:26px;background:#2396c1;float:right;margin:0 8px;line-height:26px;text-align:center;margin-right:5px;display:block;}
+.header-list ul li a{width:52px;height:26px;background:#2396c1;color:#fff;font-size:12px;text-decoration:none;}
+.header-list ul li a:hover{color:#666666;}
+.header .header-bt{height:5px;background:#167ca1;display:block; clear:both;}
+
+/*=====================================header end================================*/
+
+/*==================================/index start========================*/
+.fl{border:1px solid #CDCDCD;border-top:0px;}
+.group-title{background:url("/images/titlebg.png") repeat-x scroll 0 0 #E5EDF2;border-color: #C2D5E3;border-width: 1px 0;border-bottom: 1px solid #C2D5E3;border-top: 1px solid #C2D5E3;height: 31px;line-height: 31px;overflow: hidden;padding: 0 10px;border-left: 1px solid #FFFFFFborder-right: 1px solid #FFFFFF;}
+.group-title .o{float: right; width: 30px;}
+.group-title .o img{cursor: pointer;float: right;margin-top: 11px;}
+.group-title h2{color: #336699;font-weight: bold;}
+.group-content{padding:10px;}
+.group-content td{padding:10px 0;}
+.group-content .bt{border-top:1px dashed #CDCDCD;}
+/*==============================/index end==================================*/
+
+/*=============================nav start===========================*/
+.nav{ background:none repeat scroll 0 0 transparent; border:medium none; height:29px; line-height:29px; margin:2px 0;color:#333333;}
+.nav a{float:left;height:29px;}
+.nav-home{ background:url("/images/search.png") no-repeat scroll -8px -119px transparent; line-height:200px; overflow:hidden;width:16px;}
+.nav em{background:url("/images/pt_item.png") no-repeat scroll 3px 10px transparent; line-height:200px;width:20px; height:29px; overflow:hidden; float:left;}
+/*=========================nav end==============================*/
+
+/*===========================pagebar start========================*/
+.pgt{ margin-bottom:5px;margin-left:8px;}
+.pgtr{float:right;padding-right:10px;}
+.pgtl{float:left;}
+.pg-back{display:block; height:26px;width:60px;padding-left:15px;border:1px solid #2396C1; line-height:26px; float:left;}
+.pagebar{float:right; height:26px; line-height:26px; margin-left:20px;}
+.pagebar span{margin-left:10px;}
+/*=============================pagebar end============================*/
+
+/*===================/catalog/1.html thread list========================*/
+.cat-wrapper{border:1px solid #CDCDCD; margin-bottom:10px;}
+.cat-title{border:medium none; padding-top:5px;border-bottom:1px solid #CDCDCD;border-top:1px solid #FFFFFF;height:31px; line-height:31px; overflow:hidden;padding:0 10px;}
+.cat-title h1{font-weight:bold; font-size:14px;color:#000;}
+.cat-title h1 .ext{padding-left:10px;font-size:12px;color:#444444; font-weight:normal;}
+.cat-title h1 .ext strong{color:#F26C4F;}
+.cat-info{padding:10px;}      
+
+.thread{border:1px solid #CDCDCD;  background:none repeat scroll 0 0 #FFFFFF; margin-bottom:10px;}
+.thread-th{background:#F2F2F2; border-bottom:1px solid #CDCDCD; margin-top:1px;padding:0 10px; height:30px; line-height:30px;}
+.thread-th .title{width:700px;}
+.thread-th .by{ line-height:14px;width:105px;}
+.thread-th .num{ line-height:14px;width:60px;}
+
+        
+.thread-list{padding:10px;}
+.thread-list td,.thread-list th{border-bottom:1px solid #C2D5E3; padding:5px 0;}
+.thread-list .title{width:650px; text-align:left;}
+.thread-list .icn{width:25px; text-align:left;padding-left:5px;}
+.thread-list .by{ line-height:14px;width:105px;}
+.thread-list .num{ line-height:14px;width:60px; text-align:center;}
+.thread-list em{color:#999999;}
+.thread-list cite{color:#333333;}
+/*========================thread list end=============================*/
+
+/*==========================/thread/1.html showthread===================================*/
+.thread-info{border:1px solid #CDCDCD; background:none repeat scroll 0 0 #FFFFFF; margin-bottom:10px;}
+.thread-tip{background:none repeat scroll 0 0 #E5EDF2; border-right:1px solid #C2D5E3; overflow:hidden; width:160px;padding:10px;}
+.hm{ text-align:center;}
+.xg1{color:#999999 !important;}
+.xi1{color:#F26C4F;}
+.pipe{color:#CCCCCC; margin:0 5px;}
+.thread-title h1{padding-left:10px;font:700 16px "Microsoft Yahei",Hei,Tahoma,SimHei,sans-serif;color:#000;}
+        
+.split-bar{height:4px;}
+.split-bar .bg1{ background:none repeat scroll 0 0 #C2D5E3;width:181px;}
+.split-bar .bg2{ background:none repeat scroll 0 0 #E5EDF2;}
+        
+.pls{ background:none repeat scroll 0 0 #E5EDF2; border-right:1px solid #C2D5E3;width:180px; overflow:hidden; vertical-align:top;}
+.pi{ border-bottom:1px dashed #CDCDCD; height:16px; margin-bottom:10px; overflow:hidden; padding:10px 0;}
+.pls .pi{ padding-left:15px;}
+.xw1{ font-weight:700;}
+.xw1 a{color:#333333; text-decoration:none;}
+.plc{padding:0 20px; vertical-align:top;}
+.plm{ vertical-align:bottom !important;}
+.po{border-top:1px dashed #CDCDCD; text-align:right;line-height:36px;}
+.pct{padding-bottom:1em; min-height:100px;}
+.pcb{ clear:left;}        
+.pi strong a{ border:1px solid #FFFFFF;float:right; font-weight:400; margin-top:-6px;padding:4px 6px;}
+        
+.detail-edit{border:1px solid #CDCDCD;}
+.detail-edit .hd{height:30px; background-color:#F2F2F2; border-bottom:1px solid #CDCDCD;}
+.detail-edit .hd h3{color:#000; line-height:30px;padding-left:10px; font-weight:700;}
+.edit-group{padding:10px;width:920px;}
+/*==========================/thread/1.html showthread end===================================*/
+
+#mceContentBody { font-size:12px;}
+
+/*================================/publishthread/1.html ============================================*/
+.post-thread{ background:none repeat scroll 0 0 #F2F2F2;padding:10px;}
+.post-thread .content{ background:none repeat scroll 0 0 #FFFFFF;border:1px solid #D9D9D9;padding:1px;}
+.post-thread .content .title{ height:40px;}
+.post-thread .content .title h3{ display:inline; float:left; margin:10px 0 0 10px; color:#000; font-weight:700;}
+.post-thread .post{border-bottom:0 solid #CCCCCC; margin:0 10px 10px; padding:0 15px 30px;}
+.post-thread th{padding-top:30px; vertical-align:top;color:#000;width:70px;}
+.post-thread td{ padding-top:28px; padding-left:20px;}
+/*================================/publishthread/1.html end============================================*/
+
+/*footer*/
+.footer{border-top:1px solid #CDCDCD;color:#666; line-height:1.8;padding:10px 0 50px; width:960px; margin:0 auto; margin-top:10px; text-align:right;}
+
+.text-long{border:1px solid #999999;color:#000; font-size:1em;padding:2px;width:400px;}
+
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset {border:1px solid #ddd;    padding:0 1.4em 1.4em 1.4em;    margin:0 0 1.5em 0;}
+legend {font-size:1.2em;    font-weight: bold;}
+textarea {min-height: 75px;}
+.editor-label {margin: 1em 0 0 0;}
+.editor-field {margin:0.5em 0 0 0;}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error{    color: #ff0000;}
+.field-validation-valid{    display: none;}
+.input-validation-error{    border: 1px solid #ff0000;    background-color: #ffeeee;}
+.validation-summary-errors{    font-weight: bold;    color: #ff0000;}
+.validation-summary-valid{    display: none;}

@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "管理员登录";
+}
+@section header{
+    <style type="text/css">
+        .login{margin:0 auto;width:400px;}
+    </style>
+    <script type="text/javascript">
+        if (top.location != self.location) {
+            top.location = self.location;
+        }
+    </script>
+}
+<div class="login">
+    <form method="post">
+        <fieldset>
+            <legend>用户登录</legend>
+            @Html.ValidationSummary()
+            <table width="100%">
+            <tr>
+                <td align="right">用户名：</td>
+                <td>@Html.TextBox("txtUserName",Request["txtUserName"])</td>
+            </tr>
+            <tr>
+                <td align="right">密码：</td>
+                <td>@Html.Password("txtUserPwd")</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="登录" /></td>
+            </tr>
+        </table>   
+        </fieldset>     
+    </form>
+</div>
+
+

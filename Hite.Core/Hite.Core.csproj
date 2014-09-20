@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7D60724F-3125-4988-A281-97BA8ABD4674}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hite</RootNamespace>
+    <AssemblyName>Hite.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Controleng.Common">
+      <HintPath>..\..\ControlengV2\Controleng.Web.Forum\Bin\Controleng.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Goodspeed.Library">
+      <HintPath>..\..\ControlengV2\Controleng.Web.Forum\Bin\Goodspeed.Library.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\Assemblies\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft ASP.NET\ASP.NET MVC 3\Assemblies\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\mvc3-rtm-mspl\MVC3-Ms-PL\ReferencesAssemblies\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Common\EnumHelper.cs" />
+    <Compile Include="Common\FastPaging.cs" />
+    <Compile Include="Common\LanguageEnum.cs" />
+    <Compile Include="Common\PagerBarHelper.cs" />
+    <Compile Include="Common\Convert.cs" />
+    <Compile Include="Common\Reflection\ReflectionHelper.cs" />
+    <Compile Include="Data\AdminManage.cs" />
+    <Compile Include="Data\AttachmentManage.cs" />
+    <Compile Include="Data\FeedbackManage.cs" />
+    <Compile Include="Data\ForumApplyUserManage.cs" />
+    <Compile Include="Data\ForumManage.cs" />
+    <Compile Include="Data\ForumTopicManage.cs" />
+    <Compile Include="Data\JobManage.cs" />
+    <Compile Include="Data\OrderAdminManage.cs" />
+    <Compile Include="Data\OrderManage.cs" />
+    <Compile Include="Data\OrderUserManage.cs" />
+    <Compile Include="Data\RoleManage.cs" />
+    <Compile Include="Data\SiteManage.cs" />
+    <Compile Include="Data\CategoryManage.cs" />
+    <Compile Include="Data\ArticleManage.cs" />
+    <Compile Include="Data\UserManage.cs" />
+    <Compile Include="Data\WebLogVisitManage.cs" />
+    <Compile Include="Model\AdminInfo.cs" />
+    <Compile Include="Model\AdminInRoles.cs" />
+    <Compile Include="Model\AttachmentInfo.cs" />
+    <Compile Include="Model\FeedbackInfo.cs" />
+    <Compile Include="Model\ForumApplyStatus.cs" />
+    <Compile Include="Model\ForumApplyUserInfo.cs" />
+    <Compile Include="Model\ForumGroupInfo.cs" />
+    <Compile Include="Model\ForumInfo.cs" />
+    <Compile Include="Model\ForumModeratorInfo.cs" />
+    <Compile Include="Model\ForumReplyInfo.cs" />
+    <Compile Include="Model\ForumSearchSetting.cs" />
+    <Compile Include="Model\ForumTopicInfo.cs" />
+    <Compile Include="Model\OrderAdminInfo.cs" />
+    <Compile Include="Model\OrderAdminRoleType.cs" />
+    <Compile Include="Model\OrderInfo.cs" />
+    <Compile Include="Model\OrderSearchSetting.cs" />
+    <Compile Include="Model\OrderStatus.cs" />
+    <Compile Include="Model\OrderUserInfo.cs" />
+    <Compile Include="Model\RoleInfo.cs" />
+    <Compile Include="Model\SearchSetting.cs" />
+    <Compile Include="Model\FileExtension.cs" />
+    <Compile Include="Model\IndexFileNameOfSite.cs" />
+    <Compile Include="Model\JobInfo.cs" />
+    <Compile Include="Model\UserInfo.cs" />
+    <Compile Include="Model\WebLanguage.cs" />
+    <Compile Include="Model\WebLogVisitInfo.cs" />
+    <Compile Include="Mvc\CloakHttpHeaderModule.cs" />
+    <Compile Include="Mvc\ExtensionHelper\CategoryLinkUrlHelper.cs" />
+    <Compile Include="Mvc\ExtensionHelper\ExtensionHtmlHelper.cs" />
+    <Compile Include="Model\IPageOfList.cs" />
+    <Compile Include="Model\PageOfList.cs" />
+    <Compile Include="Model\SiteInfo.cs" />
+    <Compile Include="Model\CategoryInfo.cs" />
+    <Compile Include="Model\ArticleInCategoryInfo.cs" />
+    <Compile Include="Model\ArticleInfo.cs" />
+    <Compile Include="Model\ArticleTagInfo.cs" />
+    <Compile Include="Common\Reflection\DbFieldAttribute.cs" />
+    <Compile Include="Common\Reflection\ParameterHelper.cs" />
+    <Compile Include="Model\TemplateType.cs" />
+    <Compile Include="Mvc\Filters\ForumAuthAttribute.cs" />
+    <Compile Include="Mvc\Filters\SilenceHandleError.cs" />
+    <Compile Include="Mvc\HiteContext.cs" />
+    <Compile Include="Mvc\ExtensionHelper\LanguageResourceHelper.cs" />
+    <Compile Include="Mvc\SiteAttribute.cs" />
+    <Compile Include="Services\AdminService.cs" />
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\ArticleService.cs" />
+    <Compile Include="Services\AttachmentService.cs" />
+    <Compile Include="Services\FeedbackService.cs" />
+    <Compile Include="Services\ForumApplyUserService.cs" />
+    <Compile Include="Services\ForumService.cs" />
+    <Compile Include="Services\ForumTopicService.cs" />
+    <Compile Include="Services\JobService.cs" />
+    <Compile Include="Services\OrderAdminService.cs" />
+    <Compile Include="Services\OrderService.cs" />
+    <Compile Include="Services\OrderUserService.cs" />
+    <Compile Include="Services\RoleService.cs" />
+    <Compile Include="Services\SiteService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\WebLogVisitService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

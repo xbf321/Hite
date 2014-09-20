@@ -1,0 +1,91 @@
+﻿@{
+    Page.Title = "文章分类管理";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    var siteList = Hite.Services.SiteService.List();
+    //此字段是为了，能在返回来的时候，默认出现分类
+    var siteId = Controleng.Common.CECRequest.GetQueryInt("siteId",0);
+}
+@section head{
+    <link href="/Styles/jquery.treeview.css" rel="stylesheet" />
+    <script src="/Scripts/jquery.treeview.js" type="text/javascript"></script>
+    <style type="text/css">
+        #clist{padding:0 0 0 10px;color:Black;}
+        #clist ul{padding: 0; margin: 0;list-style: none;}
+         #clist ul li{margin: 0;padding: 3px 0pt 3px 16px;}
+    </style>
+}
+<fieldset>
+    <legend>文章分类管理</legend>
+    <table width="100%">
+        <tr>
+            <th align="right" width="10%">
+                请选择所属域：
+            </th>
+            <td>
+                <select id="dlSiteList" onchange="siteChange(this);">
+                    <option value="-1">==请选择域==</option>
+                    @foreach (var item in siteList)
+                    {
+                        if (PagesAdminContext.Current.IsInSites(item.Id))
+                        {
+                            <option value="@item.Id" @Html.Raw(item.Id == siteId ? "selected=\"selected\"" : string.Empty)>@(item.Name)（@item.Language）</option>
+                        }
+                    }
+                </select><span id="link_add"></span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div id="clist"></div>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+@section foot{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            if(@siteId != 0){
+                siteChange(document.getElementById("dlSiteList"));
+            }
+        });
+        function siteChange(obj) {
+            var _value = obj.value;
+            if (_value != -1) {
+                var html = '&nbsp;&nbsp;<a href="edit.cshtml?siteId=' + _value + '">添加分类</a>';
+                $('#link_add').html(html);
+                getTreeView(_value);
+            } else {
+                $('#link_add').html('');
+                $('#clist').html('');
+            }
+        }
+        function deleteCategory(id,siteId){
+            if(window.confirm('如果删除，则前台页面就不会显示此分类了。\r\n确定要删除吗？')){
+                $.ajax({
+                    type:"POST",
+                    url :"Ajax.cshtml",
+                    data : "m=delete&id="+id,
+                    dataType: "html",
+                    success: function(data){
+                        getTreeView(siteId);
+                    }
+                });
+            }
+        }
+        function getTreeView(siteId) {
+            $.ajax({
+                url: "Ajax.cshtml",
+                type: "POST",
+                data : "m=treehtml&siteId="+siteId,
+                dataType: "html",
+                beforeSend: function () {
+                    $('#clist').html('<img src="/images/loading.gif" alt="loading..." />正在载入...');
+                },
+                success: function (data) {
+                    $('#clist').html(data);
+                }
+            });
+        }
+    </script>
+}

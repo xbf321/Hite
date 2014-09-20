@@ -1,0 +1,61 @@
+﻿@model Hite.Model.OrderInfo
+@{
+    ViewBag.Title = "添加或修改订单";
+}
+@section header{
+<link href="/Content/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script src="/Scripts/jquery-ui.min.js" type="text/javascript"></script>
+}
+<fieldset>
+    <legend>添加或修改订单</legend>
+    <form action="" method="post">
+    @Html.ValidationSummary()
+    <table width="100%" border="0">
+        <tr>
+            <th align="right" width="10%">客户公司名称：</th>
+            <td>@Html.DropDownListFor(m => m.OrderUserId,Hite.Services.OrderUserService.GetCompanyNameSelectListItem(),"请选择")</td>
+        </tr>
+        <tr>
+            <th align="right">客户订单号：</th>
+            <td>@Html.TextBoxFor(m =>m.OrderNumber)</td>
+        </tr>
+        
+        <tr>
+            <th align="right">数量：</th>
+            <td>@Html.TextBoxFor(m =>m.Amount)</td>
+        </tr>
+        <tr>
+            <th align="right">合同交货日期：</th>
+            <td>@Html.TextBox("DeliveryDate",Model.DeliveryDate.ToString("yyyy-MM-dd"))</td>
+        </tr>
+        <tr>
+            <th align="right">状态：</th>
+            <td>@Hite.Mvc.ExtensionHtmlHelper.RenderOrderStatusDropdownList("Status", Model.Status == 0 ? Request["Status"] : (((int)Model.Status).ToString()))</td>
+        </tr>
+        <tr>
+            <th align="right" valign="top">项目名称：</th>
+            <td>@Html.TextBoxFor(m => m.ProductName)</td>
+        </tr>
+        <tr>
+            <th align="right" valign="top">备注：</th>
+            <td>@Html.TextAreaFor(m => m.Remark, new { rows=10,cols=50})</td>
+        </tr>
+        <tr>
+            <th align="right">是否删除：</th>
+            <td>@Html.RadioButtonFor(m => m.IsDeleted, true, new { @id="isDeleted1",@name="IsDeleted" })是@(Html.RadioButtonFor(m => m.IsDeleted, false, new { @id="isDelete2",@name="IsDeleted"}))否</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="保存" />&nbsp;&nbsp;&nbsp;&nbsp;<a href="List">返回</a></td>
+        </tr>
+    </table>
+    </form>
+</fieldset>
+@section footer{
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#DeliveryDate").datepicker({ dateFormat: 'yy-mm-dd', monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'], dayNamesMin: ['日', '一', '二', '三', '四', '五', '六'] });
+    });
+</script>
+}
+

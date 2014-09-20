@@ -1,0 +1,46 @@
+﻿@using Hite.Services;
+@using Hite.Model;
+@{
+    Page.Title = "管理员列表";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    int pageIndex = Controleng.Common.CECRequest.GetQueryInt("page", 0);
+    var adminList = AdminService.List(new SearchSetting()
+    {
+        PageIndex = pageIndex,
+        PageSize = 20,
+        ShowDeleted = true
+    });
+}
+<fieldset>
+    <legend>管理员列表</legend>
+    <table width="100%">
+        <tr>
+            <td align="right">
+                <a href="add.cshtml" class="btn-add">添加管理员</a>
+            </td>
+        </tr>
+    </table>
+    <table class="tblist" width="100%">
+        <tr>
+            <th width="20%">用户名</th>
+            <th>角色</th>
+            <th width="10%">是否启用</th>            
+            <th width="10%">创建时间</th>
+            <th width="5%">操作</th>
+        </tr>
+        @foreach(var item in adminList){
+            if (item.UserName != "xbf321@gmail.com")
+            {
+            <tr>
+                <td align="center">@item.UserName</td>
+                <td>@String.Join("|", item.Roles.Select(m => m.Name).ToArray())</td>
+                <td align="center">@Html.Raw(item.IsEnabled ? "启用" : "<font color='red'>已停用</font>") </td>
+                <td align="center">@item.CreateDateTime.ToString("yyyy-MM-dd")</td>
+                <td align="center"><a href="Edit.cshtml?id=@item.Id">编辑</a></td>
+            </tr>
+            }
+        }
+    </table>
+        @Html.Raw(Hite.Common.PagerBarHelper.Render(adminList.PageIndex, adminList.PageSize, adminList.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>

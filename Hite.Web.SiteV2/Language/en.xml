@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <item key="channel-sub-nav-home-text">Home</item>
+    <item key="article-publish-date-text">Publish Date</item>
+    <item key="article-related-article-text">Related Articles</item>
+    <item key="user-center-text">User Center</item>
+    <item key="contact-us-text">Contact Us</item>
+    <item key="register-text">Register</item>
+    <item key="login-text">Login</item>
+    <item key="logout-text">Logout</item>
+    <item key="search-text">Search</item>
+    <item key="more-text">More</item>
+    <item key="site-top-nav-text"><![CDATA[<a href="http://www.hite.com.cn">Home</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/en/hr.html">Jobs</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://irm.p5w.net/ssgs/S002184" target="_blank">Investor Relations</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/en/contactus.html">Contact</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/">Chinese Language</a>]]></item>
+    <item key="logged-in-bar-text"><![CDATA[[<a href="/en/accounts">User Center</a>]&nbsp;&nbsp;[<a href="/accounts/logout">Logout</a>]]]></item>
+    <item key="not-logged-in-bar-text"><![CDATA[&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/en/accounts/register">Register</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/en/accounts/login">Login</a>]]></item>
+    <item key="footer-text">
+        <![CDATA[(C)2002 Shanghai Hi-Tech Control System CO., LTD. hite@hite.com.cn<br />TEL:(8621)54235333 FAX:(8621)54235550]]>
+    </item>
+    <item key="modify-text">Modify</item>
+    <item key="chanage-pwd-text">Chanage your password</item>
+    <item key="confirm-pwd-text">Confirm password</item>
+    <item key="old-pwd-text">Old password</item>
+    <item key="new-pwd-text">New password</item>
+    <item key="confirm-new-pwd-text">Confirm new password</item>
+    <item key="save-text">Save</item>
+    <item key="realname-text">Name</item>
+    <item key="username-text">UserName</item>
+    <item key="pwd-text">Password</item>
+    <item key="company-text">Company</item>
+    <item key="industry-text">Industry</item>
+    <item key="phone-text">Phone</item>
+    <item key="feedback-text">Online feedback</item>
+    <item key="email-text">Email</item>
+    <item key="register-success-text">Register success.</item>
+    <item key="register-error-text">Register error.please retry.</item>
+    <item key="update-success-text">Update success.</item>
+    <item key="user-login-page-title-text">User login</item>
+    <item key="validate-required-text">Required.</item>
+    <item key="validate-enter-username-text">Please enter your username.</item>
+    <item key="validate-enter-valid-email-text">"Please enter a valid email address.</item>
+    <item key="validate-enter-email-text">Please enter your email.</item>
+    <item key="validate-enter-realname-text">Please enter your name.</item>
+    <item key="validate-enter-company-text">Please enter your company.</item>
+    <item key="validate-enter-phone-text">Please enter your phone.</item>
+    <item key="validate-enter-industry-text">Please select your industry.</item>
+    <item key="validate-enter-old-pwd-text">Please enter your password.</item>
+    <item key="validate-enter-new-pwd-text">Please enter your new password.</item>
+    <item key="validate-repeat-pwd-text">Please repeat your password.</item>
+</root>

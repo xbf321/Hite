@@ -1,0 +1,135 @@
+﻿@{
+    ViewBag.Title = "海得控制";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        #main{ background-color:#fff;}
+        .wrap1-col1{float:left;width:690px;}
+        .wrap1-col2{float:right; font-size:12px; line-height:22px;padding-top:50px;width:270px; background:url("/images/welcome_red.gif") no-repeat scroll left 10px transparent;}
+        
+        .wrap2-col1{float:left;display:inline; margin-right:10px;width:270px;}
+        .wrap2-col2{float:left;width:405px;}
+        .wrap2-col2 h3,.wrap2-col3 h3,.wrap3 h3{height:26px; line-height:26px; margin-bottom:10px; background:url("/images/www/hite_titlebg.gif") repeat-x scroll left bottom transparent;}
+        .wrap2-col2 .content{padding:0 10px;}
+        .wrap2-col2 .top-one-name{color:#EE1921;}
+        .wrap2-col2 .top-one-remark{color:#7E7D7D; margin:2px 0 5px 0; text-indent:28px;}
+        .wrap2-col2 .more a{color:#ee1921;}
+        .wrap2-col2 li,.wrap2-col3 li{ background:url("/images/icon_dot.gif") no-repeat scroll left center transparent; line-height:22px; text-indent:8px;}
+        .wrap2-col3{float:right;width:270px;}
+        
+        .wrap3 li{float:left;height:160px;width:163px; text-align:center;}
+        
+        .wrap4{border-color:#3F8CC4; border-style:solid none; border-width:4px 0;padding:5px 0 1px;}
+        .wrap4 li{float:left; display:inline; line-height:20px; margin-right:30px;}
+    </style>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0"
+                width="690" height="300">
+                <param name="movie" value="/images/www/banner.swf" />
+                <param name="quality" value="high" />
+                <param name="wmode" value="transparent" />
+                <embed src="/images/www/banner.swf" quality="high" pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash"
+                    type="application/x-shockwave-flash" width="690" height="300" wmode="transparent"></embed>
+            </object>
+    </div>
+    <div class="wrap1-col2">@Html.Raw(PageData["SiteInfo"].Introduction)</div>
+</div>
+<div class="blankb"></div>
+<div class="wrap2 clearfix">
+    <div class="wrap2-col1">
+        <script type="text/javascript">
+            var pic_width = 270; //图片宽度
+            var pic_height = 198; //图片高度
+            var button_pos = 4; //按扭位置 1左 2右 3上 4下
+            var stop_time = 4000; //图片停留时间(1000为1秒钟)
+            var show_text = 0; //是否显示文字标签 1显示 0不显示
+            var txtcolor = "000000"; //文字色
+            var bgcolor = "FFFFFF"; //背景色
+            var focusFlashUrl = "/Scripts/FlashFocus.swf";
+            var swf_height = show_text == 1 ? pic_height + 20 : pic_height;
+            //可编辑内容结束
+            var pics, links, texts;
+            @{
+                IList<Hite.Model.ArticleInfo> focusArticleList = ViewBag.FocusImageList;
+                if (focusArticleList.Count > 0)
+                {
+                   <text>pics = '@(focusArticleList.Select(n => n.ImageUrl).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                   <text>links = '@(focusArticleList.Select(n => n.Url).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                   <text>texts = '@(focusArticleList.Select(n => n.Title).Aggregate<string>((n1, n2) => n1 + "|" + n2))';</text>
+                }
+            }
+            //输出FlashObjct
+            document.write('<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cabversion=9,0,0,0" width="' + pic_width + '" height="' + swf_height + '">');
+            document.write('<param name="movie" value="' + focusFlashUrl + '">');
+            document.write('<param name="quality" value="high"><param name="wmode" value="opaque">');
+            document.write('<param name="FlashVars" value="pics=' + pics + '&links=' + links + '&texts=' + texts + '&pic_width=' + pic_width + '&pic_height=' + pic_height + '&show_text=' + show_text + '&txtcolor=' + txtcolor + '&bgcolor=' + bgcolor + '&button_pos=' + button_pos + '&stop_time=' + stop_time + '">');
+            document.write('<embed src="' + focusFlashUrl + '" FlashVars="pics=' + pics + '&links=' + links + '&texts=' + texts + '&pic_width=' + pic_width + '&pic_height=' + pic_height + '&show_text=' + show_text + '&txtcolor=' + txtcolor + '&bgcolor=' + bgcolor + '&button_pos=' + button_pos + '&stop_time=' + stop_time + '" quality="high" width="' + pic_width + '" height="' + swf_height + '" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />');
+            document.write('</object>');
+        </script>
+    </div>
+    <div class="wrap2-col2">
+        <h3>
+            <img src="/images/www/hite_news.gif" alt="集团新闻" width="71" height="25" /></h3>
+        <div class="content">
+            @{
+                var jituanxinwen = ViewBag.Jituanxinwen;
+
+                if (jituanxinwen.Count > 0)
+                {
+                <text><a href="@jituanxinwen[0].Url" class="top-one-name" title="@jituanxinwen[0].Title">@jituanxinwen[0].Title</a>
+                <p class="top-one-remark">
+                    @Goodspeed.Common.CharHelper.Truncate(jituanxinwen[0].Remark, 80)
+                </p>
+                </text>
+                jituanxinwen.RemoveAt(0);
+                }                
+            }
+            <ul>
+                @foreach (var item in jituanxinwen)
+                {
+                    <li><a href="@item.Url" target="_blank" title="@item.Title">@Goodspeed.Common.CharHelper.Truncate(item.Title, 38)</a></li>
+                }
+            </ul>
+            <div class="more">
+                <a href="/Channel/2.html">更多&gt;&gt;</a>
+            </div>
+        </div>
+    </div>
+    <div class="wrap2-col3">
+        <h3>
+            <img src="/images/www/hite_case.gif" alt="业绩案例" width="73" height="26" /></h3>
+        <ul>
+            @foreach (var item in ViewBag.Yejianli)
+            {
+                <li><a href="@item.Url" title='@item.Title' target="_blank">@Goodspeed.Common.CharHelper.Truncate(item.Title, 25)</a></li>
+            }
+        </ul>
+    </div>
+</div>
+<div class="blankb"></div>
+<div class="wrap3">
+     <h3>
+            <img src="/images/www/hite_zyyw.gif" alt="主营业务" width="71" height="24" /></h3>
+    <ul>
+        @foreach (var item in ViewBag.Zhuyingyewu)
+        {
+            <li><a href="@item.Url" title="@item.Title" target="_blank">
+                <img src="@item.ImageUrl" width="143" height="150" /></a> </li>
+        }
+    </ul>
+</div>
+<div class="blankb"></div>
+<div class="wrap4">
+    <ul class="clearfix">
+        <li>
+            <img src="/images/www/hite_brand1.gif" width="100" height="22" /></li>
+        @foreach (var item in ViewBag.Haidepinpai)
+        {
+            <li><a href="@item.Url" target="_blank">
+                <img src="@item.ImageUrl" width="74" height="34" /></a></li>
+        }
+    </ul>
+</div>

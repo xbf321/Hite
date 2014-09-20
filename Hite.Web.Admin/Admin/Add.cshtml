@@ -1,0 +1,84 @@
+﻿@using Hite.Services;
+@using Hite.Model;
+@{
+    Page.Title = "添加管理员";
+    Layout = "~/Shared/_SiteLayout.cshtml";   
+
+    var errors = false;
+    if(IsPost){
+        string userName = Request["txtUserName"];
+        string userPwd = Request["txtUserPwd"];
+        var roles = Request["roles"]== null ? new string[]{} : Request["roles"].Split(new char[]{','},StringSplitOptions.RemoveEmptyEntries);
+        bool isEnabled = Request["isEnabled"].AsBool();
+        if (userName.IsEmpty() || 
+            !System.Text.RegularExpressions.Regex.IsMatch(userName, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$")) {
+                errors = true;
+                ModelState.AddError("userName","用户名不能为空或格式不正确！");
+        }
+        if (AdminService.IsExistsUser(userName))
+        {
+            errors = true;
+            ModelState.AddError("usernameexists", "用户名已存在，请选择其他用户名！");
+        }
+        if(userPwd.IsEmpty()){
+            errors = true;
+            ModelState.AddError("userPwd","密码不能为空！");
+        }
+        
+        List<RoleInfo> roleList = new List<RoleInfo>();
+        var allRoles = RoleService.List();
+        foreach(var role in roles){
+            foreach(var item in allRoles){
+                if(role.AsInt() == item.Id){
+                    roleList.Add(new RoleInfo(){
+                        Id = item.Id,
+                        Name = item.Name,
+                        SiteId = item.SiteId
+                    });
+                }
+            }
+        }
+        if(!errors && ModelState.IsValid){
+            AdminInfo model = new AdminInfo();
+            model.IsEnabled = isEnabled;
+            model.Roles = roleList;
+            model.UserName = userName;
+            model.UserPwd = userPwd;
+            AdminService.Update(model);
+
+            ModelState.AddError("Success","添加成功！");
+        }
+    }
+}
+<form method="post">
+    <fieldset>
+        <legend>添加管理员</legend>
+        @Html.ValidationSummary()
+        <table>
+            <tr>
+                <td align="right">用户名：</td>
+                <td>@Html.TextBox("txtUserName",Request["txtUserName"])（格式Email）</td>
+            </tr>
+            <tr>
+                <td align="right">密码：</td>
+                <td>@Html.Password("txtUserPwd")</td>
+            </tr>
+            <tr>
+                <td align="right">角色：</td>
+                <td>@foreach(var roleItem in RoleService.List()){
+                        @Html.CheckBox("roles", false, new { @id="role_"+roleItem.Id, value=roleItem.Id }) @roleItem.Name
+                    }</td>
+            </tr>
+            <tr>
+                <td align="right">是否启用：</td>
+                <td>@Html.RadioButton("isEnabled", true, Request["isEnabled"] == null ? true : (Request["isEnabled"].ToLower() == "true" ? true : false), new { @id = "yes" })是 @Html.RadioButton("isEnabled", false, Request["isEnabled"] == null ? false : (Request["isEnabled"].ToLower() == "false" ? true : false), new { @id = "no" })否</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="保存" />&nbsp;&nbsp;<a href="list.cshtml">返回</a></td>
+            </tr>
+        </table>
+        <hr />
+        <font color="red">说明：</font>如果选择SuperAdmin（超级）管理员，就不用再选择其他角色，只有不是超级管理员，才有必要选择其他角色。
+    </fieldset>
+</form>

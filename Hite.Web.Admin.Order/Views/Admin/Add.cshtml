@@ -1,0 +1,29 @@
+﻿@model Hite.Model.OrderAdminInfo
+@{
+    ViewBag.Title = "添加管理员";
+}
+<fieldset>
+    <legend>添加管理员</legend>
+    <form method="post" action="">
+    @Html.ValidationSummary()
+    <table>
+        <tr>
+            <th align="right">用户名（Email）：</th>
+            <td>@Html.TextBoxFor(m=>m.UserName)</td>
+        </tr>
+        <tr>
+            <th align="right">密码：</th>
+            <td>@Html.PasswordFor(m=>m.UserPwd)</td>
+        </tr>
+        <tr>
+            <th align="right">管理权限：</td>
+            <td>@Html.DropDownList("ddlRoles", new List<SelectListItem> { new SelectListItem() { Text = "超级管理员", Value = "1" }, new SelectListItem() { Text = "订单操作员", Value = "2" } }, "==请选择==")</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="添加" />&nbsp;&nbsp;<a href="list" class="btn-back">返回</a></td>
+        </tr>
+    </table>
+    </form>
+</fieldset>
+

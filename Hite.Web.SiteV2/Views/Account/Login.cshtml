@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = Hite.Mvc.LanguageResourceHelper.GetString("user-login-page-title-text", PageData["SiteInfo"].Language);
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .login{margin:0 10px; background:none repeat scroll 0 0 #FFFFFF;padding-top:10px;}
+        .tab{padding-left:300px;}
+        .item{ height:40px; line-height:26px;}
+        .label{text-align:right;width:400px; display:block;float:left;}
+        .fl{float:left;}
+        .text{border:1px solid #BBBBBB; height:16px;padding:4px 3px; width:200px;}
+    </style>
+    <script src="/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+}
+<div class="banner"><img src="/images/login.jpg" alt="@Hite.Mvc.LanguageResourceHelper.GetString("user-login-page-title-text", PageData["SiteInfo"].Language)" /></div>
+<form id="loginForm" method="post" action="">
+    <div class="login">
+        <div class="tab"><img src="/images/login_icon.jpg" /></div>
+        <div class="form">
+        @Html.ValidationSummary()
+            <div class="item">
+                <span class="label">@Hite.Mvc.LanguageResourceHelper.GetString("username-text", PageData["SiteInfo"].Language)：</span>
+                <div class="fl">@Html.TextBox("txtUserName", Request["txtUserName"], new { @class = "text required" })</div>
+            </div>
+            <div class="item">
+                <span class="label">@Hite.Mvc.LanguageResourceHelper.GetString("pwd-text", PageData["SiteInfo"].Language)：</span>
+                <div class="fl">@Html.Password("txtUserPwd", "", new { @class = "text required" })</div>
+            </div>
+            <div class="item">
+                <span class="label">&nbsp;</span>
+                <div class="fl"><input type="submit" value="@Hite.Mvc.LanguageResourceHelper.GetString("login-text", PageData["SiteInfo"].Language)" />&nbsp;&nbsp;<a href="register">@Hite.Mvc.LanguageResourceHelper.GetString("register-text", PageData["SiteInfo"].Language)</a></div>
+            </div>
+        </div>
+    </div>
+</form>
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#loginForm").validate({ messages: {
+                txtUserName: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-username-text", PageData["SiteInfo"].Language)",
+                txtUserPwd: "@Hite.Mvc.LanguageResourceHelper.GetString("validate-enter-old-pwd-text", PageData["SiteInfo"].Language)"
+            }
+            });
+        });
+    </script>
+}
+
+

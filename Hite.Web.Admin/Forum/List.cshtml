@@ -1,0 +1,158 @@
+﻿@using Hite.Model;
+@using Hite.Services;
+@using Controleng.Common;
+@{
+    Page.Title = "板块列表";
+    Layout = "~/Shared/_SiteLayout.cshtml";
+
+    int id = CECRequest.GetQueryInt("id",0);
+    bool error = false;
+    int flag = 0;
+    
+    ForumInfo model = ForumService.Get(id);
+    if(IsPost){
+        System.Web.Mvc.FormCollection form = new System.Web.Mvc.FormCollection(this.Request.Unvalidated().Form);
+        model.Id = id;
+        model.Name = form["txtName"];
+        model.Info = form["txtInfo"];
+        model.GroupId = TypeConverter.StrToInt(form["dlSiteList"], 0);
+        model.Sort = TypeConverter.StrToInt(form["txtSort"], 0);
+        model.IsDeleted = TypeConverter.StrToInt(form["rblIsDeleted"]) == 1 ? true : false;
+        
+        if(model.GroupId == 0){
+            error = true;
+            ModelState.AddError("GroupId","请选择所属组！");
+        }
+        if(model.Name.IsEmpty()){
+            error = true;
+            ModelState.AddError("Name","版面名称不能为空！");
+        }
+        if(!error && ModelState.IsValid){
+            flag = 1;
+            ForumService.Update(model);
+        }
+    }
+}
+@section head {
+    <style type="text/css">
+        .colLeft{float:left;width:400px;}
+        .colRight{float:left;width:500px;}
+    </style>
+    <!--编辑器以及编辑器中本地上传图片-->
+    <script src="/editor/tiny_mce/tiny_mce.js" type="text/javascript"></script>
+    <!--编辑器以及编辑器中本地上传图片-->
+}
+<fieldset>
+    <legend>板块列表&nbsp;<a href="?">添加板块</a></legend>
+    <div class="colLeft">
+    <form method="post">
+        @Html.ValidationSummary()
+        @if(flag == 1){
+            <div class="success">保存成功！<a href="?">继续添加</a></div>
+        }
+        <table>
+            <tr>
+                <th align="right">所属组：</th>
+                <td><select id="dlSiteList" name="dlSiteList">
+                    <option value="0">==请选择组==</option>
+                    @foreach(var item in ForumService.GroupList()){
+                        if(!item.IsDeleted){
+                            <option value="@item.Id" @Html.Raw(item.Id == model.GroupId ? "selected=\"selected\"" : "")>@item.Name</option>
+                        }
+                    }
+                </select>&nbsp;&nbsp;<a href="AddGroup.cshtml">添加组</a></td>
+            </tr>
+            <tr>
+                <th align="right">版面名称：</th>
+                <td>@Html.TextBox("txtName", model.Id == 0 ? Request["txtName"] : model.Name, new { @class = "text-three" })</td>
+            </tr>
+            <tr>
+                <th align="right" valign="top">介绍：</th>
+                <td>@Html.TextArea("txtInfo", model.Id == 0 ? Request["txtInfo"] : model.Info, new { cols = 70, rows = 10 })</td>
+            </tr>
+            <tr>
+                <th align="right" valign="middle">排序：</th>
+                <td>@Html.TextBox("txtSort", model.Id == 0 ? Request["txtSort"] : model.Sort.ToString())<br />（默认：0，数值越小，排列顺序越靠前）</td>
+            </tr>
+            <tr>
+                <th align="right">是否删除：</th>
+                <td><input type="radio" name="rblIsDeleted" value="0" @(model.Id == 0 ? Request["rblIsDeleted"] : (model.IsDeleted ? "" : "checked")) />否<input type="radio" name="rblIsDeleted" value="1" @(model.Id == 0 ? Request["rblIsDeleted"] : (model.IsDeleted ? "checked" : "")) />是（默认：否）</td>
+            </tr>
+            <tr>
+                <th align="right"></th>
+                <td><input type="submit" value="保存" /></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+    <div class="colRight">
+        <table class="tblist" width="100%">
+            @foreach (var item in ForumService.GroupList(true))
+            {
+                <tr>
+                    <th>@item.Name&nbsp;@Html.Raw(item.IsDeleted ? "<font color=\"red\">已删除</font>" : "")&nbsp;<a href="AddGroup.cshtml?id=@item.Id">编辑</a></th>
+                </tr>
+                                                                                                                                    if (item.Forums.Count > 0)
+                                                                                                                                    {
+                        <tr>
+                            <td>                    
+                                <table class="tblist" width="100%">
+                                    <tr>
+                                        <th>版面名称</th>
+                                        <th width="10%">排序</th>
+                                        <th width="15%">是否删除</th>
+                                        <th width="15%">操作</th>
+                                    </tr>
+                                    @foreach (var forum in item.Forums)
+                                    {
+                                        <tr>
+                                            <td>@forum.Name</td>
+                                            <td align="center">@forum.Sort</td>
+                                            <td align="center">@Html.Raw(forum.IsDeleted ? "<font color=\"red\">已删除</font>" : "否")</td>
+                                            <td align="center"><a href="?id=@forum.Id">编辑</a></td>
+                                        </tr>
+                                    }
+                                </table>                    
+                            </td>
+                        </tr>
+                }
+            }
+        </table>
+    </div>
+    <div class="clear"></div>
+</fieldset>
+@section foot{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //设置编辑器
+            tinyMCE.init({
+                theme: "advanced",
+                mode: "exact",
+                width: "300",
+                height: "380",
+                elements: "txtInfo",
+                language: "zh",
+                plugins: "table,insertdatetime,media,-xuimage,contextmenu,paste,inlinepopups",
+                // Theme options
+                theme_advanced_buttons1: "bold,italic,underline,strikethrough,|,fontselect,fontsizeselect",
+                theme_advanced_buttons2: "",
+                theme_advanced_buttons3: "",
+                theme_advanced_toolbar_location: "top",
+                theme_advanced_toolbar_align: "left",
+                theme_advanced_path: false,
+                theme_advanced_statusbar_location: "bottom",
+                theme_advanced_resizing: true,
+                theme_advanced_resize_horizontal: false,
+                theme_advanced_resizing_use_cookie: 1,
+                theme_advanced_more_colors: false,
+                theme_advanced_font_sizes: '3,4,5,6,7',
+                theme_advanced_fonts: '楷体_GB2312=楷体_GB2312;黑体=黑体;隶书=隶书;Times New Roman=Times New Roman;Arial=Arial;'
+            });
+
+        });
+        if ($('#txtSort').val() === '') {
+            $('#txtSort').val(0);
+        }
+        
+    </script>
+    }

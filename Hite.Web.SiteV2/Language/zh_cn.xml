@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root>
+    <item key="channel-sub-nav-home-text">首页</item>
+    <item key="article-publish-date-text">发布时间</item>
+    <item key="article-related-article-text">相关文章</item>
+    <item key="user-center-text">用户中心</item>
+    <item key="contact-us-text">联系我们</item>
+    <item key="register-text">注册</item>
+    <item key="login-text">登录</item>
+    <item key="logout-text">退出</item>
+    <item key="search-text">查询</item>
+    <item key="more-text">更多</item>
+    <item key="site-top-nav-text"><![CDATA[<a href="http://www.hite.com.cn">集团首页</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/hr.html">人才招聘</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://irm.p5w.net/ssgs/S002184" target="_blank">投资者关系</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/contactus.html">联系我们</a>]]></item>
+    <item key="logged-in-bar-text"><![CDATA[[<a href="/accounts" target="_top">用户中心</a>]&nbsp;&nbsp;[<a href="javascript:void(0);" onclick="_GLOBAL.logout();" target="_top">退出</a>]]]></item>
+    <item key="not-logged-in-bar-text"><![CDATA[&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" onclick="_GLOBAL.register();" target="_top">注册</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0);" onclick="_GLOBAL.login();" target="_top">登录</a>]]></item>
+    <item key="footer-text">
+        <![CDATA[沪ICP备05050530号<br />(C)2002 上海海得控制系统股份有限公司版权所有 hite@hite.com.cn<br />TEL:(8621)54235333 FAX:(8621)54235550]]>
+    </item>
+    <item key="modify-text">修改</item>
+    <item key="chanage-pwd-text">更改密码</item>
+    <item key="confirm-pwd-text">确认密码</item>
+    <item key="old-pwd-text">原密码</item>
+    <item key="new-pwd-text">新密码</item>
+    <item key="confirm-new-pwd-text">请确认新密码</item>
+    <item key="save-text">保存</item>
+    <item key="realname-text">姓名</item>
+    <item key="username-text">用户名</item>
+    <item key="pwd-text">密码</item>
+    <item key="company-text">公司</item>
+    <item key="industry-text">所属行业</item>
+    <item key="phone-text">电话</item>
+    <item key="feedback-text">在线反馈</item>
+    <item key="email-text">电子邮件</item>
+    <item key="register-success-text">注册成功。</item>
+    <item key="register-error-text">注册失败，请重试。</item>
+    <item key="update-success-text">更新成功。</item>
+    <item key="user-login-page-title-text">用户登录</item>
+    <item key="validate-required-text">必填</item>
+    <item key="validate-enter-username-text">请输入用户名。</item>
+    <item key="validate-enter-valid-email-text">Email已存在，请选择其他的Email。</item>
+    <item key="validate-enter-email-text">请输入Email。</item>
+    <item key="validate-enter-realname-text">请输入姓名。</item>
+    <item key="validate-enter-company-text">请输入公司。</item>
+    <item key="validate-enter-phone-text">请输入电话。</item>
+    <item key="validate-enter-industry-text">请选择行业。</item>
+    <item key="validate-enter-old-pwd-text">请输入密码。</item>
+    <item key="validate-enter-new-pwd-text">请输入新密码。</item>
+    <item key="validate-repeat-pwd-text">请重复输入密码。</item>
+</root>

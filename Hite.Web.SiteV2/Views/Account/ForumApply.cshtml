@@ -1,0 +1,152 @@
+﻿@model Hite.Model.UserInfo
+@using System.Linq;
+@{
+    ViewBag.Title = "申请论坛用户";
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+@Html.Partial("~/Views/Shared/_NavForAccount.cshtml", "forumapply", new ViewDataDictionary { { "Language", PageData["SiteInfo"].Language } })
+@section header{
+    <style type="text/css">
+        .wrp{border-bottom:1px dashed #CDCDCD;padding:10px;}
+        .wrp h1{ font-weight:700; font-size:14px;}
+        .status_applying{color:Blue;}
+        .status_passed{color:Green;}
+        .status_nopass{color:Red;}
+        .fglist,.fgclist{padding:5px;}
+        .fglist ul li,.fgclist ul li{ line-height:25px;}
+        .fgclist .cname{display:block;width:120px;float:left;}
+        .fgclist .cinfo{margin-left:10px;}
+    </style>
+}
+<div class="usr-content">
+    <div class="wrp">
+        <h1>
+            请先确定以下个人信息是否准确，如果不准确，请转到【修改信息】页面修改</h1>
+        <table>
+            <tr>
+                <th align="right">
+                    Email：
+                </th>
+                <td>@Model.Email
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    姓名：
+                </th>
+                <td>@Model.RealName
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    公司：
+                </th>
+                <td>@Model.Company
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    电话：
+                </th>
+                <td>@Model.Phone
+                </td>
+            </tr>
+            <tr>
+                <th align="right">
+                    行业：
+                </th>
+                <td>@Model.Industry
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="wrp">
+    <form action="" method="post" onsubmit="return checkForm();">
+        @if (ViewBag.Msg != null)
+        {
+            <div class="msg">
+                @Html.Raw(ViewBag.Msg)
+            </div>
+        }
+        <h1>请选择您要申请哪个事业部论坛的会员（可以多选）：</h1>
+        <div class="fglist">
+            <ul>
+                @foreach (var item in ViewBag.ForumGroupList)
+                {
+                    bool isExists = false;
+                    foreach (var selected in ViewBag.ApplyList)
+                    {
+                        if (selected.ForumGroupId == item.Id)
+                        {
+                            isExists = true;
+                            switch ((Hite.Model.ForumApplyStatus)selected.Status)
+                            {
+                                case Hite.Model.ForumApplyStatus.Applying:
+                                    //正在申请中
+                                    <text><li><input type="checkbox" disabled="disabled" value="@item.Id" id="forumGroups[@(item.Id)]" name="forumGroups[]" title="@(item.Name)"/>@(item.Name)<span class="status_applying">（已申请，等待审核）</span></li></text>
+                                    break;
+                                case Hite.Model.ForumApplyStatus.NoPass:
+                                    //没有申请通过
+                                    <text><li><input type="checkbox" value="@item.Id" id="forumGroups[@item.Id]" name="forumGroups[]" title="@(item.Name)"/>@(item.Name)<span class="status_nopass">（申请未通过）</span></li></text>
+                                    break;
+                                case Hite.Model.ForumApplyStatus.Passed:
+                                    //申请通过
+                                    <text><li><input type="checkbox" disabled="disabled" value="@item.Id" id="forumGroups[@item.Id]" name="forumGroups[]" title="@(item.Name)" />@(item.Name)<span class="status_passed">（申请通过）</span></li></text>
+                                    break;
+                            }
+                            break;
+                        }
+                    }
+                    if (!isExists)
+                    {
+                        <text><li><input type="checkbox" value="@item.Id" id="forumGroups[@item.Id]" name="forumGroups[]" title="@(item.Name)"/>@item.Name</li></text>
+                    }
+
+                }
+            </ul>
+        </div>
+        <h1>请填写一位或几位同您有过商务接洽、合作的海得公司人员：</h1>
+        <div class="fgclist">
+            <ul>
+               @foreach (var item in ViewBag.ForumGroupList)
+               {
+                   bool isExist = false;
+                   foreach(var selected in ViewBag.ApplyList){
+                        if(selected.ForumGroupId == item.Id){
+                            isExist = true;
+                            <text><li><span class="cname">@(item.Name)</span><span class="cinfo">的&nbsp;&nbsp;<input type="text" id="forumGroup_@(item.Id)" name="forumGroup_@(item.Id)" value="@(selected.ContactPerson)" />（多位人员之间用逗号“，”隔开）</span><div class="clear"></div></li></text>
+                            break;
+                        }
+                   }
+                   if (!isExist)
+                   {                   
+                        <text><li><span class="cname">@(item.Name)</span><span class="cinfo">的&nbsp;&nbsp;<input type="text" id="forumGroup_@(item.Id)" name="forumGroup_@(item.Id)" />（多位人员之间用逗号“，”隔开）</span><div class="clear"></div></li></text>
+                   }
+                   
+               } 
+            </ul>
+        </div>
+        <div><input type="submit" value="提交申请" /></div>
+        </form>
+    </div>
+</div>
+@section footer{
+    <script type="text/javascript">
+        function checkForm() {
+            var _info = '';
+            $('input[name="forumGroups[]"]:checked').each(function () {
+                var id = this.value;
+                var title = $(this).attr('title');
+                var contactPersonObj = $('#forumGroup_' + id);
+                if ($.trim(contactPersonObj.val()) == '') {
+                    _info += '请填写【'+title+'】的接洽人员\r\n';
+                }
+            });
+            if ($.trim(_info).length > 0) {
+                alert(_info);
+                return false;
+            }
+            return true;
+        }
+    </script>
+}

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "列表";
+}
+<fieldset>
+    <legend>订单用户列表</legend>
+    <a href="Edit" class="btn-add">添加用户</a>
+    <table width="100%" class="tblist">
+        <tr>
+            <th width="5%">
+                流水号
+            </th>
+            <th width="15%">
+                用户名
+            </th>
+            <th width="15%">
+                密码
+            </th>
+            <th>
+                公司名称
+            </th>
+            <th width="15%">
+                添加时间
+            </th>
+            <th width="10%">
+                操作
+            </th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td align="center">@item.Id
+                </td>
+                <td align="center">@item.UserName
+                </td>
+                <td align="center">@item.UserPwd
+                </td>
+                <td align="center">@item.CompanyName
+                </td>
+                <td align="center">@item.CreateDateTime
+                </td>
+                <td align="center">
+                    <a href="Edit?id=@item.Id">编辑</a>
+                </td>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(Model.PageIndex, Model.PageSize, Model.TotalItemCount, new { @class = "pagerbar" }))
+</fieldset>

@@ -1,0 +1,75 @@
+﻿@{
+    ViewBag.Title = "上海嘉仪";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#1e6498;border:1px solid #1e6498;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#1e6498;}
+        
+        .wrap1-col1{float:left;width:700px;}
+        .wrap1-col2{float:right; line-height:22px;padding-top:45px; width:270px; background:url("/images/welcome_blue.jpg") no-repeat scroll left 10px transparent;}
+
+        .wrap2{padding-left:35px; padding-top:20px; background:url("/images/jiayi/sale_listtitle.gif") no-repeat scroll left top transparent;}
+        .wrap2 li{float:left; padding:0 25px;width:260px; background:url("/images/jiayi/sale_rline.jpg") no-repeat scroll right center transparent;}
+        .wrap2 li.bgnone{ background:none repeat scroll 0 0 transparent; padding-right:0;}
+        .wrap2 li p.info{ height:85px;padding:7px 0; line-height:20px;}
+        .wrap2 li p.more{padding-bottom:10px; padding-right:20px; text-align:right;}
+		
+    </style>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <div class="focusimg" id="slide">
+            <!--轮播广告-->
+            <ol>
+                @foreach (var item in ViewBag.FocusImageList)
+                { 
+                    <text><li><a href="@item.Url" target="_blank" title="@item.Title">
+                    <img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+                }
+            </ol>
+        </div>
+        <script type="text/javascript">
+            $("#slide").hiteSlide({ width: 700, height: 301, timer: 4000 });
+        </script>
+    </div>
+    <div class="wrap1-col2">
+        @Html.Raw(PageData["SiteInfo"].Introduction)
+    </div>
+</div>
+<div class="blankb"></div>
+<div><img height="61" width="679" src="/images/jiayi/stitle.gif"></div>
+<div class="blankb"></div>
+<div class="wrap2 clearfix">
+    <ul>
+        <li><img height="68" width="151" src="/images/jiayi/news_title.gif">
+            <p class="info">
+            @foreach (var item in ViewBag.News)
+            {
+               <a href="@item.Url" title="@item.Title">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 25))</a><br />
+            }
+            </p>
+            <p class="more">
+            <a href="/channel/131.html" title="新闻"><img src="/images/jiayi/more.gif"></a>
+            </p>
+        </li>
+        <li><img src="/images/jiayi/products_title.gif" width="160" height="68" />
+        <p class="info">您所需要的全球各种品牌和门类的电气控制产品<br />
+                        提升您电气控制系统性能的解决方案和提供实现<br />
+                        该解决方案的高性价比的产品； </p>
+        <p class="more"><a href="/channel/135.html" title="产品"><img src="/images/jiayi/more.gif"></a></p>
+        </li>
+        <li class="bgnone">
+           <img src="/images/jiayi/service_title.gif" width="160" height="68" />
+           <p class="info">一站式的维修备件供应与技术支持<br />
+                为设备制造商提供完整系统服务<br />
+                综合增值服务提升您的竞争力<br />
+                中小型自动化企业的坚强后盾 </p>
+          <p class="more"><a href="/channel/150.html" title="服务"><img src="/images/jiayi/more.gif"></a></p>
+       </li>
+    </ul>
+</div>
+<div class="blankb"></div>
+

@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "海得能源";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    <style type="text/css">
+        .focusimg ul {bottom:5px; right:10px;}
+        .focusimg ul li{color:#609705;border:1px solid #609705;width:12px;height:15px;}
+        .focusimg ul li.on{ background-color:#609705;}
+        
+        .wrap1-col1{float:left;width:678px;}
+        .wrap1-col2{float:right; line-height:22px;padding-top:45px; width:270px; background:url("/images/welcome_green.jpg") no-repeat scroll left 10px transparent;}
+        
+        .wrap2-col1{float:left;width:178px;border:#ccdecd 1px solid;}
+        .wrap2-col2{float:right; display:inline;border:#CCDECD 1px solid;width:781px;}
+        .wrap2-col1 h3,.wrap2-col2-col1 h3,.wrap2-col2-col2 h3,.wrap2-col2-col3 h3{padding-left:10px; height:21px; padding-top:4px; background:url(/images/energy/titlebg.jpg) repeat-x}
+        
+        .wrap2-col2-col1{width:500px; float:left; border-right:#ccdecd 1px solid; border-bottom:#ccdecd 1px solid;height:190px; overflow:hidden;}
+        .wrap2-col2-col2{width:280px; float:right;border-bottom:#ccdecd 1px solid; height:190px; overflow:hidden;}
+        .wrap2-col2-col2 li{float:left;}
+        .wrap2-col2-col3 li{ display:inline; float:left; margin:10px 0 10px 15px; text-align:center;width:140px;}
+        .wrap2-col2-col3{ margin-bottom:5px;}
+        .news-img img{padding-top:12px;}
+		.wrap2-col2-col1 .news-img img {height:110px;width:152px;}
+        .wrap2-col2-col1 .news-img{float:left;padding:5px 10px 0 5px;}
+        .wrap2-col2-col1 .news-list{float:left;padding-top:10px;width:310px;}
+        .wrap2-col2-col1 ul li{background:url("/images/icon_dot.gif") no-repeat scroll left center transparent;line-height:22px;text-indent:8px;}
+        .wrap2-col2-col1 .more{color:#105F91; margin-right:10px; float:right;}
+        .wrap2-col2-col2 li{padding-left:15px;padding-top:5px;}
+		.article-info {float:left;width:480px;padding-bottom:10px;}
+
+    </style>
+}
+<div class="wrap1 clearfix">
+    <div class="wrap1-col1">
+        <div class="focusimg" id="slide">
+            <!--轮播广告-->
+            <ol>
+                @foreach (var item in ViewBag.FocusImageList)
+                { 
+                    <text><li><a href="@item.Url" target="_blank" title="@item.Title">
+                    <img src="@item.ImageUrl" alt="@item.Title"></a></li></text>
+                }
+            </ol>
+        </div>
+        <script type="text/javascript">
+            $("#slide").hiteSlide({ width: 702, height: 301, timer: 4000 });
+        </script>
+    </div>
+    <div class="wrap1-col2">
+        @Html.Raw(PageData["SiteInfo"].Introduction)
+    </div>
+</div>
+<div class="blankb"></div>
+<div class="wrap2 clearfix">
+    <div class="wrap2-col1">
+        <h3><img width="54" height="16" alt="点亮展示" src="/images/energy/ldshow.jpg" complete="complete"/></h3>
+        <ul>
+            @foreach (var item in ViewBag.Liangdian) { 
+                <li>@Html.Raw(item.Content)</li>
+            }
+        </ul>
+    </div>
+    <div class="wrap2-col2">
+        <div class="wrap2-col2-col1">
+            <h3><img src="/images/energy/news.jpg" alt="新闻中心" width="55" height="14" /></h3>
+            <div class="news-img">
+                @if (ViewBag.News.Count >0) { 
+                <a href="@ViewBag.News[0].Url" class="news-img" target="_blank" title="@ViewBag.News[0].Title"><img src="@ViewBag.News[0].ImageUrl" alt="@ViewBag.News[0].Title" /></a>
+            }
+            </div> 
+            <div class="news-list">
+                <ul>
+                    @foreach (var item in ViewBag.News) { 
+                        <li><a href="@item.Url" target="_blank" title="@item.Title">@(Goodspeed.Common.CharHelper.Truncate(item.Title, 30))</a></li>
+                    }
+                </ul>
+            </div>
+            <div class="clear"></div>
+            <a href="/channel/54.html" target="_blank" class="more">查看更多>></a>
+        </div>
+        <div class="wrap2-col2-col2">
+            <h3><img src="/images/energy/fwtitle.jpg" alt="客户服务" width="56" height="14" /></h3>
+            <ul>
+                @foreach (var item in ViewBag.CustomerService) { 
+                    <li>@Html.Raw(Hite.Mvc.CategoryLinkUrlHelper.BuildLink(item, "<img src=\""+item.ImageUrl+"\" alt=\"@item.Name\" />", new { target="_blank" }))</li>
+                }
+                
+            </ul>
+        </div>
+        <div class="clear"></div>
+        <div class="wrap2-col2-col3 clearfix">
+            <h3><img src="/images/energy/productshow.jpg" alt="产品、业绩展示" width="98" height="15" /></h3>
+            <ul>
+                @foreach (var item in ViewBag.Product)
+                { 
+                    <li><a href="@item.Url" target="_blank" title="@item.Title"><img src="@item.ImageUrl" alt="@item.Title" /></a><br /><a href="@item.Url" target="_blank" title="@item.Title">@(item.Title)</a></li>
+                }
+            </ul>
+			<a href="http://energy.hite.com.cn/channel/yjal.html" style="color:#0f4a90;">更多业绩>></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://energy.hite.com.cn/channel/63.html" style="color:#0f4a90;">更多产品>></a>
+        </div>
+    </div>
+</div>
+<div class="blankb"></div>
+

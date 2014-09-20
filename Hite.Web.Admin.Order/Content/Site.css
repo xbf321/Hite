@@ -1,0 +1,105 @@
+body
+{
+    font-size: 75%;
+    font-family: Verdana, Tahoma, Arial, "Helvetica Neue", Helvetica, Sans-Serif;
+    color: #232323;
+    background-color: #fff;
+}
+a:link
+{
+    color: #034af3;
+    text-decoration: none;
+}
+
+a:visited
+{
+    color: #505abc;
+}
+
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: underline;
+}
+input,textarea{border:1px solid #BBBBBB;}
+
+/* Styles for basic forms
+-----------------------------------------------------------*/
+
+fieldset 
+{
+    border:1px solid #ddd;
+    padding:0 1.4em 1.4em 1.4em;
+    margin:0 0 1.5em 0;
+}
+
+legend 
+{
+    font-size:1.2em;
+    font-weight: bold;
+    padding:5px 10px 5px 10px;
+    border:#aaa 1px solid;
+}
+
+textarea 
+{
+    min-height: 75px;
+}
+
+.editor-label 
+{
+    margin: 1em 0 0 0;
+}
+
+.editor-field 
+{
+    margin:0.5em 0 0 0;
+}
+
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+.tblist{
+     border-collapse: collapse;
+}
+.tblist th{
+    background-image: url(/images/barbg3.jpg);
+    height: 28px;
+    text-align: center;
+    font-weight: bold;
+    border: solid 1px #CCC;
+}
+.tblist td{     
+     height:25px;
+     border:solid 1px #CCC;
+}
+/* btn
+-----------------------------------------------------------*/
+.btn-add{padding:5px; display:block;border:1px solid gray;width:60px; text-align:center; margin:10px 0 10px 0;}
+/*.btn-back{ background:url(/images/back.jpg);width:51px;height:24px; display:block; text-indent:99999; margin-left:10px;}*/

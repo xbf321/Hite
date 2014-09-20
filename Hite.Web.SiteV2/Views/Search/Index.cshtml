@@ -1,0 +1,58 @@
+﻿@{
+    
+    Layout = "~/Views/Shared/_ChannelLayout.cshtml";
+    string key = Controleng.Common.CECRequest.GetQueryString("q");
+    ViewBag.Title = string.Format("{0}搜索",key);
+}
+@section footer{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#txtKey').focus();
+            $('#btnSearch').click(function () {
+                search();
+            });
+            $("#txtKey").pressEnter(function () { search(); });
+        });
+        function search() {
+            var txtKeyObj = $('#txtKey');
+            if (txtKeyObj.val() == '') {
+                txtKeyObj.focus();
+                return false;
+            }
+            window.location.href = '?q=' + encodeURIComponent(txtKeyObj.val());
+        }
+    </script>
+}
+<div class="searchWrapper">
+    <div class="search-title">
+        <table align="center">
+            <tr>
+                <td><img src="images/icon_search.jpg" /></td>
+                <td><input type="text" id="txtKey" value="@key" /></td>
+                <td><input type="button" id="btnSearch" value="查询" /></td>
+            </tr>
+        </table>
+    </div>
+    <div class="search-result-title">
+        <h2>搜索结果</h2>
+    </div>
+    <div class="blankb"></div>
+    <div class="search-list">
+        <ul>
+            @if (Model != null)
+            {
+                if (((System.Collections.Generic.IEnumerable<Hite.Model.ArticleInfo>)Model).Count() == 0) { <li>找不到和您的查询 <strong>"@key"</strong> 相符的内容或信息。</li>}
+                foreach (var item in Model)
+                {
+                    <li>
+                        <h2 class="list-title"><a href="@item.Url" title="@item.Title">@Html.Raw(item.Title)</a></h2>
+                        <div class="list-info">@Html.Raw(Goodspeed.Common.CharHelper.Truncate(item.Content,200))</div>
+                        <div class="list-date">@item.PublishDateTime.ToString("yyyy-MM-dd")</div>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(ViewBag.PageIndex, ViewBag.PageSize, ViewBag.Total, new { @class = "pagebar" }))
+</div>
+

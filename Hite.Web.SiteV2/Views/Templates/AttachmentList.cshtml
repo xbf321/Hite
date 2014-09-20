@@ -1,0 +1,35 @@
+﻿<div class="template-attach-list">
+    <table width="100%" class="tblist">
+        <tr>
+            <th>
+                资料名称
+            </th>            
+            <th width="10%">资料大小</th>
+            <th width="12%">发布时间</th>
+            <th width="10%">文件格式</th>
+            <th width="12%">立即下载</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <div class="attach-title">@(item.Title)</div>                
+                </td>
+                <td align="center">@Controleng.Common.Utils.FormatBytesStr(item.Size)</td>
+                <td align="center">@item.PublishDate.ToString("yyyy-MM-dd")</td>
+                <td align="center">@item.Extension</td>
+                <td align="center">
+                @if (Request.IsAuthenticated)
+                {
+                <a href="@item.Url" target="_blank" title="下载@(item.Title)"><img src="/images/btndownload.jpg" alt="下载@(item.Title)" /></a>
+                }
+                else { 
+                    <text><a href="javascript:_GLOBAL.login();void(0);">请先登录</a></text>
+                }
+                </td>
+            </tr>
+        }
+    </table>
+    @Html.Raw(Hite.Common.PagerBarHelper.Render(Model.PageIndex, Model.PageSize, Model.TotalItemCount, new { @class = "pagebar" }))
+</div>
+
