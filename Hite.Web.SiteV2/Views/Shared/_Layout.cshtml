@@ -12,7 +12,7 @@
     <meta name="author" content="兴百放,xbf321(at)gmail.com" />
     <meta name="Keywords" content="@(ViewBag.Keywords != null ? ViewBag.Keywords : siteInfo.WebKeywords)" />
     <meta name="Description" content="@(ViewBag.Description != null ? ViewBag.Description : siteInfo.WebDesc)" />
-    <link type="text/css" rel="stylesheet" href="/static/css?href=styles/global.css,styles/@(siteInfo.IndexFileName.ToString().ToLower()).css,styles/jquery.ddsmoothmenu.css,styles/jquery.xDialog.css"/>
+    <link type="text/css" rel="stylesheet" href="/static/css?href=styles/global.css,styles/@(siteInfo.IndexFileName.ToString().ToLower()).css,styles/jquery.ddsmoothmenu.css,styles/jquery.xDialog.css,20141010.css"/>
     @if (siteInfo.Language == Hite.Model.WebLanguage.en)
     { 
     <link rel="alternate" hreflang="cn" href="http://www.hite.com.cn" />
@@ -54,6 +54,10 @@
     <div id="footer">
         @Html.Raw(Hite.Mvc.LanguageResourceHelper.GetString("footer-text", siteInfo.Language))
     </div>
+<div style="width:980px;margin:0 auto;text-align:center;"><script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F12bfcbe81fca32418c806918642a68e0' type='text/javascript'%3E%3C/script%3E"));
+</script></div>
     <script type="text/javascript">
         ddsmoothmenu.init({
             mainmenuid: "nav", //menu DIV id
@@ -94,6 +98,7 @@
         var url = "<scr" + "ipt type=\"text/javascript\" src=\"/static/statistics?siteid=@(siteInfo.Id)&referrer=" + referrer + "\"></scr" + "ipt\>";
         document.write(url);
     </script>
+
     @Html.Raw(siteInfo.ThirdCode)
 </body>
 </html>

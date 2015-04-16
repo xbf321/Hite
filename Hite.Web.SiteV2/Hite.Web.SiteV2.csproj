@@ -14,6 +14,7 @@
     <AssemblyName>Hite.Web.Site</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>false</UseIISExpress>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,11 +34,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Controleng.Common">
-      <HintPath>..\Hite.Core\bin\Debug\Controleng.Common.dll</HintPath>
+    <Reference Include="Controleng.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\Controleng.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Goodspeed.Library">
-      <HintPath>..\..\ControlengV2\Controleng.Web.Forum\Bin\Goodspeed.Library.dll</HintPath>
+    <Reference Include="Goodspeed.Library, Version=1.0.0.20631, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assemblies\Goodspeed.Library.dll</HintPath>
     </Reference>
     <Reference Include="log4net">
       <HintPath>..\Assemblies\log4net.dll</HintPath>
